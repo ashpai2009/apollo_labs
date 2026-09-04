@@ -11,7 +11,7 @@ export function Hero() {
           {/* Editorial column */}
           <div className="lg:col-span-6 xl:col-span-6">
             <p className="mono-label flex items-center gap-3 text-muted">
-              <span className="text-signal">◆</span>
+              <span className="text-signal-text">◆</span>
               Apollo Labs · Student-Led Research
             </p>
 

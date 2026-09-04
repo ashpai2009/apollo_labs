@@ -139,7 +139,7 @@ export function Navbar() {
               >
                 <span
                   className={`text-2xl tracking-[-0.01em] ${
-                    isActive(item.href) ? "text-signal" : "text-paper"
+                    isActive(item.href) ? "text-signal-text" : "text-paper"
                   }`}
                 >
                   {item.label}

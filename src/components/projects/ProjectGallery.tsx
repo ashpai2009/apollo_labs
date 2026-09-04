@@ -74,7 +74,7 @@ export function ProjectGallery() {
                 <span className="block font-serif text-[1.5rem] leading-tight">
                   Browse every Apollo project
                 </span>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm text-signal">
+                <span className="mt-4 inline-flex items-center gap-2 text-sm text-signal-text">
                   Open Explore <Arrow />
                 </span>
               </span>

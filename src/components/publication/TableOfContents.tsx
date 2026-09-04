@@ -45,7 +45,7 @@ export function TableOfContents({
               >
                 <span
                   className={`mono-label pt-0.5 transition-colors duration-200 ${
-                    current ? "text-signal" : "text-faint"
+                    current ? "text-signal-text" : "text-faint"
                   }`}
                 >
                   {String(i + 1).padStart(2, "0")}

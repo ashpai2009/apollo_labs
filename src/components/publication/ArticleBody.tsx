@@ -40,7 +40,7 @@ function SectionRule({ index, heading }: { index: string; heading: string }) {
   return (
     <div className="mb-7">
       <div className="flex items-center gap-4">
-        <span className="mono-label text-signal">{index}</span>
+        <span className="mono-label text-signal-text">{index}</span>
         <span aria-hidden="true" className="h-px flex-1 bg-hairline" />
       </div>
       <h2 className="mt-5 text-[1.6rem] font-normal leading-tight tracking-[-0.015em]">

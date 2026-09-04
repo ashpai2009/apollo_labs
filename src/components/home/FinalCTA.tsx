@@ -8,7 +8,7 @@ export function FinalCTA() {
         <Reveal>
           <div className="grid gap-12 lg:grid-cols-12">
             <p className="mono-label text-muted lg:col-span-3 lg:pt-4">
-              <span className="text-signal">◆</span>
+              <span className="text-signal-text">◆</span>
               <span className="ml-3">Join Apollo Labs</span>
             </p>
             <div className="lg:col-span-8 lg:col-start-4">

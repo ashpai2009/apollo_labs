@@ -8,7 +8,7 @@ export function CommunitySection() {
       <div className="shell-wide grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-3">
           <p className="mono-label flex gap-3 text-muted">
-            <span className="text-signal">05</span>
+            <span className="text-signal-text">05</span>
             <span>Community</span>
           </p>
         </div>

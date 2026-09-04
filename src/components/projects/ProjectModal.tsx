@@ -94,7 +94,7 @@ export function ProjectModal() {
             animate={enter.animate}
             exit={reduced ? { opacity: 0 } : enter.exit}
             transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto relative flex max-h-[88dvh] focus:outline-none w-full flex-col overflow-hidden border border-hairline-strong bg-base shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] max-md:max-h-[92dvh] max-md:rounded-t-2xl md:max-h-[86dvh] md:max-w-[64rem]"
+            className="pointer-events-auto relative flex max-h-[88dvh] focus:outline-none w-full flex-col overflow-hidden border border-hairline-strong bg-base shadow-[0_40px_100px_-20px_var(--apollo-modal-shadow)] max-md:max-h-[92dvh] max-md:rounded-t-2xl md:max-h-[86dvh] md:max-w-[64rem]"
           >
             {/* Mobile grab affordance */}
             <div className="flex shrink-0 justify-center pt-3 md:hidden">

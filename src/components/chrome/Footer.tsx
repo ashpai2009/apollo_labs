@@ -74,7 +74,7 @@ export function Footer() {
             Apollo Labs · Est. 2026 · Student-Led Research
           </p>
           <p className="mono-label text-faint">
-            <span className="text-signal">◆</span> Prototype build 0.1
+            <span className="text-signal-text">◆</span> Prototype build 0.1
           </p>
         </div>
       </div>

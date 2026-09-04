@@ -15,7 +15,7 @@ export function ResourceLinks({ project }: { project: Project }) {
   return (
     <section id="resources" className="mt-20 scroll-mt-28">
       <div className="flex items-center gap-4">
-        <span className="mono-label text-signal">◆</span>
+        <span className="mono-label text-signal-text">◆</span>
         <span aria-hidden="true" className="h-px flex-1 bg-hairline" />
       </div>
       <h2 className="mt-5 text-[1.6rem] font-normal leading-tight tracking-[-0.015em]">
@@ -36,7 +36,7 @@ export function ResourceLinks({ project }: { project: Project }) {
                   </span>
                   <span className="mono-label text-faint">{meta.note}</span>
                 </span>
-                <span className="text-muted transition-colors duration-200 group-hover:text-signal">
+                <span className="text-muted transition-colors duration-200 group-hover:text-signal-text">
                   <Arrow />
                 </span>
               </a>

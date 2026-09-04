@@ -12,7 +12,7 @@ export function Eyebrow({
 }) {
   return (
     <p className={`mono-label flex items-center gap-3 text-muted ${className ?? ""}`}>
-      {index && <span className="text-signal">{index}</span>}
+      {index && <span className="text-signal-text">{index}</span>}
       <span>{children}</span>
     </p>
   );

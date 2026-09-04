@@ -59,7 +59,7 @@ export function HeroVisual() {
           .getPropertyValue("--apollo-signal")
           .trim() || accent;
       alpha =
-        document.documentElement.dataset.theme === "light" ? 1.9 : 1;
+        document.documentElement.dataset.theme === "light" ? 2.4 : 1;
     };
 
     let width = 0;

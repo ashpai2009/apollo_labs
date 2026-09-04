@@ -11,7 +11,7 @@ function MemberRow({ member, index }: { member: Member; index: number }) {
         <div className="flex items-center gap-4 sm:col-span-4">
           <span
             aria-hidden="true"
-            className="mono-label flex size-10 shrink-0 items-center justify-center border border-hairline text-paper-dim transition-colors duration-300 group-hover:border-signal group-hover:text-signal"
+            className="mono-label flex size-10 shrink-0 items-center justify-center border border-hairline text-paper-dim transition-colors duration-300 group-hover:border-signal group-hover:text-signal-text"
           >
             {initials(member.name)}
           </span>
@@ -19,7 +19,7 @@ function MemberRow({ member, index }: { member: Member; index: number }) {
             {member.name}
           </span>
         </div>
-        <span className="mono-label text-signal sm:col-span-3">{member.role}</span>
+        <span className="mono-label text-signal-text sm:col-span-3">{member.role}</span>
         <p className="max-w-[42ch] text-[0.9375rem] leading-relaxed text-muted sm:col-span-4">
           {member.focus}
         </p>
@@ -41,7 +41,7 @@ export function TeamGrid() {
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-12">
             <p className="mono-label flex gap-3 text-muted lg:col-span-3">
-              <span className="text-signal">04</span>
+              <span className="text-signal-text">04</span>
               <span>The Team</span>
             </p>
             <div className="lg:col-span-9">

@@ -53,7 +53,7 @@ export function Prose({
       <div className="shell-wide grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-3">
           <p className="mono-label flex gap-3 text-muted lg:sticky lg:top-28">
-            <span className="text-signal">{index}</span>
+            <span className="text-signal-text">{index}</span>
             <span>{heading}</span>
           </p>
         </div>

@@ -49,7 +49,7 @@ export function Disciplines() {
                     {String(counts.get(d.name) ?? 0).padStart(2, "0")}{" "}
                     {counts.get(d.name) === 1 ? "Project" : "Projects"}
                   </span>
-                  <span className="text-signal opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-signal-text opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <Arrow />
                   </span>
                 </span>

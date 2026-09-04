@@ -45,7 +45,7 @@ function Chip({
       aria-pressed={active}
       className={`mono-label border px-3 py-2 transition-colors duration-200 ${
         active
-          ? "border-signal bg-signal/12 text-signal"
+          ? "border-signal bg-signal/8 text-signal-text"
           : "border-hairline text-muted hover:border-hairline-strong hover:text-paper"
       }`}
     >
@@ -163,7 +163,7 @@ export function ExploreArchive() {
         <div className="shell-wide">
           <div className="flex items-baseline justify-between gap-6 border-b border-hairline pb-5">
             <p className="mono-label text-muted">
-              <span className="text-signal">
+              <span className="text-signal-text">
                 {String(results.length).padStart(2, "0")}
               </span>
               <span className="ml-3">

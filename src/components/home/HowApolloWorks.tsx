@@ -59,7 +59,7 @@ export function HowApolloWorks() {
                 >
                   <span className="absolute inset-[3px] bg-signal" />
                 </span>
-                <p className="mono-label text-signal">{step.index}</p>
+                <p className="mono-label text-signal-text">{step.index}</p>
                 <h3 className="mt-4 font-serif text-[1.6rem] leading-tight">
                   {step.title}
                 </h3>

@@ -72,7 +72,7 @@ export default function CommunityPage() {
       <section className="gutter border-b border-hairline py-16 md:py-24">
         <div className="shell-wide grid gap-10 lg:grid-cols-12">
           <p className="mono-label flex gap-3 text-muted lg:col-span-3">
-            <span className="text-signal">02</span>
+            <span className="text-signal-text">02</span>
             <span>The rhythm</span>
           </p>
           <div className="lg:col-span-9">
@@ -80,7 +80,7 @@ export default function CommunityPage() {
               {RHYTHM.map((item, i) => (
                 <Reveal as="li" key={item.index} delay={i * 0.05}>
                   <div className="group grid gap-x-8 gap-y-3 border-b border-hairline py-8 md:grid-cols-12 md:items-baseline">
-                    <span className="mono-label text-signal md:col-span-1">
+                    <span className="mono-label text-signal-text md:col-span-1">
                       {item.index}
                     </span>
                     <h2 className="font-serif text-[1.5rem] leading-tight md:col-span-4">
@@ -145,7 +145,7 @@ export default function CommunityPage() {
           <Reveal>
             <div className="grid gap-10 lg:grid-cols-12">
               <p className="mono-label text-muted lg:col-span-3 lg:pt-3">
-                <span className="text-signal">◆</span>
+                <span className="text-signal-text">◆</span>
                 <span className="ml-3">Join</span>
               </p>
               <div className="lg:col-span-8 lg:col-start-4">

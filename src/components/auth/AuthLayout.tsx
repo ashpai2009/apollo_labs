@@ -50,7 +50,7 @@ export function AuthLayout({
       <section className="gutter flex flex-col justify-center py-28 lg:py-16">
         <div className="mx-auto w-full max-w-[26rem]">
           <p className="mono-label flex items-center gap-3 text-muted">
-            <span className="text-signal">◆</span>
+            <span className="text-signal-text">◆</span>
             {eyebrow}
           </p>
           <h1 className="mt-7 text-[clamp(1.9rem,3.4vw,2.5rem)] font-normal leading-[1.08] tracking-[-0.025em]">

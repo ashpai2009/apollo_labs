@@ -20,6 +20,9 @@
   --color-signal-bright: var(--apollo-signal-bright);
   --color-signal-dim: var(--apollo-signal-dim);
   --color-signal-ink: var(--apollo-signal-ink);
+  /* Accent for small text and glyphs, which needs more contrast than the
+     accent used for filled surfaces. */
+  --color-signal-text: var(--apollo-signal-text);
 
   /* ── Type ─────────────────────────────────────── */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -62,11 +65,13 @@
   --apollo-signal-bright: #f2764f;
   --apollo-signal-dim: #a83c1e;
   --apollo-signal-ink: #140803;
+  --apollo-signal-text: #e4572e;
 
   /* Procedural cover artwork */
   --apollo-art-from: #16161a;
   --apollo-art-to: #0d0d0f;
   --apollo-backdrop: rgba(8, 8, 9, 0.6);
+  --apollo-modal-shadow: rgba(0, 0, 0, 0.8);
 }
 
 html[data-theme="light"] {
@@ -83,17 +88,21 @@ html[data-theme="light"] {
 
   --apollo-paper: #171614;
   --apollo-paper-dim: #46443f;
-  --apollo-muted: #6a6760;
-  --apollo-faint: #78746d;
+  --apollo-muted: #67645d;
+  --apollo-faint: #706c65;
 
-  --apollo-signal: #cf4620;
-  --apollo-signal-bright: #b93c19;
+  --apollo-signal: #c8411c;
+  --apollo-signal-bright: #a83415;
   --apollo-signal-dim: #8f2f13;
-  --apollo-signal-ink: #fff8f5;
+  --apollo-signal-ink: #ffffff;
+  --apollo-signal-text: #ab3512;
 
-  --apollo-art-from: #ffffff;
-  --apollo-art-to: #f0ede7;
+  /* The cover ground is pulled off the page colour so artwork reads as an
+     object rather than dissolving into the background. */
+  --apollo-art-from: #eeeae1;
+  --apollo-art-to: #e4dfd4;
   --apollo-backdrop: rgba(80, 74, 66, 0.34);
+  --apollo-modal-shadow: rgba(48, 42, 34, 0.22);
 }
 
 @layer base {
@@ -227,10 +236,10 @@ html[data-theme="light"] {
   .art-grid { stroke-opacity: 0.07; }
   .art-dot { fill-opacity: 0.55; }
 
-  html[data-theme="light"] .art-line { stroke-opacity: 0.52; }
-  html[data-theme="light"] .art-soft { stroke-opacity: 0.32; }
-  html[data-theme="light"] .art-grid { stroke-opacity: 0.14; }
-  html[data-theme="light"] .art-dot { fill-opacity: 0.72; }
+  html[data-theme="light"] .art-line { stroke-opacity: 0.62; }
+  html[data-theme="light"] .art-soft { stroke-opacity: 0.42; }
+  html[data-theme="light"] .art-grid { stroke-opacity: 0.2; }
+  html[data-theme="light"] .art-dot { fill-opacity: 0.82; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -357,6 +366,16 @@ html[data-apollo-intro="play"] body {
 
 @keyframes intro-draw { to { stroke-dashoffset: 0; } }
 @keyframes intro-point { to { opacity: 0.4; } }
+
+/* The intro artwork needs more weight on a light ground. */
+html[data-theme="light"] #apollo-intro .intro-orbit { opacity: 0.5; }
+html[data-theme="light"] #apollo-intro .intro-planet {
+  animation-name: intro-planet-in-light;
+}
+@keyframes intro-planet-in-light {
+  from { opacity: 0; transform: scale(0.82); }
+  to { opacity: 0.55; transform: scale(1); }
+}
 @keyframes intro-fade-out { to { opacity: 0; } }
 @keyframes intro-node { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }
 @keyframes intro-rise { to { transform: translateY(0); } }

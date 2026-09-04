@@ -44,7 +44,7 @@ export function ProjectAbstract({ abstract }: { abstract: string }) {
             className="overflow-hidden"
           >
             <div className="mt-6 border-t border-hairline pt-6">
-              <p className="mono-label text-signal">Abstract</p>
+              <p className="mono-label text-signal-text">Abstract</p>
               <p className="mt-4 max-w-[64ch] text-[0.9375rem] leading-[1.75] text-paper-dim">
                 {abstract}
               </p>
