@@ -83,7 +83,7 @@ export function ProjectCard({
           {project.summary}
         </p>
 
-        <p className="t-meta mt-auto pt-3 text-muted">
+        <p className="t-meta mt-auto pt-4 text-muted">
           {authorLine(project)}
           <span aria-hidden="true" className="mx-1.5 text-faint">
             ·

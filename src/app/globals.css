@@ -252,15 +252,16 @@ html[data-theme="light"] {
   /* Body inside cards and dense rows, where 20px would
      force awkward wrapping. Holds the 17px floor. */
   .t-body-sm {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     line-height: 1.55;
   }
-  @media (min-width: 1280px) { .t-body-sm { font-size: 1.125rem; } }
+  @media (min-width: 1280px) { .t-body-sm { font-size: 1.1875rem; } }
 
-  /* Supporting metadata — 14px. Not for explanatory copy. */
+  /* Supporting detail — 16px. Sits below body but stays comfortably
+     readable; use .mono-label for true chrome-level metadata. */
   .t-meta {
-    font-size: 0.875rem;
-    line-height: 1.45;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   /* Small uppercase technical label */
@@ -317,11 +318,14 @@ html[data-theme="light"] {
       transparent 68%
     );
   }
+  /* Light theme takes a soft violet instead of the signal orange, which
+     reads harsh against the warm off-white ground. */
   html[data-theme="light"] .pointer-glow {
     background: radial-gradient(
-      20rem 20rem at var(--gx, 50%) var(--gy, 50%),
-      color-mix(in srgb, var(--color-signal) 9%, transparent),
-      transparent 66%
+      21rem 21rem at var(--gx, 50%) var(--gy, 50%),
+      hsl(272 72% 62% / 0.16),
+      hsl(272 72% 62% / 0.05) 45%,
+      transparent 68%
     );
   }
   @media (prefers-reduced-motion: reduce), (pointer: coarse) {

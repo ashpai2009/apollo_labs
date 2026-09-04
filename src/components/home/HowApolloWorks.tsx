@@ -17,7 +17,7 @@ export function HowApolloWorks() {
               From idea to publication.
             </h2>
           </div>
-          <p className="t-body-sm max-w-[38ch] text-muted lg:col-span-4 lg:col-start-9 lg:pb-2">
+          <p className="t-body max-w-[36ch] text-paper-dim lg:col-span-4 lg:col-start-9 lg:pb-2">
             Four stages. Every published project has been through all of them.
           </p>
         </header>
@@ -35,7 +35,7 @@ export function HowApolloWorks() {
               />
               <p className="mono-label text-signal-text lg:text-faint">{step.index}</p>
               <h3 className="t-sub mt-3">{step.title}</h3>
-              <p className="t-body-sm mt-3 max-w-[30ch] text-muted">{step.body}</p>
+              <p className="t-body-sm mt-3 max-w-[28ch] text-paper-dim">{step.body}</p>
             </li>
           ))}
         </ol>

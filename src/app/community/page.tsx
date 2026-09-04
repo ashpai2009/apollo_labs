@@ -100,7 +100,7 @@ export default function CommunityPage() {
                     <span className="mono-label text-faint md:col-span-2">
                       {item.cadence}
                     </span>
-                    <p className="t-body-sm max-w-[52ch] text-muted md:col-span-6">
+                    <p className="t-body-sm max-w-[52ch] text-paper-dim md:col-span-6">
                       {item.body}
                     </p>
                   </div>

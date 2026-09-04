@@ -28,7 +28,7 @@ export function SectionHeading({
         <p className="mono-label text-signal-text">{label}</p>
         <h2 className="t-section max-w-[18ch] text-paper">{title}</h2>
         {lede && (
-          <p className="t-body-sm max-w-[58ch] text-paper-dim">{lede}</p>
+          <p className="t-body max-w-[54ch] text-paper-dim">{lede}</p>
         )}
       </div>
       {action && <div className="shrink-0 sm:pb-1">{action}</div>}

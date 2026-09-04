@@ -18,7 +18,7 @@ function MemberRow({ member, index }: { member: Member; index: number }) {
           <span className="t-sub">{member.name}</span>
         </div>
         <span className="mono-label text-faint sm:col-span-3">{member.role}</span>
-        <p className="t-body-sm max-w-[48ch] text-muted sm:col-span-4">
+        <p className="t-body-sm max-w-[46ch] text-paper-dim sm:col-span-4">
           {member.focus}
         </p>
       </div>

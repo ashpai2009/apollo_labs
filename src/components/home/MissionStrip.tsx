@@ -29,10 +29,10 @@ export function MissionStrip() {
             {PRINCIPLES.map((p) => (
               <div
                 key={p.term}
-                className="flex items-baseline gap-6 border-t border-hairline py-4"
+                className="flex items-baseline gap-6 border-t border-hairline py-5"
               >
-                <dt className="t-sub w-28 shrink-0 text-paper">{p.term}</dt>
-                <dd className="t-body-sm text-muted">{p.detail}</dd>
+                <dt className="t-sub w-32 shrink-0 text-paper">{p.term}</dt>
+                <dd className="t-body text-paper-dim">{p.detail}</dd>
               </div>
             ))}
           </dl>

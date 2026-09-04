@@ -76,19 +76,17 @@ export function Prose({
           )}
 
           {children && (
-            <div className="t-body-sm mt-6 flex max-w-[52ch] flex-col gap-4 text-muted [&_strong]:font-medium [&_strong]:text-paper">
+            <div className="t-body mt-6 flex max-w-[54ch] flex-col gap-4 text-muted [&_strong]:font-medium [&_strong]:text-paper">
               {children}
             </div>
           )}
 
           {points && (
-            <dl className="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+            <dl className="mt-12 grid gap-x-12 gap-y-8 sm:grid-cols-2">
               {points.map((point) => (
                 <div key={point.term} className="border-t border-hairline pt-4">
-                  <dt className="t-body-sm font-medium text-paper">
-                    {point.term}
-                  </dt>
-                  <dd className="t-meta mt-2 max-w-[32ch] text-muted">
+                  <dt className="t-sub text-paper">{point.term}</dt>
+                  <dd className="t-body-sm mt-2.5 max-w-[34ch] text-muted">
                     {point.detail}
                   </dd>
                 </div>
