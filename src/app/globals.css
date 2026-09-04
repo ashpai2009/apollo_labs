@@ -20,6 +20,8 @@
   --color-signal-bright: var(--apollo-signal-bright);
   --color-signal-dim: var(--apollo-signal-dim);
   --color-signal-ink: var(--apollo-signal-ink);
+  --color-card: var(--apollo-card);
+  --color-card-hover: var(--apollo-card-hover);
   /* Accent for small text and glyphs, which needs more contrast than the
      accent used for filled surfaces. */
   --color-signal-text: var(--apollo-signal-text);
@@ -32,8 +34,8 @@
   /* ── Widths ───────────────────────────────────── */
   /* ~68 characters at the article body size */
   --container-prose: 37rem;
-  --container-content: 1180px;
-  --container-wide: 1440px;
+  --container-content: 1080px;
+  --container-wide: 1280px;
 
   /* ── Easing ───────────────────────────────────── */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -53,8 +55,10 @@
   --apollo-surface-2: #1a1a1e;
   --apollo-elevated: #1f1f24;
 
-  --apollo-hairline: rgba(255, 255, 255, 0.08);
-  --apollo-hairline-strong: rgba(255, 255, 255, 0.16);
+  --apollo-hairline: rgba(255, 255, 255, 0.09);
+  --apollo-hairline-strong: rgba(255, 255, 255, 0.18);
+  --apollo-card: #141417;
+  --apollo-card-hover: #191920;
 
   --apollo-paper: #ece8e1;
   --apollo-paper-dim: #b9b5ae;
@@ -83,8 +87,10 @@ html[data-theme="light"] {
   --apollo-surface-2: #efece6;
   --apollo-elevated: #ffffff;
 
-  --apollo-hairline: rgba(24, 21, 18, 0.12);
-  --apollo-hairline-strong: rgba(24, 21, 18, 0.24);
+  --apollo-hairline: rgba(24, 21, 18, 0.13);
+  --apollo-hairline-strong: rgba(24, 21, 18, 0.26);
+  --apollo-card: #ffffff;
+  --apollo-card-hover: #ffffff;
 
   --apollo-paper: #171614;
   --apollo-paper-dim: #46443f;
@@ -165,14 +171,20 @@ html[data-theme="light"] {
 @layer components {
   /* Editorial gutters — one system, three widths */
   .gutter {
-    padding-inline: 1.5rem;
+    padding-inline: 1.25rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
+    .gutter { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
     .gutter { padding-inline: 2.5rem; }
   }
-  @media (min-width: 1280px) {
-    .gutter { padding-inline: 4rem; }
-  }
+
+  /* Section rhythm. One scale, used everywhere, so nothing drifts. */
+  .section { padding-block: 3.5rem; }
+  @media (min-width: 768px) { .section { padding-block: 4.5rem; } }
+  .section-lg { padding-block: 4rem; }
+  @media (min-width: 768px) { .section-lg { padding-block: 5.5rem; } }
 
   .shell-wide {
     max-width: var(--container-wide);

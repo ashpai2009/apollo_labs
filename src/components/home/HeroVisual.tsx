@@ -2,224 +2,102 @@
 
 import { useEffect, useRef } from "react";
 
-type Node = {
-  ring: number;
-  angle: number;
-  speed: number;
-  radius: number;
-  accent: boolean;
-};
-
-const RINGS = [
-  { rx: 0.46, ry: 0.2, tilt: -0.34 },
-  { rx: 0.34, ry: 0.32, tilt: 0.42 },
-  { rx: 0.42, ry: 0.14, tilt: 0.16 },
-];
-
 /**
- * Scientific-visualization hero: ~36 nodes on three inclined orbits with
- * proximity linking. One rAF loop, paused offscreen, static when reduced.
+ * An abstract view of work moving through Apollo: a model output, a field-data
+ * card, and a project record under review. Layered but never overlapping each
+ * other's labels. One slow cursor drift, nothing else.
  */
 export function HeroVisual() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let accent = "#e4572e";
-
-    let seed = 20260418;
-    const rand = () => {
-      seed = (seed * 1664525 + 1013904223) >>> 0;
-      return seed / 4294967296;
-    };
-
-    const nodes: Node[] = Array.from({ length: 36 }, (_, i) => ({
-      ring: i % RINGS.length,
-      angle: rand() * Math.PI * 2,
-      speed: (0.00006 + rand() * 0.00009) * (i % 2 ? 1 : -1),
-      radius: 0.9 + rand() * 1.7,
-      accent: i === 5 || i === 22,
-    }));
-
-    // Ink is read from CSS so the visual follows the active theme.
-    let ink = "236,232,225";
-    let alpha = 1;
-    const readInk = () => {
-      const parsed = getComputedStyle(canvas)
-        .color.match(/-?\d+(\.\d+)?/g)
-        ?.slice(0, 3);
-      if (parsed) ink = parsed.map((n) => Math.round(Number(n))).join(",");
-      accent =
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--apollo-signal")
-          .trim() || accent;
-      alpha =
-        document.documentElement.dataset.theme === "light" ? 2.4 : 1;
-    };
-
-    let width = 0;
-    let height = 0;
-    let pointerX = 0;
-    let pointerY = 0;
-    let parallaxX = 0;
-    let parallaxY = 0;
-    let frame = 0;
-    let running = true;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      readInk();
-    };
-
-    const positionOf = (node: Node, t: number) => {
-      const ring = RINGS[node.ring];
-      const a = node.angle + t * node.speed;
-      const rx = ring.rx * Math.min(width, height * 1.5);
-      const ry = ring.ry * Math.min(width, height * 1.5);
-      const x = Math.cos(a) * rx;
-      const y = Math.sin(a) * ry;
-      const cos = Math.cos(ring.tilt);
-      const sin = Math.sin(ring.tilt);
-      return {
-        x: width / 2 + (x * cos - y * sin) + parallaxX,
-        y: height / 2 + (x * sin + y * cos) + parallaxY,
-      };
-    };
-
-    const draw = (t: number) => {
-      ctx.clearRect(0, 0, width, height);
-
-      parallaxX += (pointerX * 10 - parallaxX) * 0.045;
-      parallaxY += (pointerY * 8 - parallaxY) * 0.045;
-
-      // Orbit paths
-      ctx.lineWidth = 1;
-      for (const ring of RINGS) {
-        ctx.beginPath();
-        ctx.ellipse(
-          width / 2 + parallaxX * 0.6,
-          height / 2 + parallaxY * 0.6,
-          ring.rx * Math.min(width, height * 1.5),
-          ring.ry * Math.min(width, height * 1.5),
-          ring.tilt,
-          0,
-          Math.PI * 2,
-        );
-        ctx.strokeStyle = `rgba(${ink},${0.09 * alpha})`;
-        ctx.stroke();
-      }
-
-      const points = nodes.map((n) => positionOf(n, t));
-
-      // Proximity links
-      ctx.lineWidth = 0.6;
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const dx = points[i].x - points[j].x;
-          const dy = points[i].y - points[j].y;
-          const d = Math.hypot(dx, dy);
-          if (d < 96) {
-            ctx.strokeStyle = `rgba(${ink},${(1 - d / 96) * 0.16 * alpha})`;
-            ctx.beginPath();
-            ctx.moveTo(points[i].x, points[i].y);
-            ctx.lineTo(points[j].x, points[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Nodes
-      points.forEach((p, i) => {
-        const node = nodes[i];
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, node.accent ? 3.2 : node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = node.accent
-          ? accent
-          : `rgba(${ink},${Math.min(1, (0.34 + node.radius * 0.16) * alpha)})`;
-        ctx.fill();
+    let raf = 0;
+    const onMove = (event: PointerEvent) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const x = event.clientX / window.innerWidth - 0.5;
+        const y = event.clientY / window.innerHeight - 0.5;
+        el.style.setProperty("--tilt-x", `${(x * 5).toFixed(2)}px`);
+        el.style.setProperty("--tilt-y", `${(y * 4).toFixed(2)}px`);
       });
     };
-
-    const loop = (time: number) => {
-      if (!running) return;
-      draw(time);
-      frame = requestAnimationFrame(loop);
-    };
-
-    resize();
-
-    if (reduced) {
-      draw(0);
-    } else {
-      frame = requestAnimationFrame(loop);
-    }
-
-    const onResize = () => {
-      resize();
-      draw(performance.now());
-    };
-    window.addEventListener("resize", onResize);
-
-    const onPointer = (event: PointerEvent) => {
-      if (reduced) return;
-      pointerX = event.clientX / window.innerWidth - 0.5;
-      pointerY = event.clientY / window.innerHeight - 0.5;
-    };
-    if (window.matchMedia("(pointer: fine)").matches) {
-      window.addEventListener("pointermove", onPointer, { passive: true });
-    }
-
-    // Stop the loop whenever the visual leaves the viewport.
-    const themeObserver = new MutationObserver(() => {
-      readInk();
-      draw(performance.now());
-    });
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (reduced) return;
-        if (entry.isIntersecting && !running) {
-          running = true;
-          frame = requestAnimationFrame(loop);
-        } else if (!entry.isIntersecting && running) {
-          running = false;
-          cancelAnimationFrame(frame);
-        }
-      },
-      { threshold: 0 },
-    );
-    observer.observe(canvas);
-
+    window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
-      running = false;
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      themeObserver.disconnect();
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("pointermove", onMove);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <div
+      ref={ref}
       aria-hidden="true"
-      className="size-full"
-    />
+      className="relative aspect-[5/4] w-full select-none [transform:translate3d(var(--tilt-x,0),var(--tilt-y,0),0)] [transition:transform_600ms_cubic-bezier(0.22,0.61,0.36,1)]"
+    >
+      {/* Model output — top right, label above the grid so nothing covers it */}
+      <div className="absolute right-0 top-0 z-0 w-[64%] border border-hairline bg-card p-3.5">
+        <div className="flex items-center justify-between pb-2.5">
+          <span className="mono-label text-faint">Model output</span>
+          <span className="mono-label text-signal-text">0.81</span>
+        </div>
+        <div className="grid grid-cols-14 gap-[2px]">
+          {Array.from({ length: 84 }, (_, i) => {
+            const col = i % 14;
+            const row = Math.floor(i / 14);
+            const band = 1 - Math.abs((col / 14) * 0.9 + 0.05 - row / 6);
+            const accent = i === 31 || i === 58;
+            return (
+              <span
+                key={i}
+                className={`aspect-square ${accent ? "bg-signal" : "bg-paper"}`}
+                style={accent ? undefined : { opacity: 0.06 + band * 0.42 }}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Field data — left; label sits on top so the record card can overlap */}
+      <div className="absolute left-0 top-[32%] z-10 w-[52%] overflow-hidden border border-hairline bg-card shadow-[0_18px_40px_-24px_rgba(0,0,0,0.55)]">
+        <div className="flex items-center justify-between px-3 py-2.5">
+          <span className="mono-label text-faint">ENV · Field data</span>
+          <span className="mono-label text-signal-text">Published</span>
+        </div>
+        <svg viewBox="0 0 200 96" className="w-full text-paper" role="presentation">
+          <rect width="200" height="96" className="fill-base" />
+          {[0, 1, 2, 3].map((i) => (
+            <polygon
+              key={i}
+              points={`0,${36 + i * 15} 40,${24 + i * 15} 80,${44 + i * 15} 120,${20 + i * 15} 160,${38 + i * 15} 200,${26 + i * 15} 200,96 0,96`}
+              fill={i === 1 ? "var(--apollo-signal)" : "currentColor"}
+              fillOpacity={i === 1 ? 0.85 : 0.1 + i * 0.1}
+            />
+          ))}
+        </svg>
+      </div>
+
+      {/* Project record — bottom right, clear of the field-data card */}
+      <div className="absolute bottom-0 right-[2%] z-20 w-[56%] border border-hairline bg-card p-4 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.55)]">
+        <p className="mono-label text-signal-text">AI · Research Paper</p>
+        <div className="mt-3 space-y-2">
+          <span className="block h-2.5 w-[86%] bg-paper/30" />
+          <span className="block h-2.5 w-[62%] bg-paper/30" />
+        </div>
+        <div className="mt-3.5 space-y-1.5">
+          <span className="block h-1.5 w-full bg-paper/12" />
+          <span className="block h-1.5 w-[92%] bg-paper/12" />
+          <span className="block h-1.5 w-[70%] bg-paper/12" />
+        </div>
+        <div className="mt-3.5 flex items-center gap-2 border-t border-hairline pt-3">
+          <span className="size-1.5 bg-signal" />
+          <span className="mono-label text-faint">Under review</span>
+        </div>
+      </div>
+    </div>
   );
 }

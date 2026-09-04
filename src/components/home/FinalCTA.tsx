@@ -1,37 +1,28 @@
 import { ButtonLink, Arrow } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
 
 export function FinalCTA() {
   return (
-    <section className="gutter border-t border-hairline py-28 md:py-40">
+    <section className="gutter">
       <div className="shell-wide">
-        <Reveal>
-          <div className="grid gap-12 lg:grid-cols-12">
-            <p className="mono-label text-muted lg:col-span-3 lg:pt-4">
-              <span className="text-signal-text">◆</span>
-              <span className="ml-3">Join Apollo Labs</span>
+        <div className="flex flex-col gap-6 border-t border-hairline py-12 sm:flex-row sm:items-center sm:justify-between sm:gap-12 md:py-16">
+          <div>
+            <h2 className="max-w-[22ch] text-[clamp(1.5rem,2.8vw,2rem)] font-medium leading-[1.15] tracking-[-0.025em]">
+              Have something worth publishing?
+            </h2>
+            <p className="mt-2.5 max-w-[46ch] text-[0.9375rem] leading-relaxed text-paper-dim">
+              Bring a half-finished idea or a project that has been sitting
+              unpublished. We will help you finish it.
             </p>
-            <div className="lg:col-span-8 lg:col-start-4">
-              <h2 className="max-w-[16ch] text-[clamp(2.1rem,5vw,3.6rem)] font-normal leading-[1.05] tracking-[-0.025em]">
-                Your work deserves{" "}
-                <span className="font-serif italic">somewhere to live.</span>
-              </h2>
-              <p className="mt-7 max-w-[44ch] text-[1rem] leading-relaxed text-paper-dim">
-                Bring a half-finished idea, a dataset you cannot stop thinking
-                about, or a project that has been sitting unpublished. We will
-                help you finish it.
-              </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/explore" className="group">
-                  Explore Apollo <Arrow />
-                </ButtonLink>
-                <ButtonLink href="/community" variant="secondary">
-                  Join the Community
-                </ButtonLink>
-              </div>
-            </div>
           </div>
-        </Reveal>
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/join" className="group">
+              Join Apollo <Arrow />
+            </ButtonLink>
+            <ButtonLink href="/explore" variant="secondary">
+              Browse the Archive
+            </ButtonLink>
+          </div>
+        </div>
       </div>
     </section>
   );

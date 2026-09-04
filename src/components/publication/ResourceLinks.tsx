@@ -13,12 +13,12 @@ export function ResourceLinks({ project }: { project: Project }) {
   if (entries.length === 0) return null;
 
   return (
-    <section id="resources" className="mt-20 scroll-mt-28">
+    <section id="resources" className="mt-14 scroll-mt-24">
       <div className="flex items-center gap-4">
         <span className="mono-label text-signal-text">◆</span>
         <span aria-hidden="true" className="h-px flex-1 bg-hairline" />
       </div>
-      <h2 className="mt-5 text-[1.6rem] font-normal leading-tight tracking-[-0.015em]">
+      <h2 className="mt-4 text-[1.4rem] font-medium leading-tight tracking-[-0.02em]">
         Resources
       </h2>
       <ul className="mt-7 border-t border-hairline">

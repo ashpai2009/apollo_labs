@@ -13,35 +13,35 @@ export const DISCIPLINES: DisciplineMeta[] = [
     code: "AI",
     description:
       "Applied machine learning, model interpretability, and systems that reason over messy real-world data.",
-    cover: "network",
+    cover: "matrix",
   },
   {
     name: "Computer Science",
     code: "CS",
     description:
       "Algorithms, compilers, distributed systems, and the theory underneath working software.",
-    cover: "lattice",
+    cover: "interface",
   },
   {
     name: "Engineering",
     code: "ENG",
     description:
       "Mechanical, electrical, and materials work — designed, fabricated, and tested against real loads.",
-    cover: "blueprint",
+    cover: "solid",
   },
   {
     name: "Biology",
     code: "BIO",
     description:
       "Molecular, cellular, and organismal investigation, from bench protocol to analyzed result.",
-    cover: "contour",
+    cover: "cells",
   },
   {
     name: "Environmental Science",
     code: "ENV",
     description:
       "Field measurement, climate modeling, and long-horizon studies of local ecological systems.",
-    cover: "contour",
+    cover: "terrain",
   },
   {
     name: "Mathematics",
@@ -55,7 +55,7 @@ export const DISCIPLINES: DisciplineMeta[] = [
     code: "RBT",
     description:
       "Control, perception, and mechanism design for machines that have to survive contact with the world.",
-    cover: "blueprint",
+    cover: "mechanism",
   },
 ];
 
@@ -66,5 +66,5 @@ export function disciplineCode(name: Discipline): string {
 }
 
 export function coverVariantFor(name: Discipline): CoverVariant {
-  return DISCIPLINE_MAP.get(name)?.cover ?? "lattice";
+  return DISCIPLINE_MAP.get(name)?.cover ?? "interface";
 }

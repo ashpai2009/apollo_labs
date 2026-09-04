@@ -159,7 +159,7 @@ export function ExploreArchive() {
       </section>
 
       {/* ── Results ──────────────────────────────── */}
-      <section className="gutter py-12 md:py-16">
+      <section className="gutter section">
         <div className="shell-wide">
           <div className="flex items-baseline justify-between gap-6 border-b border-hairline pb-5">
             <p className="mono-label text-muted">
@@ -182,8 +182,8 @@ export function ExploreArchive() {
           </div>
 
           {results.length === 0 ? (
-            <div className="py-24 text-center">
-              <p className="font-serif text-[1.6rem] text-paper-dim">
+            <div className="py-20 text-center">
+              <p className="text-[1.25rem] font-medium text-paper-dim">
                 Nothing matches that yet.
               </p>
               <p className="mt-3 text-sm text-muted">
@@ -191,7 +191,7 @@ export function ExploreArchive() {
               </p>
             </div>
           ) : (
-            <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {results.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}

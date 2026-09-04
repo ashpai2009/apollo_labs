@@ -6,13 +6,13 @@ export function ArticleBody({ project }: { project: Project }) {
     <div>
       <section id="abstract" className="scroll-mt-28">
         <SectionRule index="01" heading="Abstract" />
-        <p className="font-serif text-[1.3rem] leading-[1.6] text-paper">
+        <p className="text-[1.1875rem] leading-[1.65] text-paper">
           {project.abstract}
         </p>
       </section>
 
       {project.content.map((section, i) => (
-        <section key={section.id} id={section.id} className="mt-20 scroll-mt-28">
+        <section key={section.id} id={section.id} className="mt-14 scroll-mt-24">
           <SectionRule
             index={String(i + 2).padStart(2, "0")}
             heading={section.heading}
@@ -43,7 +43,7 @@ function SectionRule({ index, heading }: { index: string; heading: string }) {
         <span className="mono-label text-signal-text">{index}</span>
         <span aria-hidden="true" className="h-px flex-1 bg-hairline" />
       </div>
-      <h2 className="mt-5 text-[1.6rem] font-normal leading-tight tracking-[-0.015em]">
+      <h2 className="mt-4 text-[1.4rem] font-medium leading-tight tracking-[-0.02em]">
         {heading}
       </h2>
     </div>

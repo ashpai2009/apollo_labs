@@ -1,35 +1,33 @@
 import type { ReactNode } from "react";
-import { Eyebrow } from "./Eyebrow";
 
+/**
+ * Compact section header: a label, one line of context, and an optional
+ * action on the same row. Deliberately not a full-screen title block.
+ */
 export function SectionHeading({
-  index,
-  eyebrow,
-  title,
+  label,
   lede,
   action,
   className,
 }: {
-  index?: string;
-  eyebrow: string;
-  title: ReactNode;
+  label: string;
   lede?: ReactNode;
   action?: ReactNode;
   className?: string;
 }) {
   return (
-    <header className={className}>
-      <Eyebrow index={index}>{eyebrow}</Eyebrow>
-      <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-16">
-        <h2 className="max-w-[16ch] text-balance text-[clamp(1.85rem,3.6vw,3rem)] font-normal leading-[1.06] tracking-[-0.02em]">
-          {title}
-        </h2>
+    <header
+      className={`flex flex-col gap-3 border-b border-hairline pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10 ${className ?? ""}`}
+    >
+      <div className="flex flex-col gap-2">
+        <h2 className="mono-label text-signal-text">{label}</h2>
         {lede && (
-          <p className="max-w-[46ch] text-[0.9375rem] leading-relaxed text-paper-dim md:pb-1.5">
+          <p className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-paper-dim">
             {lede}
           </p>
         )}
-        {action && <div className="shrink-0 md:pb-1.5">{action}</div>}
       </div>
+      {action && <div className="shrink-0">{action}</div>}
     </header>
   );
 }

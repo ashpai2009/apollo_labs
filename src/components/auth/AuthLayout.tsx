@@ -25,7 +25,7 @@ export function AuthLayout({
       {/* Identity */}
       <aside className="relative hidden overflow-hidden border-r border-hairline bg-base lg:flex lg:flex-col lg:justify-between">
         <div className="absolute inset-0 opacity-70">
-          <ProjectCover variant="network" seed="apollo-auth" />
+          <ProjectCover variant="matrix" seed="apollo-auth" />
         </div>
         <div className="relative gutter pt-16">
           <Link href="/" className="inline-flex items-center gap-3">

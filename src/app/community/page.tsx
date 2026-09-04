@@ -45,7 +45,7 @@ export default function CommunityPage() {
         title={
           <>
             Membership is a working group,{" "}
-            <span className="font-serif italic">not a mailing list.</span>
+            <span className="text-paper-dim">not a mailing list.</span>
           </>
         }
         lede="Apollo runs on people showing up and doing the work in view of each other. Here is what that actually involves — the rhythm, the review, and how a project gets from an idea to the archive."
@@ -69,7 +69,7 @@ export default function CommunityPage() {
         </p>
       </Prose>
 
-      <section className="gutter border-b border-hairline py-16 md:py-24">
+      <section className="gutter border-b border-hairline py-12 md:py-16">
         <div className="shell-wide grid gap-10 lg:grid-cols-12">
           <p className="mono-label flex gap-3 text-muted lg:col-span-3">
             <span className="text-signal-text">02</span>
@@ -79,11 +79,11 @@ export default function CommunityPage() {
             <ul className="border-t border-hairline">
               {RHYTHM.map((item, i) => (
                 <Reveal as="li" key={item.index} delay={i * 0.05}>
-                  <div className="group grid gap-x-8 gap-y-3 border-b border-hairline py-8 md:grid-cols-12 md:items-baseline">
+                  <div className="group grid gap-x-8 gap-y-2 border-b border-hairline py-5 md:grid-cols-12 md:items-baseline">
                     <span className="mono-label text-signal-text md:col-span-1">
                       {item.index}
                     </span>
-                    <h2 className="font-serif text-[1.5rem] leading-tight md:col-span-4">
+                    <h2 className="text-[1.125rem] font-medium tracking-[-0.015em] md:col-span-4">
                       {item.title}
                     </h2>
                     <span className="mono-label text-faint md:col-span-2">
@@ -140,7 +140,7 @@ export default function CommunityPage() {
         </p>
       </Prose>
 
-      <section className="gutter py-24 md:py-32">
+      <section className="gutter section">
         <div className="shell-wide">
           <Reveal>
             <div className="grid gap-10 lg:grid-cols-12">
@@ -149,9 +149,9 @@ export default function CommunityPage() {
                 <span className="ml-3">Join</span>
               </p>
               <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="max-w-[15ch] text-[clamp(1.9rem,4vw,3rem)] font-normal leading-[1.06] tracking-[-0.025em]">
+                <h2 className="max-w-[18ch] text-[clamp(1.6rem,3vw,2.25rem)] font-medium leading-[1.1] tracking-[-0.025em]">
                   Bring the thing you{" "}
-                  <span className="font-serif italic">never finished.</span>
+                  <span className="text-paper-dim">never finished.</span>
                 </h2>
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <ButtonLink href="/join" className="group">

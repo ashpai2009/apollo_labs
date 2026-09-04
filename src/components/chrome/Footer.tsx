@@ -31,8 +31,8 @@ const COLUMNS = [
 export function Footer() {
   return (
     <footer className="border-t border-hairline">
-      <div className="shell-wide gutter py-16 md:py-20">
-        <div className="grid gap-14 md:grid-cols-12 md:gap-10">
+      <div className="shell-wide gutter py-12 md:py-14">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5 lg:col-span-4">
             <Link href="/" className="inline-flex items-center gap-3">
               <Logo size={32} />
@@ -52,7 +52,7 @@ export function Footer() {
             {COLUMNS.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <h2 className="mono-label text-faint">{col.title}</h2>
-                <ul className="mt-5 flex flex-col gap-3.5">
+                <ul className="mt-4 flex flex-col gap-3">
                   {col.links.map((link) => (
                     <li key={link.label}>
                       <Link
@@ -69,7 +69,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-hairline pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-hairline pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="mono-label text-faint">
             Apollo Labs · Est. 2026 · Student-Led Research
           </p>

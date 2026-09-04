@@ -35,11 +35,13 @@ export type Section = {
 };
 
 export type CoverVariant =
-  | "network"
-  | "lattice"
-  | "blueprint"
-  | "contour"
-  | "curves";
+  | "matrix"
+  | "interface"
+  | "cells"
+  | "solid"
+  | "terrain"
+  | "curves"
+  | "mechanism";
 
 export type Project = {
   id: string;
@@ -52,6 +54,8 @@ export type Project = {
   year: number;
   date: string;
   featured: boolean;
+  /** Real cover art, once projects supply it; falls back to generated. */
+  coverImageUrl?: string;
   /** Editorial emphasis inside the gallery composition. */
   emphasis?: "featured" | "wide" | "standard";
   summary: string;

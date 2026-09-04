@@ -1,54 +1,44 @@
-import { Reveal } from "@/components/ui/Reveal";
-import { ButtonLink, Arrow } from "@/components/ui/Button";
-import { TEAM } from "@/lib/team";
+import { Arrow } from "@/components/ui/Button";
+import Link from "next/link";
+
+const LINKS = [
+  { href: "/about", label: "About Apollo Labs", body: "Why it exists, how work gets reviewed, and who runs it." },
+  { href: "/community", label: "Membership", body: "The weekly rhythm, mentorship, and how projects develop." },
+];
 
 export function CommunitySection() {
   return (
-    <section className="gutter border-t border-hairline py-24 md:py-32">
-      <div className="shell-wide grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-3">
-          <p className="mono-label flex gap-3 text-muted">
-            <span className="text-signal-text">05</span>
-            <span>Community</span>
+    <section className="gutter section">
+      <div className="shell-wide grid gap-8 md:grid-cols-[1fr_auto] md:items-start md:gap-16">
+        <div>
+          <h2 className="mono-label text-signal-text">The Organization</h2>
+          <p className="mt-4 max-w-[58ch] text-[1.0625rem] leading-[1.6] text-paper">
+            Apollo is run by students who are also publishing through it —
+            deliberately small enough that scoping a project, getting a draft
+            read, and finding a mentor all happen in the same room.
           </p>
         </div>
 
-        <Reveal className="lg:col-span-5">
-          <h2 className="max-w-[18ch] text-[clamp(1.8rem,3.4vw,2.7rem)] font-normal leading-[1.08] tracking-[-0.02em]">
-            Student-led, and deliberately{" "}
-            <span className="font-serif italic">small enough to be useful.</span>
-          </h2>
-          <p className="mt-7 max-w-[44ch] text-[1rem] leading-relaxed text-paper-dim">
-            Apollo is run by students who are also publishing through it. Members
-            scope projects together, review each other&apos;s drafts before
-            anything goes out, and bring in mentors when a project needs
-            expertise the group does not have.
-          </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/community" variant="secondary" className="group">
-              How Membership Works <Arrow />
-            </ButtonLink>
-          </div>
-        </Reveal>
-
-        <Reveal className="lg:col-span-3 lg:col-start-10" delay={0.1}>
-          <dl className="flex flex-col gap-7 border-t border-hairline pt-7">
-            <div>
-              <dt className="mono-label text-faint">Founded</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">2026</dd>
-            </div>
-            <div>
-              <dt className="mono-label text-faint">Core team</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">
-                {String(TEAM.length).padStart(2, "0")}
-              </dd>
-            </div>
-            <div>
-              <dt className="mono-label text-faint">Review before publish</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">Always</dd>
-            </div>
-          </dl>
-        </Reveal>
+        <ul className="grid gap-3 sm:grid-cols-2 md:w-[27rem]">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="group flex h-full flex-col gap-1.5 border border-hairline bg-card p-4 transition-colors duration-200 hover:border-hairline-strong"
+              >
+                <span className="flex items-center gap-2 text-[0.9375rem] font-medium">
+                  {link.label}
+                  <span className="text-signal-text">
+                    <Arrow />
+                  </span>
+                </span>
+                <span className="text-[0.8125rem] leading-relaxed text-muted">
+                  {link.body}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

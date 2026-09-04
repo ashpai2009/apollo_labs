@@ -58,7 +58,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Methodology, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "network",
+          variant: "matrix",
           caption: "Figure 1 \u2014 Placeholder figure for example project 1. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -142,7 +142,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Design, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "lattice",
+          variant: "interface",
           caption: "Figure 1 \u2014 Placeholder figure for example project 2. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -229,7 +229,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Design, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "blueprint",
+          variant: "solid",
           caption: "Figure 1 \u2014 Placeholder figure for example project 3. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -313,7 +313,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Methodology, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "contour",
+          variant: "cells",
           caption: "Figure 1 \u2014 Placeholder figure for example project 4. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -400,7 +400,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Methodology, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "contour",
+          variant: "cells",
           caption: "Figure 1 \u2014 Placeholder figure for example project 5. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -484,7 +484,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Design, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "blueprint",
+          variant: "solid",
           caption: "Figure 1 \u2014 Placeholder figure for example project 6. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -655,7 +655,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Design, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "lattice",
+          variant: "interface",
           caption: "Figure 1 \u2014 Placeholder figure for example project 8. Captions sit under the artwork with a signal rule on the left."
         }
       },
@@ -742,7 +742,7 @@ export const PROJECTS: Project[] = [
           "A second paragraph, so the rhythm between blocks of text can be judged rather than guessed at. Sentence length here is deliberately varied. The section heading above reads Methodology, and the numbering in the table of contents tracks whatever sections a project actually defines."
         ],
         figure: {
-          variant: "blueprint",
+          variant: "solid",
           caption: "Figure 1 \u2014 Placeholder figure for example project 9. Captions sit under the artwork with a signal rule on the left."
         }
       },

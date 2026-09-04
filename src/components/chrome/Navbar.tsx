@@ -48,7 +48,7 @@ export function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="shell-wide gutter flex h-16 items-center justify-between md:h-[4.5rem]">
+      <div className="shell-wide gutter flex h-14 items-center justify-between md:h-16">
         <Link
           href="/"
           className="rounded-sm transition-opacity duration-200 hover:opacity-80"
@@ -58,7 +58,7 @@ export function Navbar() {
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-7">
             {NAV.map((item) => {
               const active = isActive(item.href);
               return (
@@ -127,7 +127,7 @@ export function Navbar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="gutter h-[calc(100dvh-4rem)] overflow-y-auto border-t border-hairline bg-void pb-10 pt-8 md:hidden"
+        className="gutter h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-hairline bg-void pb-10 pt-6 md:hidden"
       >
         <ul className="flex flex-col">
           {NAV.map((item, i) => (
@@ -135,10 +135,10 @@ export function Navbar() {
               <Link
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="flex items-baseline justify-between py-5"
+                className="flex items-baseline justify-between py-4"
               >
                 <span
-                  className={`text-2xl tracking-[-0.01em] ${
+                  className={`text-xl font-medium tracking-[-0.01em] ${
                     isActive(item.href) ? "text-signal-text" : "text-paper"
                   }`}
                 >
@@ -151,7 +151,7 @@ export function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="mt-10 flex flex-col gap-3">
+        <div className="mt-8 flex flex-col gap-3">
           <ButtonLink href="/join" onClick={() => setOpen(false)} className="w-full">
             Join Apollo
           </ButtonLink>
@@ -164,7 +164,7 @@ export function Navbar() {
             Sign In
           </ButtonLink>
         </div>
-        <p className="mono-label mt-12 text-faint">
+        <p className="mono-label mt-10 text-faint">
           Apollo Labs · Student-Led Research
         </p>
       </div>

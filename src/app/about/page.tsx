@@ -19,7 +19,7 @@ export default function AboutPage() {
         title={
           <>
             A place for student work to be{" "}
-            <span className="font-serif italic">finished, not just started.</span>
+            <span className="text-paper-dim">finished, not just started.</span>
           </>
         }
         lede="Apollo Labs is a student-led research community. We help members take a project from a rough idea through to something written up, reviewed, and permanently published — and we keep the archive that holds it."
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
       <TeamGrid />
 
-      <section className="gutter py-24 md:py-32">
+      <section className="gutter section">
         <div className="shell-wide">
           <Reveal>
             <div className="grid gap-10 lg:grid-cols-12">
@@ -99,9 +99,9 @@ export default function AboutPage() {
                 <span className="ml-3">Next</span>
               </p>
               <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="max-w-[16ch] text-[clamp(1.9rem,4vw,3rem)] font-normal leading-[1.06] tracking-[-0.025em]">
+                <h2 className="max-w-[18ch] text-[clamp(1.6rem,3vw,2.25rem)] font-medium leading-[1.1] tracking-[-0.025em]">
                   See what members have{" "}
-                  <span className="font-serif italic">already published.</span>
+                  <span className="text-paper-dim">already published.</span>
                 </h2>
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <ButtonLink href="/explore" className="group">

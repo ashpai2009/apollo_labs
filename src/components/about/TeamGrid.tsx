@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 function MemberRow({ member, index }: { member: Member; index: number }) {
   return (
     <li className="group border-b border-hairline">
-      <div className="grid items-baseline gap-x-6 gap-y-3 py-7 sm:grid-cols-12">
+      <div className="grid items-baseline gap-x-6 gap-y-2 py-5 sm:grid-cols-12">
         <span className="mono-label text-faint sm:col-span-1">
           {String(index).padStart(2, "0")}
         </span>
@@ -15,7 +15,7 @@ function MemberRow({ member, index }: { member: Member; index: number }) {
           >
             {initials(member.name)}
           </span>
-          <span className="font-serif text-[1.35rem] leading-tight">
+          <span className="text-[1.0625rem] font-medium tracking-[-0.01em]">
             {member.name}
           </span>
         </div>
@@ -35,7 +35,7 @@ export function TeamGrid() {
   return (
     <section
       id="team"
-      className="gutter scroll-mt-24 border-b border-hairline py-20 md:py-28"
+      className="gutter section scroll-mt-20 border-b border-hairline"
     >
       <div className="shell-wide">
         <Reveal>
@@ -45,14 +45,14 @@ export function TeamGrid() {
               <span>The Team</span>
             </p>
             <div className="lg:col-span-9">
-              <h2 className="max-w-[18ch] text-[clamp(1.8rem,3.4vw,2.7rem)] font-normal leading-[1.08] tracking-[-0.02em]">
+              <h2 className="max-w-[24ch] text-[clamp(1.5rem,2.6vw,2rem)] font-medium leading-[1.12] tracking-[-0.025em]">
                 Apollo Labs is run by the students who use it.
               </h2>
             </div>
           </div>
         </Reveal>
 
-        <div className="mt-14">
+        <div className="mt-8">
           <p className="mono-label text-faint">Founders</p>
           <ul className="mt-5 border-t border-hairline">
             {founders.map((member, i) => (
@@ -60,7 +60,7 @@ export function TeamGrid() {
             ))}
           </ul>
 
-          <p className="mono-label mt-14 text-faint">Engineering</p>
+          <p className="mono-label mt-10 text-faint">Engineering</p>
           <ul className="mt-5 border-t border-hairline">
             {engineering.map((member, i) => (
               <MemberRow

@@ -5,16 +5,13 @@ import type { Project } from "@/lib/types";
 export function RelatedProjects({ projects }: { projects: Project[] }) {
   if (projects.length === 0) return null;
   return (
-    <section className="gutter border-t border-hairline py-20 md:py-28">
+    <section className="gutter section border-t border-hairline">
       <div className="shell-wide">
-        <div className="flex items-baseline justify-between gap-6">
-          <h2 className="mono-label text-muted">
-            <span className="text-signal-text">◆</span>
-            <span className="ml-3">Related Work</span>
-          </h2>
-        </div>
+        <h2 className="mono-label border-b border-hairline pb-5 text-signal-text">
+          Related Work
+        </h2>
         <ProjectSurface>
-          <div className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

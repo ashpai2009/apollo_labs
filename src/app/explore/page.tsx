@@ -21,7 +21,7 @@ export default function ExplorePage() {
         title={
           <>
             Every project Apollo has{" "}
-            <span className="font-serif italic">published.</span>
+            <span className="text-paper-dim">published.</span>
           </>
         }
         lede="Search the full archive by title, author, tag, or abstract, and filter down to a discipline or project type. Open any entry to read its abstract without leaving the page."
@@ -29,19 +29,19 @@ export default function ExplorePage() {
           <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-6 border-t border-hairline pt-6">
             <div>
               <dt className="mono-label text-faint">Projects</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">
+              <dd className="mt-2 text-2xl font-medium leading-none tracking-[-0.02em]">
                 {String(PROJECTS.length).padStart(2, "0")}
               </dd>
             </div>
             <div>
               <dt className="mono-label text-faint">Disciplines</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">
+              <dd className="mt-2 text-2xl font-medium leading-none tracking-[-0.02em]">
                 {String(DISCIPLINES.length).padStart(2, "0")}
               </dd>
             </div>
             <div>
               <dt className="mono-label text-faint">Archive opened</dt>
-              <dd className="mt-2 font-serif text-2xl leading-none">2026</dd>
+              <dd className="mt-2 text-2xl font-medium leading-none tracking-[-0.02em]">2026</dd>
             </div>
           </dl>
         }

@@ -47,7 +47,7 @@ export default async function ProjectPage({
   return (
     <article>
       {/* ── Masthead ─────────────────────────────── */}
-      <header className="gutter border-b border-hairline pb-14 pt-28 md:pb-20 md:pt-36">
+      <header className="gutter border-b border-hairline pb-10 pt-24 md:pb-14 md:pt-28">
         <div className="shell-wide">
           <nav aria-label="Breadcrumb" className="mono-label text-faint">
             <Link href="/" className="transition-colors hover:text-paper-dim">
@@ -65,7 +65,7 @@ export default async function ProjectPage({
             <span className="text-paper-dim">{disciplineCode(project.discipline)}</span>
           </nav>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-12">
+          <div className="mt-8 grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <span className="mono-label flex items-center gap-2 text-paper-dim">
@@ -82,11 +82,11 @@ export default async function ProjectPage({
                 <span className="mono-label text-muted">{project.status}</span>
               </div>
 
-              <h1 className="mt-7 max-w-[20ch] font-serif text-[clamp(2.2rem,5.4vw,4rem)] font-normal leading-[1.06] tracking-[-0.02em]">
+              <h1 className="mt-5 max-w-[24ch] text-[clamp(1.9rem,3.8vw,2.9rem)] font-medium leading-[1.08] tracking-[-0.03em]">
                 {project.title}
               </h1>
 
-              <p className="mt-8 max-w-[54ch] text-[1.0625rem] leading-relaxed text-paper-dim">
+              <p className="mt-5 max-w-[58ch] text-[1rem] leading-relaxed text-paper-dim">
                 {project.summary}
               </p>
             </div>
@@ -125,7 +125,7 @@ export default async function ProjectPage({
       </header>
 
       {/* ── Cover ────────────────────────────────── */}
-      <div className="gutter border-b border-hairline py-10 md:py-14">
+      <div className="gutter border-b border-hairline py-8 md:py-10">
         <div className="shell-wide">
           <div className="aspect-[21/9] w-full overflow-hidden border border-hairline bg-base max-md:aspect-[3/2]">
             <ProjectCover
@@ -148,7 +148,7 @@ export default async function ProjectPage({
       </div>
 
       {/* ── Body ─────────────────────────────────── */}
-      <div className="gutter py-16 md:py-24">
+      <div className="gutter section">
         <div className="shell-wide grid gap-16 xl:grid-cols-12 xl:gap-10">
           <div className="hidden xl:col-span-3 xl:block">
             <TableOfContents items={toc} />

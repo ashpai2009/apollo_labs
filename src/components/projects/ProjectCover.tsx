@@ -19,271 +19,296 @@ function rng(seed: string) {
   };
 }
 
-/** Trig differs in the last float digit between Node and the browser; fixing
- *  precision keeps server and client markup byte-identical. */
 const q = (n: number) => Math.round(n * 100) / 100;
-
-/* Line art rides on currentColor so it inverts with the theme; only the
-   signal accent is fixed. */
-const INK = "currentColor";
 const SIGNAL = "var(--apollo-signal)";
 
-/* ── Artificial Intelligence: node/link network ─────────────── */
-function Network(seed: string) {
+/**
+ * Cover artwork is built from filled shapes rather than hairlines: each
+ * discipline gets its own composition with real visual mass, so a wall of
+ * cards does not read as one repeated wireframe. Tones come from CSS so both
+ * themes work, and any project carrying `coverImageUrl` skips generation
+ * entirely — that is the hook for uploaded images later.
+ */
+
+/* ── Artificial Intelligence: model activation matrix ────────── */
+function Matrix(seed: string) {
   const r = rng(seed);
-  const nodes = Array.from({ length: 76 }, () => ({
-    x: q(28 + r() * (W - 56)),
-    y: q(24 + r() * (H - 48)),
-    s: q(1.1 + r() * 2),
-  }));
-  const edges: [number, number][] = [];
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-      if (d < 88) edges.push([i, j]);
+  const cols = 30;
+  const rows = 22;
+  // Two deliberate accents, chosen up front — a threshold would scatter them.
+  const accentA = Math.floor(r() * cols * rows);
+  const accentB = Math.floor(r() * cols * rows);
+  const cw = W / cols;
+  const ch = H / rows;
+  const cells: React.ReactNode[] = [];
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const v = r();
+      // A diagonal band of high activation keeps it from looking like noise.
+      const band = 1 - Math.abs((x / cols) * 0.85 + 0.1 - y / rows);
+      const weight = v * 0.4 + band * 0.6;
+      if (weight < 0.3) continue;
+      const index = y * cols + x;
+      const accent = index === accentA || index === accentB;
+      cells.push(
+        <rect
+          key={`${x}-${y}`}
+          x={q(x * cw + 1.5)}
+          y={q(y * ch + 1.5)}
+          width={q(cw - 3)}
+          height={q(ch - 3)}
+          fill={accent ? SIGNAL : "currentColor"}
+          fillOpacity={accent ? 1 : q(0.04 + Math.pow(weight, 1.6) * 0.6)}
+        />,
+      );
     }
   }
-  const hub = Math.floor(r() * nodes.length);
-  return (
-    <g>
-      {edges.map(([a, b], i) => (
-        <line
-          key={i}
-          x1={nodes[a].x}
-          y1={nodes[a].y}
-          x2={nodes[b].x}
-          y2={nodes[b].y}
-          stroke={INK} className="art-soft"
-          strokeWidth="0.7"
-        />
-      ))}
-      {nodes.map((n, i) => (
-        <circle
-          key={i}
-          cx={n.x}
-          cy={n.y}
-          r={i === hub ? 5 : n.s}
-          fill={i === hub ? SIGNAL : INK}
-          className={i === hub ? undefined : "art-dot"}
-        />
-      ))}
-      {i0(nodes[hub], nodes)}
-    </g>
-  );
+  return <g>{cells}</g>;
 }
 
-function i0(hub: { x: number; y: number }, nodes: { x: number; y: number }[]) {
-  return (
-    <g>
-      {nodes
-        .filter((n) => Math.hypot(n.x - hub.x, n.y - hub.y) < 130)
-        .map((n, i) => (
-          <line
-            key={i}
-            x1={hub.x}
-            y1={hub.y}
-            x2={n.x}
-            y2={n.y}
-            stroke={SIGNAL}
-            strokeOpacity={0.4}
-            strokeWidth="0.7"
-          />
-        ))}
-    </g>
-  );
-}
-
-/* ── Computer Science: recursive subdivision ────────────────── */
-function Lattice(seed: string) {
+/* ── Computer Science: interface / code composition ──────────── */
+function Interface(seed: string) {
   const r = rng(seed);
-  const rects: { x: number; y: number; w: number; h: number; d: number }[] = [];
-  const split = (x: number, y: number, w: number, h: number, d: number) => {
-    if (d > 5 || (w < 74 && h < 74) || (d > 2 && r() < 0.22)) {
-      rects.push({ x, y, w, h, d });
-      return;
+  const lines: React.ReactNode[] = [];
+  let y = 108;
+  let row = 0;
+  while (y < H - 60) {
+    const indent = 60 + Math.floor(r() * 3) * 46;
+    const width = 120 + r() * (W - indent - 200);
+    const accent = row === 3 || row === 11;
+    lines.push(
+      <rect
+        key={row}
+        x={q(indent)}
+        y={q(y)}
+        width={q(width)}
+        height={11}
+        rx={2}
+        fill={accent ? SIGNAL : "currentColor"}
+        fillOpacity={accent ? 0.95 : q(0.16 + r() * 0.3)}
+      />,
+    );
+    y += 24;
+    row += 1;
+  }
+  return (
+    <g>
+      <rect x="0" y="0" width={W} height="74" fill="currentColor" fillOpacity="0.1" />
+      <circle cx="42" cy="37" r="8" fill="currentColor" fillOpacity="0.3" />
+      <circle cx="70" cy="37" r="8" fill="currentColor" fillOpacity="0.22" />
+      <circle cx="98" cy="37" r="8" fill="currentColor" fillOpacity="0.22" />
+      <rect x="150" y="28" width="210" height="18" rx="3" fill="currentColor" fillOpacity="0.14" />
+      {lines}
+    </g>
+  );
+}
+
+/* ── Biology: microscopy field ───────────────────────────────── */
+function Cells(seed: string) {
+  const r = rng(seed);
+  const blobs: React.ReactNode[] = [];
+  for (let i = 0; i < 46; i++) {
+    const cx = 40 + r() * (W - 80);
+    const cy = 40 + r() * (H - 80);
+    const rad = 16 + r() * 62;
+    const accent = i === 7 || i === 29;
+    blobs.push(
+      <g key={i}>
+        <ellipse
+          cx={q(cx)}
+          cy={q(cy)}
+          rx={q(rad)}
+          ry={q(rad * (0.72 + r() * 0.3))}
+          fill={accent ? SIGNAL : "currentColor"}
+          fillOpacity={accent ? 0.75 : q(0.05 + r() * 0.16)}
+        />
+        <ellipse
+          cx={q(cx + rad * 0.16)}
+          cy={q(cy - rad * 0.12)}
+          rx={q(rad * 0.3)}
+          ry={q(rad * 0.26)}
+          fill="currentColor"
+          fillOpacity={q(0.16 + r() * 0.22)}
+        />
+      </g>,
+    );
+  }
+  return <g>{blobs}</g>;
+}
+
+/* ── Engineering: extruded isometric solid ──────────────────── */
+function Solid(seed: string) {
+  const r = rng(seed);
+  const plates = 1 + Math.floor(r() * 3);
+  const cx = W / 2 + (r() - 0.5) * 90;
+  const spread = 1.1 + r() * 0.5;
+  const s0 = 96 + r() * 40;
+  const depth = 34 + r() * 34;
+  const gap = depth + 16;
+  const cyBase = H / 2 + 70 - plates * 12;
+  const layers: React.ReactNode[] = [];
+
+  for (let i = plates - 1; i >= 0; i--) {
+    const s = s0 * (1 - i * 0.12);
+    const cy = cyBase - i * gap;
+    const top = `${cx},${q(cy - s * 0.58)} ${q(cx + s * spread)},${cy} ${cx},${q(cy + s * 0.58)} ${q(cx - s * spread)},${cy}`;
+    const left = `${q(cx - s * spread)},${cy} ${cx},${q(cy + s * 0.58)} ${cx},${q(cy + s * 0.58 + depth)} ${q(cx - s * spread)},${q(cy + depth)}`;
+    const right = `${q(cx + s * spread)},${cy} ${cx},${q(cy + s * 0.58)} ${cx},${q(cy + s * 0.58 + depth)} ${q(cx + s * spread)},${q(cy + depth)}`;
+    layers.push(
+      <g key={i}>
+        <polygon points={left} fill="currentColor" fillOpacity={q(0.34 + i * 0.06)} />
+        <polygon points={right} fill="currentColor" fillOpacity={q(0.2 + i * 0.05)} />
+        <polygon points={top} fill="currentColor" fillOpacity={q(0.55 + i * 0.08)} />
+        {i === 0 && (
+          <polygon
+            points={`${cx},${q(cy - s * 0.26)} ${q(cx + s * spread * 0.44)},${cy} ${cx},${q(cy + s * 0.26)} ${q(cx - s * spread * 0.44)},${cy}`}
+            fill={SIGNAL}
+          />
+        )}
+      </g>,
+    );
+  }
+
+  return (
+    <g>
+      {Array.from({ length: 4 }, (_, i) => (
+        <rect key={`f${i}`} x="0" y={q(H - 78 + i * 22)} width={W} height="2"
+          fill="currentColor" fillOpacity="0.07" />
+      ))}
+      {layers}
+    </g>
+  );
+}
+
+/* ── Environmental Science: layered terrain ─────────────────── */
+function Terrain(seed: string) {
+  const r = rng(seed);
+  const phase = r() * 6.283;
+  const k1 = 1.2 + r() * 0.8;
+  const k2 = 2.4 + r() * 1.6;
+  const count = 7;
+  const bands: React.ReactNode[] = [];
+  // Back to front: each ridge overpaints the one behind it.
+  for (let i = 0; i < count; i++) {
+    const base = H * 0.3 + (i * H * 0.66) / count;
+    const amp = 30 - i * 2.5;
+    const pts: string[] = [];
+    for (let x = 0; x <= W; x += 16) {
+      const t = x / W;
+      const y =
+        base -
+        Math.sin(t * k1 * 6.283 + phase + i * 0.4) * amp -
+        Math.sin(t * k2 * 6.283 - phase) * amp * 0.35;
+      pts.push(`${x},${q(y)}`);
     }
-    if (w > h) {
-      const cut = q(w * (0.34 + r() * 0.32));
-      split(x, y, cut, h, d + 1);
-      split(x + cut, y, w - cut, h, d + 1);
-    } else {
-      const cut = q(h * (0.34 + r() * 0.32));
-      split(x, y, w, cut, d + 1);
-      split(x, y + cut, w, h - cut, d + 1);
+    const accent = i === 3;
+    bands.push(
+      <polygon
+        key={i}
+        points={`${pts.join(" ")} ${W},${H} 0,${H}`}
+        fill={accent ? SIGNAL : "currentColor"}
+        fillOpacity={accent ? 0.72 : q(0.1 + i * 0.07)}
+      />,
+    );
+  }
+  return <g>{bands}</g>;
+}
+
+/* ── Mathematics: plotted areas under curves ────────────────── */
+function Curves(seed: string) {
+  const r = rng(seed);
+  const a = 1.3 + r() * 1.2;
+  const b = 2.4 + r() * 1.8;
+  const curve = (scale: number, shift: number) => {
+    const pts: string[] = [];
+    for (let x = 0; x <= W; x += 10) {
+      const t = x / W;
+      const y =
+        H * 0.66 -
+        Math.abs(Math.sin(t * a * 3.14 + shift)) * H * 0.34 * scale -
+        Math.sin(t * b * 6.283 + shift) * H * 0.07 * scale;
+      pts.push(`${x},${q(y)}`);
     }
+    return pts.join(" ");
   };
-  split(34, 30, W - 68, H - 60, 0);
-  const accent = Math.floor(r() * rects.length);
   return (
     <g>
-      {rects.map((rc, i) => (
-        <g key={i}>
-          <rect
-            x={rc.x}
-            y={rc.y}
-            width={rc.w}
-            height={rc.h}
-            fill={i === accent ? "rgba(228,87,46,0.14)" : "none"}
-            stroke={i === accent ? SIGNAL : INK}
-            className={i === accent ? undefined : "art-soft"}
-            strokeWidth={i === accent ? 1.3 : 0.8}
-          />
-          {rc.d >= 4 && (
-            <line
-              x1={rc.x}
-              y1={rc.y}
-              x2={rc.x + rc.w}
-              y2={rc.y + rc.h}
-              stroke={INK} className="art-soft"
-              strokeWidth="0.6"
-            />
-          )}
-        </g>
+      {Array.from({ length: 8 }, (_, i) => (
+        <rect key={`g${i}`} x={q(50 + i * 100)} y="0" width="1.5" height={H}
+          fill="currentColor" fillOpacity="0.06" />
       ))}
+      {[0.55, 0.78, 1].map((scale, i) => (
+        <polygon
+          key={i}
+          points={`${curve(scale, i * 0.5)} ${W},${H} 0,${H}`}
+          fill="currentColor"
+          fillOpacity={q(0.1 + i * 0.11)}
+        />
+      ))}
+      <polyline
+        points={curve(1.18, -0.35)}
+        fill="none"
+        stroke={SIGNAL}
+        strokeWidth="7"
+        strokeLinejoin="round"
+      />
     </g>
   );
 }
 
-/* ── Engineering / Robotics: orthographic blueprint ─────────── */
-function Blueprint(seed: string) {
+/* ── Robotics: linkage mechanism ─────────────────────────────── */
+function Mechanism(seed: string) {
   const r = rng(seed);
-  const cx = q(W * (0.42 + r() * 0.1));
-  const cy = H * 0.5;
-  const base = q(104 + r() * 44);
-  const sideRect = r() > 0.5;
-  const spokes = 6 + Math.floor(r() * 5);
+  const j = [
+    { x: 170, y: 420 },
+    { x: 330, y: q(240 + r() * 60) },
+    { x: 520, y: q(330 + r() * 50) },
+    { x: 660, y: 190 },
+  ];
   return (
     <g>
-      {Array.from({ length: 17 }, (_, i) => (
-        <line key={`v${i}`} x1={40 + i * 45} y1={28} x2={40 + i * 45} y2={H - 28} stroke={INK} className="art-grid" strokeWidth="0.5" />
-      ))}
-      {Array.from({ length: 12 }, (_, i) => (
-        <line key={`h${i}`} x1={28} y1={44 + i * 52} x2={W - 28} y2={44 + i * 52} stroke={INK} className="art-grid" strokeWidth="0.5" />
-      ))}
-      <circle cx={cx} cy={cy} r={base} stroke={INK} className="art-line" strokeWidth="1" fill="none" />
-      <circle cx={cx} cy={cy} r={q(base * 0.62)} stroke={INK} className="art-soft" strokeWidth="0.8" fill="none" />
-      <circle cx={cx} cy={cy} r={q(base * 0.24)} stroke={INK} className="art-line" strokeWidth="1" fill="none" />
-      {sideRect && (
-        <rect
-          x={q(cx + base + 40)}
-          y={q(cy - base * 0.7)}
-          width={q(base * 1.2)}
-          height={q(base * 1.4)}
-          stroke={INK} className="art-soft"
-          strokeWidth="0.8"
-          fill="none"
-        />
-      )}
-      {!sideRect && (
-        <g>
-          <circle cx={q(cx + base + 96)} cy={q(cy - base * 0.35)} r={q(base * 0.42)} stroke={INK} className="art-soft" strokeWidth="0.8" fill="none" />
-          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 152)} y2={q(cy + base * 0.6)} stroke={INK} className="art-soft" strokeWidth="0.8" />
-          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 40)} y2={q(cy - base * 0.35)} stroke={INK} className="art-soft" strokeWidth="0.8" />
-        </g>
-      )}
-      <line x1={q(cx - base - 46)} y1={cy} x2={q(cx + base + 46)} y2={cy} stroke={INK} className="art-soft" strokeWidth="0.6" strokeDasharray="12 6 3 6" />
-      <line x1={cx} y1={q(cy - base - 44)} x2={cx} y2={q(cy + base + 44)} stroke={INK} className="art-soft" strokeWidth="0.6" strokeDasharray="12 6 3 6" />
-      {Array.from({ length: spokes }, (_, i) => {
-        const a = (i / spokes) * Math.PI * 2 + r() * 0.4;
+      <rect x="90" y="470" width={W - 180} height="26" fill="currentColor" fillOpacity="0.28" />
+      {j.slice(0, -1).map((p, i) => {
+        const n = j[i + 1];
+        const ang = (Math.atan2(n.y - p.y, n.x - p.x) * 180) / Math.PI;
+        const len = Math.hypot(n.x - p.x, n.y - p.y);
         return (
-          <line
+          <rect
             key={i}
-            x1={q(cx + Math.cos(a) * base * 0.24)}
-            y1={q(cy + Math.sin(a) * base * 0.24)}
-            x2={q(cx + Math.cos(a) * base)}
-            y2={q(cy + Math.sin(a) * base)}
-            stroke={INK} className="art-soft"
-            strokeWidth="0.8"
+            x={q(p.x)}
+            y={-13}
+            width={q(len)}
+            height="26"
+            rx="13"
+            fill="currentColor"
+            fillOpacity={q(0.3 + i * 0.14)}
+            transform={`translate(0 ${q(p.y)}) rotate(${q(ang)} ${q(p.x)} 0)`}
           />
         );
       })}
-      <line x1={q(cx - base)} y1={q(cy + base + 52)} x2={q(cx + base)} y2={q(cy + base + 52)} stroke={SIGNAL} strokeWidth="0.9" />
-      <line x1={q(cx - base)} y1={q(cy + base + 45)} x2={q(cx - base)} y2={q(cy + base + 59)} stroke={SIGNAL} strokeWidth="0.9" />
-      <line x1={q(cx + base)} y1={q(cy + base + 45)} x2={q(cx + base)} y2={q(cy + base + 59)} stroke={SIGNAL} strokeWidth="0.9" />
-    </g>
-  );
-}
-
-/* ── Biology / Environment: topographic contours ────────────── */
-function Contour(seed: string) {
-  const r = rng(seed);
-  const cx = q(W * (0.36 + r() * 0.28));
-  const cy = q(H * (0.4 + r() * 0.2));
-  const phase = q(r() * Math.PI * 2);
-  const k1 = 2 + Math.floor(r() * 3);
-  const k2 = 4 + Math.floor(r() * 4);
-  const ring = (scale: number) => {
-    const pts: string[] = [];
-    for (let a = 0; a <= 360; a += 3) {
-      const t = (a * Math.PI) / 180;
-      const rad =
-        scale *
-        (1 + 0.16 * Math.sin(k1 * t + phase) + 0.09 * Math.sin(k2 * t - phase));
-      pts.push(`${(cx + Math.cos(t) * rad * 1.35).toFixed(1)},${(cy + Math.sin(t) * rad * 0.82).toFixed(1)}`);
-    }
-    return pts.join(" ");
-  };
-  const rings = Array.from({ length: 17 }, (_, i) => 26 + i * 15);
-  return (
-    <g>
-      {rings.map((s, i) => (
-        <polyline
-          key={i}
-          points={ring(s)}
-          fill="none"
-          stroke={i === 2 ? SIGNAL : INK}
-          className={i === 2 ? undefined : "art-soft"}
-          strokeWidth={i === 2 ? 1.4 : 0.8}
-          opacity={i === 2 ? 0.85 : 1}
-        />
+      {j.map((p, i) => (
+        <g key={i}>
+          <circle cx={p.x} cy={p.y} r="30" fill="currentColor" fillOpacity="0.5" />
+          <circle
+            cx={p.x}
+            cy={p.y}
+            r="13"
+            fill={i === j.length - 1 ? SIGNAL : "var(--apollo-art-from)"}
+          />
+        </g>
       ))}
-      <circle cx={cx} cy={cy} r="4" fill={SIGNAL} />
-    </g>
-  );
-}
-
-/* ── Mathematics: parametric curve family ───────────────────── */
-function Curves(seed: string) {
-  const r = rng(seed);
-  const a = 2 + Math.floor(r() * 2);
-  const b = 3 + Math.floor(r() * 3);
-  const lines = Array.from({ length: 9 }, (_, i) => {
-    const shift = (i / 9) * Math.PI * 0.55;
-    const pts: string[] = [];
-    for (let t = 0; t <= 1.0001; t += 0.006) {
-      const u = t * Math.PI * 2;
-      const x = W / 2 + Math.sin(a * u + shift) * (W * 0.4);
-      const y = H / 2 + Math.sin(b * u) * (H * 0.34) * (1 - i / 22);
-      pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-    }
-    return pts.join(" ");
-  });
-  return (
-    <g>
-      <line x1={34} y1={H / 2} x2={W - 34} y2={H / 2} stroke={INK} className="art-grid" strokeWidth="0.7" />
-      <line x1={W / 2} y1={28} x2={W / 2} y2={H - 28} stroke={INK} className="art-grid" strokeWidth="0.7" />
-      {lines.map((p, i) => (
-        <polyline
-          key={i}
-          points={p}
-          fill="none"
-          stroke={INK} className="art-soft"
-          strokeWidth="0.8"
-          opacity={0.85 - i / 16}
-        />
-      ))}
-      <circle cx={W / 2} cy={H / 2} r="5" fill={SIGNAL} />
-      <line x1={W / 2 - 34} y1={H / 2} x2={W / 2 + 34} y2={H / 2} stroke={SIGNAL} strokeWidth="1.2" opacity="0.7" />
     </g>
   );
 }
 
 const RENDERERS: Record<CoverVariant, (seed: string) => React.ReactNode> = {
-  network: Network,
-  lattice: Lattice,
-  blueprint: Blueprint,
-  contour: Contour,
+  matrix: Matrix,
+  interface: Interface,
+  cells: Cells,
+  solid: Solid,
+  terrain: Terrain,
   curves: Curves,
+  mechanism: Mechanism,
 };
 
 export function ProjectCover({
@@ -291,13 +316,28 @@ export function ProjectCover({
   seed,
   className,
   label,
+  imageUrl,
 }: {
   variant: CoverVariant;
   seed: string;
   className?: string;
   /** Screen-reader description; omit for decorative use alongside a title. */
   label?: string;
+  /** When a project has real cover art, generation is skipped entirely. */
+  imageUrl?: string;
 }) {
+  if (imageUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={imageUrl}
+        alt={label ?? ""}
+        className={`size-full object-cover ${className ?? ""}`}
+        loading="lazy"
+      />
+    );
+  }
+
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
