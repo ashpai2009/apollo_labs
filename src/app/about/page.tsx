@@ -106,27 +106,27 @@ export default function AboutPage() {
 
       <TeamGrid />
 
-      <section className="gutter section">
+      <section className="gutter section-lg">
         <div className="shell-wide">
           <Reveal>
-            <div className="grid gap-8 lg:grid-cols-12">
-              <p className="mono-label text-muted lg:col-span-3 lg:pt-3">
-                <span className="text-signal-text">◆</span>
-                <span className="ml-3">Next</span>
-              </p>
-              <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="t-section max-w-[18ch] text-paper">
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+              <div className="lg:col-span-6">
+                <p className="mono-label text-muted">
+                  <span className="text-signal-text">◆</span>
+                  <span className="ml-3">Next</span>
+                </p>
+                <h2 className="t-section mt-6 max-w-[15ch] text-paper">
                   See what members have{" "}
                   <span className="text-paper-dim">already published.</span>
                 </h2>
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <ButtonLink href="/explore" className="group">
-                    Browse the Archive <Arrow />
-                  </ButtonLink>
-                  <ButtonLink href="/community" variant="secondary">
-                    How Membership Works
-                  </ButtonLink>
-                </div>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:col-start-8 lg:justify-end lg:pb-2">
+                <ButtonLink href="/explore" size="lg" className="group">
+                  Browse the Archive <Arrow />
+                </ButtonLink>
+                <ButtonLink href="/community" size="lg" variant="secondary">
+                  How Membership Works
+                </ButtonLink>
               </div>
             </div>
           </Reveal>

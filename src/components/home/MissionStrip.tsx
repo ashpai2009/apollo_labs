@@ -1,50 +1,42 @@
 /**
- * The mission band. One large statement carries the idea; the paragraph and
- * the three principles support it rather than competing with it.
+ * Statement left, explanation and principles right. Asymmetric on purpose —
+ * the claim carries the weight, the right column supports it.
  */
 const PRINCIPLES = [
-  {
-    term: "Student-led",
-    detail: "Scoped and run by the people doing the work.",
-  },
-  {
-    term: "Reviewed",
-    detail: "Read by a member before anything publishes.",
-  },
-  {
-    term: "Published",
-    detail: "A permanent, citable page in a public archive.",
-  },
+  { term: "Build", detail: "Scoped so it can actually finish." },
+  { term: "Review", detail: "Read by a member before it publishes." },
+  { term: "Publish", detail: "A permanent, citable page." },
 ];
 
 export function MissionStrip() {
   return (
     <section className="gutter border-y border-hairline bg-surface">
-      <div className="shell-wide py-14 md:py-20">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <p className="mono-label text-signal-text">Mission</p>
-            <h2 className="t-section mt-5 max-w-[19ch] text-paper">
-              Student work should not disappear after it is finished.
-            </h2>
-          </div>
-
-          <div className="lg:col-span-5 lg:pt-11">
-            <p className="t-body max-w-[46ch] text-paper-dim">
-              Apollo Labs gives that work somewhere permanent to live, and a
-              standard worth meeting on the way there.
-            </p>
-          </div>
+      <div className="shell-wide grid gap-12 py-20 lg:grid-cols-12 lg:gap-16 lg:py-28">
+        <div className="lg:col-span-7">
+          <p className="mono-label text-signal-text">Mission</p>
+          <h2 className="t-section mt-6 max-w-[16ch] text-paper">
+            Most student work disappears when the class ends.
+          </h2>
         </div>
 
-        <dl className="mt-12 grid gap-x-10 gap-y-6 border-t border-hairline pt-8 sm:grid-cols-3">
-          {PRINCIPLES.map((p) => (
-            <div key={p.term}>
-              <dt className="t-sub text-paper">{p.term}</dt>
-              <dd className="t-meta mt-2 max-w-[30ch] text-muted">{p.detail}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="lg:col-span-5 lg:pt-16">
+          <p className="t-body max-w-[42ch] text-paper-dim">
+            It sits in a shared drive, gets shown once, and is never read again.
+            Apollo gives that work a standard to meet and somewhere to stay.
+          </p>
+
+          <dl className="mt-10 flex flex-col">
+            {PRINCIPLES.map((p) => (
+              <div
+                key={p.term}
+                className="flex items-baseline gap-6 border-t border-hairline py-4"
+              >
+                <dt className="t-sub w-28 shrink-0 text-paper">{p.term}</dt>
+                <dd className="t-body-sm text-muted">{p.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );

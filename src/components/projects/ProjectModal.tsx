@@ -94,7 +94,7 @@ export function ProjectModal() {
             animate={enter.animate}
             exit={reduced ? { opacity: 0 } : enter.exit}
             transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto relative flex max-h-[88dvh] focus:outline-none w-full flex-col overflow-hidden border border-hairline-strong bg-base shadow-[0_40px_100px_-20px_var(--apollo-modal-shadow)] max-md:max-h-[92dvh] max-md:rounded-t-2xl md:max-h-[84dvh] md:max-w-[58rem]"
+            className="pointer-events-auto relative flex max-h-[88dvh] focus:outline-none w-full flex-col overflow-hidden border border-hairline-strong bg-base shadow-[0_40px_100px_-20px_var(--apollo-modal-shadow)] max-md:max-h-[92dvh] max-md:rounded-t-2xl md:max-h-[86dvh] md:max-w-[78rem]"
           >
             {/* Mobile grab affordance */}
             <div className="flex shrink-0 justify-center pt-3 md:hidden">
@@ -102,9 +102,9 @@ export function ProjectModal() {
             </div>
 
             <div className="scroll-region flex-1 overflow-y-auto overscroll-contain">
-              <div className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+              <div className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
                 {/* Cover */}
-                <div className="relative border-b border-hairline bg-surface md:sticky md:top-0 md:h-full md:min-h-[24rem] md:border-b-0 md:border-r">
+                <div className="relative border-b border-hairline bg-surface md:sticky md:top-0 md:h-full md:min-h-[30rem] md:border-b-0 md:border-r">
                   <div className="aspect-[16/10] md:absolute md:inset-0 md:aspect-auto md:h-full">
                     <ProjectCover
                       variant={coverVariantFor(project.discipline)}
@@ -122,7 +122,7 @@ export function ProjectModal() {
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-5 p-6 md:p-9">
+                <div className="flex flex-col gap-6 p-6 md:p-12">
                   <div className="flex items-center gap-3 pr-12 md:pr-14">
                     <span className="mono-label flex items-center gap-2 text-paper-dim">
                       <span aria-hidden="true" className="size-1 bg-signal" />
@@ -132,7 +132,7 @@ export function ProjectModal() {
                     <span className="mono-label text-faint">{project.year}</span>
                   </div>
 
-                  <h2 className="max-w-[22ch] text-[clamp(1.625rem,3vw,2.125rem)] font-medium leading-[1.12] tracking-[-0.025em] text-paper">
+                  <h2 className="max-w-[22ch] text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-[1.12] tracking-[-0.025em] text-paper">
                     {project.title}
                   </h2>
 

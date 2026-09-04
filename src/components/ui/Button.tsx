@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { useMagnetic } from "./useMagnetic";
 
 type Variant = "primary" | "secondary" | "ghost";
-type Size = "sm" | "md";
+type Size = "sm" | "md" | "lg";
 
 const base =
   "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] active:scale-[0.985] disabled:pointer-events-none disabled:opacity-45";
@@ -20,7 +20,8 @@ const variants: Record<Variant, string> = {
 
 const sizes: Record<Size, string> = {
   sm: "h-9 px-4 text-[0.8125rem]",
-  md: "h-11 px-6 text-sm",
+  md: "h-11 px-6 text-[0.9375rem]",
+  lg: "h-[3.25rem] px-8 text-[1.0625rem]",
 };
 
 type SharedProps = {

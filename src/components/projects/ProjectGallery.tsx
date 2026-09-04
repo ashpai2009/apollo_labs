@@ -14,7 +14,7 @@ export function ProjectGallery() {
   const grid = rest.slice(2, 8);
 
   return (
-    <section id="work" className="gutter section scroll-mt-20">
+    <section id="work" className="gutter section-lg scroll-mt-20">
       <div className="shell-wide">
         <SectionHeading
           label="Projects"
@@ -30,18 +30,18 @@ export function ProjectGallery() {
           }
         />
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ProjectCard project={lead} featured />
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
             {beside.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {grid.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

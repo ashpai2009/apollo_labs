@@ -9,8 +9,8 @@ const LINKS = [
 export function CommunitySection() {
   return (
     <section className="gutter section">
-      <div className="shell-wide grid gap-8 md:grid-cols-[1fr_auto] md:items-start md:gap-16 lg:gap-20">
-        <div>
+      <div className="shell-wide grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
+        <div className="lg:col-span-6">
           <p className="mono-label text-signal-text">The Organization</p>
           <h2 className="t-section mt-5 max-w-[16ch] text-paper">
             Built and run by students.
@@ -22,12 +22,12 @@ export function CommunitySection() {
           </p>
         </div>
 
-        <ul className="grid gap-3 sm:grid-cols-2 md:w-[27rem]">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-5 lg:col-start-8">
           {LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group flex h-full flex-col gap-1.5 border border-hairline bg-card p-5 transition-colors duration-200 hover:border-hairline-strong"
+                className="group flex h-full flex-col gap-1.5 border border-hairline bg-card p-6 transition-colors duration-200 hover:border-hairline-strong"
               >
                 <span className="t-body-sm flex items-center gap-2 font-medium">
                   {link.label}

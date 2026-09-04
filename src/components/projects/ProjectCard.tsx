@@ -8,8 +8,10 @@ import { authorLine } from "@/lib/projects";
 import type { Project } from "@/lib/types";
 
 /**
- * One card shape, two sizes. The image carries roughly 60% of the card, and
- * every card in a row lines up on the same aspect ratio.
+ * One card shape, two sizes. Standard cards hold a fixed aspect so every card
+ * in a row lines up. The featured card instead lets its cover grow to fill
+ * whatever height the column has left, so matching the height of the stacked
+ * cards beside it does not leave a void under the text.
  */
 export function ProjectCard({
   project,
@@ -25,7 +27,9 @@ export function ProjectCard({
     <article className="group relative flex h-full flex-col overflow-hidden border border-hairline bg-card transition-[border-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:-translate-y-0.5 hover:border-hairline-strong focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-signal motion-reduce:hover:translate-y-0">
       <div
         className={`relative overflow-hidden bg-base ${
-          featured ? "aspect-[3/2]" : "aspect-[4/3]"
+          featured
+            ? "aspect-[16/9] lg:aspect-auto lg:min-h-[24rem] lg:flex-1"
+            : "aspect-[4/3]"
         }`}
       >
         <ProjectCover

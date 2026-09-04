@@ -1,7 +1,7 @@
 import type { CoverVariant } from "@/lib/types";
 
-const W = 800;
-const H = 600;
+const W = 1200;
+const H = 800;
 
 /** Deterministic PRNG so server and client render identical artwork. */
 function rng(seed: string) {
@@ -23,25 +23,42 @@ function rng(seed: string) {
 const q = (n: number) => Math.round(n * 100) / 100;
 
 /**
- * Every cover is the same composition — a soft gradient ground, one diffuse
- * highlight, and the Apollo mark. The discipline picks the hue (via the
- * `cover-*` class, which sets the colour custom properties in globals.css)
- * and the seed nudges the gradient angle and highlight position so two cards
- * in the same discipline are not pixel-identical.
+ * A placeholder for a figure that does not exist yet — not a piece of art.
+ * A near-neutral ground, a measured grid, and the Apollo mark held small in
+ * the corner. The discipline shifts the hue slightly and the seed shifts the
+ * grid origin, so a wall of cards has variation without colour noise.
  *
- * Any project carrying `coverImageUrl` skips generation entirely — that is
- * the hook for uploaded images later.
+ * Any project carrying `coverImageUrl` skips generation entirely.
  */
+function Grid({ seed }: { seed: string }) {
+  const r = rng(seed);
+  const step = 60;
+  const offset = q(r() * step);
+  const lines: React.ReactNode[] = [];
+  for (let x = offset; x < W; x += step) {
+    lines.push(
+      <line key={`v${x}`} x1={q(x)} y1={0} x2={q(x)} y2={H} strokeWidth="1" />,
+    );
+  }
+  for (let y = offset; y < H; y += step) {
+    lines.push(
+      <line key={`h${y}`} x1={0} y1={q(y)} x2={W} y2={q(y)} strokeWidth="1" />,
+    );
+  }
+  return (
+    <g stroke="var(--cover-ink)" strokeOpacity="0.2">
+      {lines}
+    </g>
+  );
+}
 
-/** The Apollo mark, authored on a 32×32 grid, scaled into the cover. */
-function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
-  const half = (32 * scale) / 2;
+/** The Apollo mark, authored on a 32×32 grid. */
+function Mark({ scale, x, y }: { scale: number; x: number; y: number }) {
   return (
     <g
-      transform={`translate(${q(cx - half)} ${q(cy - half)}) scale(${scale})`}
-      stroke="var(--cover-mark)"
+      transform={`translate(${q(x)} ${q(y)}) scale(${scale})`}
+      stroke="var(--cover-ink)"
       fill="none"
-      vectorEffect="non-scaling-stroke"
     >
       <ellipse
         cx="16"
@@ -49,20 +66,20 @@ function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
         rx="13.5"
         ry="6.5"
         transform="rotate(-22 16 18)"
-        strokeOpacity="0.4"
-        strokeWidth="0.55"
+        strokeOpacity="0.3"
+        strokeWidth="0.7"
       />
       <path
         d="M6.6 26.4 L16 5.4 L25.4 26.4"
-        strokeOpacity="0.82"
-        strokeWidth="1.15"
+        strokeOpacity="0.62"
+        strokeWidth="1.5"
         strokeLinecap="square"
         strokeLinejoin="miter"
       />
       <path
         d="M11.1 19.6 H20.9"
-        strokeOpacity="0.82"
-        strokeWidth="1.15"
+        strokeOpacity="0.62"
+        strokeWidth="1.5"
         strokeLinecap="square"
       />
       <circle
@@ -70,7 +87,7 @@ function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
         cy="12.9"
         r="2.1"
         fill="var(--apollo-signal)"
-        fillOpacity="0.9"
+        fillOpacity="0.75"
         stroke="none"
       />
     </g>
@@ -104,16 +121,7 @@ export function ProjectCover({
     );
   }
 
-  const r = rng(seed);
-  // Gradient runs across one of four diagonals; the highlight drifts within
-  // the upper-left quadrant so the light always reads as coming from there.
-  const flip = r() > 0.5;
-  const glowX = q(0.18 + r() * 0.26);
-  const glowY = q(0.14 + r() * 0.22);
-  const glowR = q(0.58 + r() * 0.22);
-
   const gid = `cv-${seed}`;
-  const glid = `cg-${seed}`;
 
   return (
     <svg
@@ -126,28 +134,15 @@ export function ProjectCover({
     >
       {label ? <title>{label}</title> : null}
       <defs>
-        <linearGradient
-          id={gid}
-          x1={flip ? "1" : "0"}
-          y1="0"
-          x2={flip ? "0" : "1"}
-          y2="1"
-        >
+        <linearGradient id={gid} x1="0" y1="0" x2="0.6" y2="1">
           <stop offset="0%" stopColor="var(--cover-a)" />
           <stop offset="100%" stopColor="var(--cover-b)" />
         </linearGradient>
-
-        <radialGradient id={glid} cx={glowX} cy={glowY} r={glowR}>
-          <stop offset="0%" stopColor="var(--cover-glow)" stopOpacity="0.34" />
-          <stop offset="55%" stopColor="var(--cover-glow)" stopOpacity="0.1" />
-          <stop offset="100%" stopColor="var(--cover-glow)" stopOpacity="0" />
-        </radialGradient>
       </defs>
 
       <rect width={W} height={H} fill={`url(#${gid})`} />
-      <rect width={W} height={H} fill={`url(#${glid})`} />
-
-      <Mark scale={7.6} cx={W / 2} cy={H / 2} />
+      <Grid seed={seed} />
+      <Mark scale={4.4} x={W - 232} y={H - 232} />
     </svg>
   );
 }

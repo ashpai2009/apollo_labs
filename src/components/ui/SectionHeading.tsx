@@ -22,13 +22,13 @@ export function SectionHeading({
 }) {
   return (
     <header
-      className={`flex flex-col gap-5 border-b border-hairline pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-10 ${className ?? ""}`}
+      className={`flex flex-col gap-6 border-b border-hairline pb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-16 ${className ?? ""}`}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <p className="mono-label text-signal-text">{label}</p>
-        <h2 className="t-section max-w-[20ch] text-paper">{title}</h2>
+        <h2 className="t-section max-w-[18ch] text-paper">{title}</h2>
         {lede && (
-          <p className="t-body-sm max-w-[62ch] text-paper-dim">{lede}</p>
+          <p className="t-body-sm max-w-[58ch] text-paper-dim">{lede}</p>
         )}
       </div>
       {action && <div className="shrink-0 sm:pb-1">{action}</div>}

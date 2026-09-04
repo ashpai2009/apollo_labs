@@ -29,7 +29,7 @@ self-promotion by design). Run this from the SQL editor, where `auth.uid()` is
 null and the guard defers to the trusted server context:
 
 ```sql
-update public.profiles set role = 'admin' where email = 'you@example.com';
+update public.profiles set role = 'admin' where email = 'ashmitpai2009@gmail.com';
 ```
 
 ## Storage

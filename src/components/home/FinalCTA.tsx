@@ -4,9 +4,9 @@ export function FinalCTA() {
   return (
     <section className="gutter">
       <div className="shell-wide">
-        <div className="flex flex-col gap-6 border-t border-hairline py-14 sm:flex-row sm:items-center sm:justify-between sm:gap-12 md:py-20">
+        <div className="flex flex-col gap-6 border-t border-hairline py-20 lg:flex-row lg:items-end lg:justify-between lg:gap-16 md:py-28">
           <div>
-            <h2 className="t-section max-w-[20ch] text-paper">
+            <h2 className="t-section max-w-[16ch] text-paper">
               Have something worth publishing?
             </h2>
             <p className="t-body mt-4 max-w-[44ch] text-paper-dim">
@@ -15,10 +15,10 @@ export function FinalCTA() {
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/join" className="group">
+            <ButtonLink href="/join" size="lg" className="group">
               Join Apollo <Arrow />
             </ButtonLink>
-            <ButtonLink href="/explore" variant="secondary">
+            <ButtonLink href="/explore" size="lg" variant="secondary">
               Browse the Archive
             </ButtonLink>
           </div>

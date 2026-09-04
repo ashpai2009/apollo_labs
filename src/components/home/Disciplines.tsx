@@ -15,18 +15,18 @@ export function Disciplines() {
           lede="Apollo does not privilege papers over builds. Pick a field to see what members have published in it."
         />
 
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {DISCIPLINES.map((d) => (
             <li key={d.name}>
               <Link
                 href={`/explore?discipline=${encodeURIComponent(d.name)}`}
-                className="group flex items-center justify-between gap-4 border border-hairline bg-card px-4 py-4 transition-colors duration-200 hover:border-signal/60"
+                className="group flex items-center justify-between gap-4 border border-hairline bg-card px-5 py-5 transition-colors duration-200 hover:border-signal/60"
               >
                 <span className="flex items-center gap-3">
                   <span className="mono-label text-faint transition-colors duration-200 group-hover:text-signal-text">
                     {d.code}
                   </span>
-                  <span className="t-body-sm leading-tight">{d.name}</span>
+                  <span className="t-body-sm font-medium leading-tight">{d.name}</span>
                 </span>
                 <span className="mono-label text-paper-dim">
                   {String(counts.get(d.name) ?? 0).padStart(2, "0")}

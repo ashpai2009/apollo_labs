@@ -72,41 +72,41 @@ export default function CommunityPage() {
         ]}
       />
 
-      <section className="gutter border-b border-hairline py-14 md:py-20">
-        <div className="shell-wide grid gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-3">
-            <p className="mono-label flex gap-3 text-muted lg:sticky lg:top-28">
-              <span className="text-signal-text">02</span>
-              <span>The rhythm</span>
-            </p>
-          </div>
-          <div className="lg:col-span-9">
-            <h2 className="t-section max-w-[22ch] text-paper">
-              What a term actually looks like.
-            </h2>
-            <p className="t-lead mt-5 max-w-[50ch] text-paper-dim">
+      <section className="gutter border-b border-hairline py-20 md:py-28">
+        <div className="shell-wide">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <p className="mono-label flex gap-3 text-muted">
+                <span className="text-signal-text">02</span>
+                <span>The rhythm</span>
+              </p>
+              <h2 className="t-section mt-6 max-w-[14ch] text-paper">
+                What a term actually looks like.
+              </h2>
+            </div>
+            <p className="t-lead max-w-[40ch] text-paper-dim lg:col-span-6 lg:col-start-7 lg:mt-11">
               Four recurring commitments. Everything else is you and the work.
             </p>
+          </div>
 
-            <ul className="mt-10 border-t border-hairline">
+          <ul className="mt-16 border-t border-hairline">
               {RHYTHM.map((item, i) => (
                 <Reveal as="li" key={item.index} delay={i * 0.05}>
-                  <div className="grid gap-x-8 gap-y-2.5 border-b border-hairline py-6 md:grid-cols-12 md:items-baseline">
+                  <div className="grid gap-x-10 gap-y-3 border-b border-hairline py-8 md:grid-cols-12 md:items-baseline">
                     <span className="mono-label text-signal-text md:col-span-1">
                       {item.index}
                     </span>
-                    <h3 className="t-sub md:col-span-4">{item.title}</h3>
+                    <h3 className="t-sub md:col-span-3">{item.title}</h3>
                     <span className="mono-label text-faint md:col-span-2">
                       {item.cadence}
                     </span>
-                    <p className="t-body-sm max-w-[46ch] text-muted md:col-span-5">
+                    <p className="t-body-sm max-w-[52ch] text-muted md:col-span-6">
                       {item.body}
                     </p>
                   </div>
                 </Reveal>
               ))}
-            </ul>
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -154,27 +154,27 @@ export default function CommunityPage() {
         ]}
       />
 
-      <section className="gutter section">
+      <section className="gutter section-lg">
         <div className="shell-wide">
           <Reveal>
-            <div className="grid gap-8 lg:grid-cols-12">
-              <p className="mono-label text-muted lg:col-span-3 lg:pt-3">
-                <span className="text-signal-text">◆</span>
-                <span className="ml-3">Join</span>
-              </p>
-              <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="t-section max-w-[18ch] text-paper">
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+              <div className="lg:col-span-6">
+                <p className="mono-label text-muted">
+                  <span className="text-signal-text">◆</span>
+                  <span className="ml-3">Join</span>
+                </p>
+                <h2 className="t-section mt-6 max-w-[15ch] text-paper">
                   Bring the thing you{" "}
                   <span className="text-paper-dim">never finished.</span>
                 </h2>
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <ButtonLink href="/join" className="group">
-                    Join Apollo <Arrow />
-                  </ButtonLink>
-                  <ButtonLink href="/about" variant="secondary">
-                    About the Organization
-                  </ButtonLink>
-                </div>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:col-start-8 lg:justify-end lg:pb-2">
+                <ButtonLink href="/join" size="lg" className="group">
+                  Join Apollo <Arrow />
+                </ButtonLink>
+                <ButtonLink href="/about" size="lg" variant="secondary">
+                  About the Organization
+                </ButtonLink>
               </div>
             </div>
           </Reveal>
