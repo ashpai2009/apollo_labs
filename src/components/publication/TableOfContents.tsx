@@ -39,7 +39,7 @@ export function TableOfContents({
               <a
                 href={`#${item.id}`}
                 aria-current={current ? "location" : undefined}
-                className={`group flex gap-3 text-[0.8125rem] leading-snug transition-colors duration-200 ${
+                className={`group flex gap-3 text-[0.875rem] leading-snug transition-colors duration-200 ${
                   current ? "text-paper" : "text-faint hover:text-paper-dim"
                 }`}
               >

@@ -9,13 +9,16 @@ const LINKS = [
 export function CommunitySection() {
   return (
     <section className="gutter section">
-      <div className="shell-wide grid gap-8 md:grid-cols-[1fr_auto] md:items-start md:gap-16">
+      <div className="shell-wide grid gap-8 md:grid-cols-[1fr_auto] md:items-start md:gap-16 lg:gap-20">
         <div>
-          <h2 className="mono-label text-signal-text">The Organization</h2>
-          <p className="mt-4 max-w-[58ch] text-[1.0625rem] leading-[1.6] text-paper">
-            Apollo is run by students who are also publishing through it —
-            deliberately small enough that scoping a project, getting a draft
-            read, and finding a mentor all happen in the same room.
+          <p className="mono-label text-signal-text">The Organization</p>
+          <h2 className="t-section mt-5 max-w-[16ch] text-paper">
+            Built and run by students.
+          </h2>
+          <p className="t-body mt-6 max-w-[52ch] text-paper-dim">
+            Everyone running Apollo is also publishing through it — small enough
+            that scoping a project, getting a draft read, and finding a mentor
+            all happen in the same room.
           </p>
         </div>
 
@@ -24,15 +27,15 @@ export function CommunitySection() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group flex h-full flex-col gap-1.5 border border-hairline bg-card p-4 transition-colors duration-200 hover:border-hairline-strong"
+                className="group flex h-full flex-col gap-1.5 border border-hairline bg-card p-5 transition-colors duration-200 hover:border-hairline-strong"
               >
-                <span className="flex items-center gap-2 text-[0.9375rem] font-medium">
+                <span className="t-body-sm flex items-center gap-2 font-medium">
                   {link.label}
                   <span className="text-signal-text">
                     <Arrow />
                   </span>
                 </span>
-                <span className="text-[0.8125rem] leading-relaxed text-muted">
+                <span className="t-meta text-muted">
                   {link.body}
                 </span>
               </Link>

@@ -1,33 +1,50 @@
 /**
- * Compact credibility band: three claims and a short paragraph on one row.
- * Replaces the full-screen mission statement.
+ * The mission band. One large statement carries the idea; the paragraph and
+ * the three principles support it rather than competing with it.
  */
-const CLAIMS = [
-  "Student-led research.",
-  "Built collaboratively.",
-  "Published publicly.",
+const PRINCIPLES = [
+  {
+    term: "Student-led",
+    detail: "Scoped and run by the people doing the work.",
+  },
+  {
+    term: "Reviewed",
+    detail: "Read by a member before anything publishes.",
+  },
+  {
+    term: "Published",
+    detail: "A permanent, citable page in a public archive.",
+  },
 ];
 
 export function MissionStrip() {
   return (
     <section className="gutter border-y border-hairline bg-surface">
-      <div className="shell-wide grid gap-6 py-8 md:grid-cols-[auto_1fr] md:items-center md:gap-14">
-        <ul className="flex flex-col gap-1.5">
-          {CLAIMS.map((claim) => (
-            <li
-              key={claim}
-              className="text-[1.0625rem] font-medium leading-snug tracking-[-0.015em]"
-            >
-              {claim}
-            </li>
+      <div className="shell-wide py-14 md:py-20">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <p className="mono-label text-signal-text">Mission</p>
+            <h2 className="t-section mt-5 max-w-[19ch] text-paper">
+              Student work should not disappear after it is finished.
+            </h2>
+          </div>
+
+          <div className="lg:col-span-5 lg:pt-11">
+            <p className="t-body max-w-[46ch] text-paper-dim">
+              Apollo Labs gives that work somewhere permanent to live, and a
+              standard worth meeting on the way there.
+            </p>
+          </div>
+        </div>
+
+        <dl className="mt-12 grid gap-x-10 gap-y-6 border-t border-hairline pt-8 sm:grid-cols-3">
+          {PRINCIPLES.map((p) => (
+            <div key={p.term}>
+              <dt className="t-sub text-paper">{p.term}</dt>
+              <dd className="t-meta mt-2 max-w-[30ch] text-muted">{p.detail}</dd>
+            </div>
           ))}
-        </ul>
-        <p className="max-w-[68ch] text-[0.9375rem] leading-relaxed text-paper-dim md:justify-self-end">
-          Apollo Labs gives student work somewhere permanent to live and a
-          standard worth meeting on the way there. Members scope projects with
-          people who have finished one before, review each other&apos;s drafts
-          in the open, and publish to an archive that stays put.
-        </p>
+        </dl>
       </div>
     </section>
   );

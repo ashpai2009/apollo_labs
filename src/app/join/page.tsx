@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AuthLayout, MockNotice } from "@/components/auth/AuthLayout";
-import { Field } from "@/components/ui/Field";
-import { Button, Arrow } from "@/components/ui/Button";
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { JoinForm } from "@/components/auth/AuthForms";
 
 export const metadata: Metadata = {
   title: "Join Apollo",
@@ -27,33 +26,7 @@ export default function JoinPage() {
         </p>
       }
     >
-      <form className="mt-10 flex flex-col gap-7" aria-describedby="join-mock">
-        <Field label="Full name" name="name" placeholder="Your name" autoComplete="name" />
-        <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" />
-        <Field
-          label="Password"
-          type="password"
-          name="password"
-          placeholder="At least 8 characters"
-          autoComplete="new-password"
-        />
-        <Field
-          label="Graduation year"
-          type="number"
-          name="graduationYear"
-          placeholder="2028"
-          min={2024}
-          max={2040}
-        />
-        <div className="mt-2">
-          <Button type="button" className="group w-full">
-            Create Account <Arrow />
-          </Button>
-        </div>
-        <div id="join-mock">
-          <MockNotice />
-        </div>
-      </form>
+      <JoinForm />
     </AuthLayout>
   );
 }

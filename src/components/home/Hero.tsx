@@ -11,7 +11,7 @@ const STATS = [
 
 export function Hero() {
   return (
-    <section className="gutter pb-14 pt-24 md:pb-20 md:pt-28">
+    <section className="gutter pb-16 pt-24 md:pb-24 md:pt-32">
       <div className="shell-wide grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div>
           <p className="mono-label flex items-center gap-2.5 text-signal-text">
@@ -19,20 +19,19 @@ export function Hero() {
             Student-Led Research
           </p>
 
-          <h1 className="mt-5 max-w-[17ch] text-[clamp(2.1rem,4.4vw,3.25rem)] font-medium leading-[1.08] tracking-[-0.03em]">
+          <h1 className="t-hero mt-6 max-w-[15ch] text-paper">
             Built for students who make{" "}
             <span className="font-serif font-normal italic tracking-[-0.01em]">
               things worth sharing.
             </span>
           </h1>
 
-          <p className="mt-5 max-w-[52ch] text-[1rem] leading-[1.6] text-paper-dim">
-            Apollo Labs is where student research lives. Build a project, refine
-            it with people who care about the details, publish it properly — and
-            leave it somewhere it can be read.
+          <p className="t-lead mt-7 max-w-[44ch] text-paper-dim">
+            Build a project, refine it with people who care about the details,
+            and publish it somewhere it can actually be read.
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <ButtonLink href="#work" className="group">
               Explore Projects <Arrow />
             </ButtonLink>
@@ -41,10 +40,10 @@ export function Hero() {
             </ButtonLink>
           </div>
 
-          <dl className="mt-9 flex flex-wrap gap-x-10 gap-y-4">
+          <dl className="mt-11 flex flex-wrap gap-x-10 gap-y-4">
             {STATS.map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-2.5">
-                <dd className="text-[1.375rem] font-medium leading-none tracking-[-0.02em]">
+                <dd className="text-[1.625rem] font-medium leading-none tracking-[-0.02em] text-paper">
                   {stat.value}
                 </dd>
                 <dt className="mono-label text-faint">{stat.label}</dt>

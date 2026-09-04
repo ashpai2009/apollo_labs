@@ -1,33 +1,37 @@
 import type { ReactNode } from "react";
 
 /**
- * Compact section header: a label, one line of context, and an optional
- * action on the same row. Deliberately not a full-screen title block.
+ * Section header: a mono label carrying the section's name as *metadata*,
+ * a real title beneath it, and an optional action on the same row.
+ *
+ * The label is never the heading on its own — at 12px it cannot carry the
+ * hierarchy, so `title` is required.
  */
 export function SectionHeading({
   label,
+  title,
   lede,
   action,
   className,
 }: {
   label: string;
+  title: ReactNode;
   lede?: ReactNode;
   action?: ReactNode;
   className?: string;
 }) {
   return (
     <header
-      className={`flex flex-col gap-3 border-b border-hairline pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10 ${className ?? ""}`}
+      className={`flex flex-col gap-5 border-b border-hairline pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-10 ${className ?? ""}`}
     >
-      <div className="flex flex-col gap-2">
-        <h2 className="mono-label text-signal-text">{label}</h2>
+      <div className="flex flex-col gap-3">
+        <p className="mono-label text-signal-text">{label}</p>
+        <h2 className="t-section max-w-[20ch] text-paper">{title}</h2>
         {lede && (
-          <p className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-paper-dim">
-            {lede}
-          </p>
+          <p className="t-body-sm max-w-[62ch] text-paper-dim">{lede}</p>
         )}
       </div>
-      {action && <div className="shrink-0">{action}</div>}
+      {action && <div className="shrink-0 sm:pb-1">{action}</div>}
     </header>
   );
 }

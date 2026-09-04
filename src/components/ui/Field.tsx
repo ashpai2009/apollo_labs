@@ -6,10 +6,12 @@ import { useId } from "react";
 export function Field({
   label,
   hint,
+  error,
   className,
   ...props
-}: { label: string; hint?: string } & ComponentPropsWithoutRef<"input">) {
+}: { label: string; hint?: string; error?: string } & ComponentPropsWithoutRef<"input">) {
   const id = useId();
+  const descriptionId = hint || error ? `${id}-description` : undefined;
   return (
     <div className={`flex flex-col gap-2 ${className ?? ""}`}>
       <label htmlFor={id} className="mono-label text-muted">
@@ -17,10 +19,20 @@ export function Field({
       </label>
       <input
         id={id}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={descriptionId}
         className="h-11 border-b border-hairline-strong bg-transparent text-[0.9375rem] text-paper outline-none transition-colors duration-200 placeholder:text-faint hover:border-paper/35 focus:border-signal focus-visible:outline-none"
         {...props}
       />
-      {hint && <p className="text-xs text-faint">{hint}</p>}
+      {(error || hint) && (
+        <p
+          id={descriptionId}
+          className={`text-xs ${error ? "text-signal-text" : "text-faint"}`}
+          role={error ? "alert" : undefined}
+        >
+          {error ?? hint}
+        </p>
+      )}
     </div>
   );
 }

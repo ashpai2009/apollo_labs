@@ -22,69 +22,85 @@ export default function AboutPage() {
             <span className="text-paper-dim">finished, not just started.</span>
           </>
         }
-        lede="Apollo Labs is a student-led research community. We help members take a project from a rough idea through to something written up, reviewed, and permanently published — and we keep the archive that holds it."
+        lede="Apollo Labs is a student-led research community. We take projects from rough idea to reviewed, published work — and keep the archive that holds them."
       />
 
-      <Prose index="01" heading="Mission">
+      <Prose
+        index="01"
+        label="Mission"
+        title="Student work should have somewhere permanent to live."
+        lead="Most of it disappears. It sits in a shared drive, gets shown once, and is never read again — the effort was real, the record of it was not."
+        points={[
+          {
+            term: "Scoped projects",
+            detail: "Sized at the start so finishing is realistic.",
+          },
+          {
+            term: "Open review",
+            detail: "Read by a member before anything publishes.",
+          },
+          {
+            term: "Permanent pages",
+            detail: "A citable URL with an author and a date.",
+          },
+          {
+            term: "Public archive",
+            detail: "Published work stays up. It is not quietly deleted.",
+          },
+        ]}
+      >
         <p>
-          Most student work disappears. It lives in a shared drive, gets shown
-          once, and is never read again. The effort was real; the record of it
-          was not.
-        </p>
-        <p>
-          <strong>
-            Apollo Labs exists to give serious student work somewhere permanent
-            to live, and a standard worth meeting on the way there.
-          </strong>{" "}
-          That means two commitments. Projects get finished — scoped so they can
-          end, and reviewed before they publish. And once published, they stay:
-          a citable page with an author, a date, and the reasoning intact.
-        </p>
-        <p>
-          We are deliberately not a showcase for polished summaries. A project
-          page carries the methodology and the results that did not work
-          alongside the ones that did, because that is what makes it useful to
-          the next person.
-        </p>
-      </Prose>
-
-      <Prose index="02" heading="Why we exist">
-        <p>
-          Students who want to do research usually hit the same three walls:
-          they cannot tell whether an idea is the right size, they have no one
-          to check the work who is not grading it, and there is nowhere credible
-          to put the result.
-        </p>
-        <p>
-          Apollo addresses each one directly. Scoping happens in conversation
-          with people who have finished projects before. Review happens in the
-          open, from other members, before anything is published. And the
-          archive gives the finished work a permanent home that is not a
-          slideshow or a folder.
-        </p>
-        <p>
-          We take applied and engineering work as seriously as papers. A
-          well-documented build with real testing is a research contribution,
-          and the publication format is designed to hold both.
+          Apollo exists to give serious student work a home and a standard worth
+          meeting on the way there. We are{" "}
+          <strong>not a showcase for polished summaries</strong> — a project page
+          carries the methodology and the results that did not work alongside the
+          ones that did, because that is what makes it useful to the next person.
         </p>
       </Prose>
 
-      <Prose index="03" heading="How students participate">
+      <Prose
+        index="02"
+        label="Why we exist"
+        title="Students hit the same three walls."
+        lead="They cannot tell whether an idea is the right size, they have no one to check the work who is not grading it, and there is nowhere credible to put the result."
+        points={[
+          {
+            term: "Scoping",
+            detail: "A conversation with people who have finished before.",
+          },
+          {
+            term: "Review",
+            detail: "In the open, from other members, before publication.",
+          },
+          {
+            term: "Archive",
+            detail: "A permanent home that is not a slideshow or a folder.",
+          },
+          {
+            term: "Builds count",
+            detail:
+              "A documented build with real testing is a contribution too.",
+          },
+        ]}
+      />
+
+      <Prose
+        index="03"
+        label="How students participate"
+        title="Join with an interest, not a finished proposal."
+        lead="The first step is usually a conversation that turns a broad curiosity into a question narrow enough to answer in a term."
+      >
         <p>
-          Members join with an interest, not a finished proposal. The first step
-          is usually a conversation that turns a broad curiosity into a question
-          narrow enough to answer in a term.
+          From there, work runs in the open. Members share progress, get feedback
+          while decisions are still reversible, and pull in mentors when a
+          project needs expertise the group does not have. Projects can be solo
+          or collaborative; both are common.
         </p>
         <p>
-          From there, work runs in the open. Members share progress, get
-          feedback while decisions are still reversible, and pull in mentors when
-          a project needs expertise the group does not have. Projects can be
-          solo or collaborative; both are common.
-        </p>
-        <p>
-          Nothing publishes without review. A member reads the draft, checks the
-          claims against what the work actually shows, and sends it back if the
-          two do not match. The reviewer is credited on the project.
+          <strong>Nothing publishes without review.</strong> A member reads the
+          draft, checks the claims against what the work actually shows, and
+          sends it back if the two do not match. The reviewer is credited on the
+          project.
         </p>
       </Prose>
 
@@ -93,13 +109,13 @@ export default function AboutPage() {
       <section className="gutter section">
         <div className="shell-wide">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12">
+            <div className="grid gap-8 lg:grid-cols-12">
               <p className="mono-label text-muted lg:col-span-3 lg:pt-3">
                 <span className="text-signal-text">◆</span>
                 <span className="ml-3">Next</span>
               </p>
               <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="max-w-[18ch] text-[clamp(1.6rem,3vw,2.25rem)] font-medium leading-[1.1] tracking-[-0.025em]">
+                <h2 className="t-section max-w-[18ch] text-paper">
                   See what members have{" "}
                   <span className="text-paper-dim">already published.</span>
                 </h2>

@@ -71,9 +71,6 @@
   --apollo-signal-ink: #140803;
   --apollo-signal-text: #e4572e;
 
-  /* Procedural cover artwork */
-  --apollo-art-from: #16161a;
-  --apollo-art-to: #0d0d0f;
   --apollo-backdrop: rgba(8, 8, 9, 0.6);
   --apollo-modal-shadow: rgba(0, 0, 0, 0.8);
 }
@@ -103,10 +100,6 @@ html[data-theme="light"] {
   --apollo-signal-ink: #ffffff;
   --apollo-signal-text: #ab3512;
 
-  /* The cover ground is pulled off the page colour so artwork reads as an
-     object rather than dissolving into the background. */
-  --apollo-art-from: #eeeae1;
-  --apollo-art-to: #e4dfd4;
   --apollo-backdrop: rgba(80, 74, 66, 0.34);
   --apollo-modal-shadow: rgba(48, 42, 34, 0.22);
 }
@@ -181,10 +174,10 @@ html[data-theme="light"] {
   }
 
   /* Section rhythm. One scale, used everywhere, so nothing drifts. */
-  .section { padding-block: 3.5rem; }
-  @media (min-width: 768px) { .section { padding-block: 4.5rem; } }
-  .section-lg { padding-block: 4rem; }
-  @media (min-width: 768px) { .section-lg { padding-block: 5.5rem; } }
+  .section { padding-block: 4rem; }
+  @media (min-width: 768px) { .section { padding-block: 5.5rem; } }
+  .section-lg { padding-block: 4.5rem; }
+  @media (min-width: 768px) { .section-lg { padding-block: 6.5rem; } }
 
   .shell-wide {
     max-width: var(--container-wide);
@@ -201,12 +194,80 @@ html[data-theme="light"] {
     max-width: var(--container-prose);
   }
 
+  /* ── Type scale ───────────────────────────────────
+     One ladder for the whole site. Every heading and
+     body block picks a rung here rather than inventing
+     its own arbitrary `text-[...]` value. */
+
+  /* Homepage hero — 40 → 64px */
+  .t-hero {
+    font-size: clamp(2.375rem, 5.2vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.032em;
+    font-weight: 500;
+  }
+
+  /* Page title on About / Community / Explore — 34 → 56px */
+  .t-page {
+    font-size: clamp(2.125rem, 4.4vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+
+  /* Section title — 28 → 36px. The real heading for every
+     major band; the mono label above it is only metadata. */
+  .t-section {
+    font-size: clamp(1.75rem, 3.1vw, 2.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+
+  /* Subheading — 20 → 24px */
+  .t-sub {
+    font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+    line-height: 1.28;
+    letter-spacing: -0.018em;
+    font-weight: 500;
+  }
+
+  /* Lead sentence: the one strong line under a section
+     title. Carries the point so the body can be short. */
+  .t-lead {
+    font-size: clamp(1.1875rem, 1.7vw, 1.375rem);
+    line-height: 1.45;
+    letter-spacing: -0.012em;
+  }
+
+  /* Body — 17px mobile floor, stepping to 19px on wide
+     screens. Never set body copy below this. */
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+  }
+  @media (min-width: 768px) { .t-body { font-size: 1.125rem; } }
+  @media (min-width: 1280px) { .t-body { font-size: 1.1875rem; } }
+
+  /* Body inside cards and dense rows, where 19px would
+     force awkward wrapping. Still at the 17px floor. */
+  .t-body-sm {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  /* Supporting metadata — 14px. Not for explanatory copy. */
+  .t-meta {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
   /* Small uppercase technical label */
   .mono-label {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
   }
 
@@ -238,20 +299,97 @@ html[data-theme="light"] {
     transform-origin: left;
   }
 
-  /* Procedural cover artwork. Ink alphas are raised for the light theme:
-     dark-on-light at the same alpha reads considerably fainter. */
-  .art-from { stop-color: var(--apollo-art-from); }
-  .art-to { stop-color: var(--apollo-art-to); }
+  /* ── Project cover artwork ─────────────────────────
+     Every cover is the same composition: a soft two-tone
+     gradient, a diffuse highlight, and the Apollo mark.
+     Only the hue changes, keyed to the discipline, so a
+     wall of cards reads as one family. Both themes get
+     their own lightness so the mark stays legible. */
+  .cover-matrix {
+    --cover-a: hsl(275 34% 17%);
+    --cover-b: hsl(275 26% 9%);
+    --cover-glow: hsl(275 58% 62%);
+    --cover-mark: hsl(275 46% 78%);
+  }
+  .cover-interface {
+    --cover-a: hsl(218 34% 17%);
+    --cover-b: hsl(218 26% 9%);
+    --cover-glow: hsl(218 58% 62%);
+    --cover-mark: hsl(218 46% 78%);
+  }
+  .cover-cells {
+    --cover-a: hsl(132 34% 17%);
+    --cover-b: hsl(132 26% 9%);
+    --cover-glow: hsl(132 58% 62%);
+    --cover-mark: hsl(132 46% 78%);
+  }
+  .cover-solid {
+    --cover-a: hsl(25 34% 17%);
+    --cover-b: hsl(25 26% 9%);
+    --cover-glow: hsl(25 58% 62%);
+    --cover-mark: hsl(25 46% 78%);
+  }
+  .cover-terrain {
+    --cover-a: hsl(172 34% 17%);
+    --cover-b: hsl(172 26% 9%);
+    --cover-glow: hsl(172 58% 62%);
+    --cover-mark: hsl(172 46% 78%);
+  }
+  .cover-curves {
+    --cover-a: hsl(340 34% 17%);
+    --cover-b: hsl(340 26% 9%);
+    --cover-glow: hsl(340 58% 62%);
+    --cover-mark: hsl(340 46% 78%);
+  }
+  .cover-mechanism {
+    --cover-a: hsl(62 34% 17%);
+    --cover-b: hsl(62 26% 9%);
+    --cover-glow: hsl(62 58% 62%);
+    --cover-mark: hsl(62 46% 78%);
+  }
 
-  .art-line { stroke-opacity: 0.34; }
-  .art-soft { stroke-opacity: 0.19; }
-  .art-grid { stroke-opacity: 0.07; }
-  .art-dot { fill-opacity: 0.55; }
-
-  html[data-theme="light"] .art-line { stroke-opacity: 0.62; }
-  html[data-theme="light"] .art-soft { stroke-opacity: 0.42; }
-  html[data-theme="light"] .art-grid { stroke-opacity: 0.2; }
-  html[data-theme="light"] .art-dot { fill-opacity: 0.82; }
+  html[data-theme="light"] .cover-matrix {
+    --cover-a: hsl(275 56% 95%);
+    --cover-b: hsl(275 42% 86%);
+    --cover-glow: hsl(275 70% 88%);
+    --cover-mark: hsl(275 44% 34%);
+  }
+  html[data-theme="light"] .cover-interface {
+    --cover-a: hsl(218 56% 95%);
+    --cover-b: hsl(218 42% 86%);
+    --cover-glow: hsl(218 70% 88%);
+    --cover-mark: hsl(218 44% 34%);
+  }
+  html[data-theme="light"] .cover-cells {
+    --cover-a: hsl(132 56% 95%);
+    --cover-b: hsl(132 42% 86%);
+    --cover-glow: hsl(132 70% 88%);
+    --cover-mark: hsl(132 44% 34%);
+  }
+  html[data-theme="light"] .cover-solid {
+    --cover-a: hsl(25 56% 95%);
+    --cover-b: hsl(25 42% 86%);
+    --cover-glow: hsl(25 70% 88%);
+    --cover-mark: hsl(25 44% 34%);
+  }
+  html[data-theme="light"] .cover-terrain {
+    --cover-a: hsl(172 56% 95%);
+    --cover-b: hsl(172 42% 86%);
+    --cover-glow: hsl(172 70% 88%);
+    --cover-mark: hsl(172 44% 34%);
+  }
+  html[data-theme="light"] .cover-curves {
+    --cover-a: hsl(340 56% 95%);
+    --cover-b: hsl(340 42% 86%);
+    --cover-glow: hsl(340 70% 88%);
+    --cover-mark: hsl(340 44% 34%);
+  }
+  html[data-theme="light"] .cover-mechanism {
+    --cover-a: hsl(62 56% 95%);
+    --cover-b: hsl(62 42% 86%);
+    --cover-glow: hsl(62 70% 88%);
+    --cover-mark: hsl(62 44% 34%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { ButtonLink } from "@/components/ui/Button";
+import { createClient } from "@/lib/supabase/client";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
@@ -15,8 +16,33 @@ const NAV = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    let active = true;
+    void supabase.auth.getUser().then(({ data }) => {
+      if (active) setSignedIn(Boolean(data.user));
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSignedIn(Boolean(session?.user));
+    });
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setOpen(false);
+    router.push("/");
+    router.refresh();
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -86,15 +112,19 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle className="mr-1" />
-          <Link
-            href="/signin"
-            className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper"
-          >
-            Sign In
-          </Link>
-          <ButtonLink href="/join" size="sm" className="ml-3">
-            Join Apollo
-          </ButtonLink>
+          {signedIn ? (
+            <>
+              <button type="button" onClick={handleSignOut} className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper">
+                Sign Out
+              </button>
+              <ButtonLink href="/dashboard" size="sm" className="ml-3">Dashboard</ButtonLink>
+            </>
+          ) : (
+            <>
+              <Link href="/signin" className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper">Sign In</Link>
+              <ButtonLink href="/join" size="sm" className="ml-3">Join Apollo</ButtonLink>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
@@ -152,17 +182,17 @@ export function Navbar() {
           ))}
         </ul>
         <div className="mt-8 flex flex-col gap-3">
-          <ButtonLink href="/join" onClick={() => setOpen(false)} className="w-full">
-            Join Apollo
-          </ButtonLink>
-          <ButtonLink
-            href="/signin"
-            onClick={() => setOpen(false)}
-            variant="secondary"
-            className="w-full"
-          >
-            Sign In
-          </ButtonLink>
+          {signedIn ? (
+            <>
+              <ButtonLink href="/dashboard" onClick={() => setOpen(false)} className="w-full">Dashboard</ButtonLink>
+              <button type="button" onClick={handleSignOut} className="h-11 border border-hairline-strong px-6 text-sm font-medium text-paper transition-colors hover:bg-paper/[0.04]">Sign Out</button>
+            </>
+          ) : (
+            <>
+              <ButtonLink href="/join" onClick={() => setOpen(false)} className="w-full">Join Apollo</ButtonLink>
+              <ButtonLink href="/signin" onClick={() => setOpen(false)} variant="secondary" className="w-full">Sign In</ButtonLink>
+            </>
+          )}
         </div>
         <p className="mono-label mt-10 text-faint">
           Apollo Labs · Student-Led Research

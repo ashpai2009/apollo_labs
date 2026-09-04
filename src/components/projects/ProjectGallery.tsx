@@ -18,18 +18,19 @@ export function ProjectGallery() {
       <div className="shell-wide">
         <SectionHeading
           label="Projects"
+          title="Selected work from Apollo members."
           lede="Research, engineering, and software built by Apollo members. Open one to read the abstract without leaving the page."
           action={
             <Link
               href="/explore"
-              className="group inline-flex items-center gap-2 text-[0.875rem] text-paper transition-colors duration-200 hover:text-signal-text"
+              className="group inline-flex items-center gap-2 text-[0.9375rem] font-medium text-paper transition-colors duration-200 hover:text-signal-text"
             >
               View all projects <Arrow />
             </Link>
           }
         />
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ProjectCard project={lead} featured />
           </div>

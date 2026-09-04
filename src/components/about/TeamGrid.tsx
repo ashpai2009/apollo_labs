@@ -15,12 +15,10 @@ function MemberRow({ member, index }: { member: Member; index: number }) {
           >
             {initials(member.name)}
           </span>
-          <span className="text-[1.0625rem] font-medium tracking-[-0.01em]">
-            {member.name}
-          </span>
+          <span className="t-sub">{member.name}</span>
         </div>
-        <span className="mono-label text-signal-text sm:col-span-3">{member.role}</span>
-        <p className="max-w-[42ch] text-[0.9375rem] leading-relaxed text-muted sm:col-span-4">
+        <span className="mono-label text-faint sm:col-span-3">{member.role}</span>
+        <p className="t-body-sm max-w-[42ch] text-muted sm:col-span-4">
           {member.focus}
         </p>
       </div>
@@ -39,28 +37,34 @@ export function TeamGrid() {
     >
       <div className="shell-wide">
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-12">
-            <p className="mono-label flex gap-3 text-muted lg:col-span-3">
-              <span className="text-signal-text">04</span>
-              <span>The Team</span>
-            </p>
-            <div className="lg:col-span-9">
-              <h2 className="max-w-[24ch] text-[clamp(1.5rem,2.6vw,2rem)] font-medium leading-[1.12] tracking-[-0.025em]">
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-3">
+              <p className="mono-label flex gap-3 text-muted">
+                <span className="text-signal-text">04</span>
+                <span>The Team</span>
+              </p>
+            </div>
+            <div className="lg:col-span-8 lg:col-start-4">
+              <h2 className="t-section max-w-[22ch] text-paper">
                 Apollo Labs is run by the students who use it.
               </h2>
+              <p className="t-lead mt-5 max-w-[48ch] text-paper-dim">
+                Everyone below is publishing through Apollo, not just
+                administering it.
+              </p>
             </div>
           </div>
         </Reveal>
 
-        <div className="mt-8">
-          <p className="mono-label text-faint">Founders</p>
+        <div className="mt-14">
+          <h3 className="mono-label text-signal-text">Founders</h3>
           <ul className="mt-5 border-t border-hairline">
             {founders.map((member, i) => (
               <MemberRow key={member.name} member={member} index={i + 1} />
             ))}
           </ul>
 
-          <p className="mono-label mt-10 text-faint">Engineering</p>
+          <h3 className="mono-label mt-14 text-signal-text">Engineering</h3>
           <ul className="mt-5 border-t border-hairline">
             {engineering.map((member, i) => (
               <MemberRow

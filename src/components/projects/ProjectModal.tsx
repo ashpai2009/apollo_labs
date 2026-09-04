@@ -122,7 +122,7 @@ export function ProjectModal() {
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-5 p-6 md:p-8">
+                <div className="flex flex-col gap-5 p-6 md:p-9">
                   <div className="flex items-center gap-3 pr-12 md:pr-14">
                     <span className="mono-label flex items-center gap-2 text-paper-dim">
                       <span aria-hidden="true" className="size-1 bg-signal" />
@@ -132,12 +132,12 @@ export function ProjectModal() {
                     <span className="mono-label text-faint">{project.year}</span>
                   </div>
 
-                  <h2 className="max-w-[24ch] text-[clamp(1.4rem,3vw,1.9rem)] font-medium leading-[1.15] tracking-[-0.02em]">
+                  <h2 className="max-w-[22ch] text-[clamp(1.625rem,3vw,2.125rem)] font-medium leading-[1.12] tracking-[-0.025em] text-paper">
                     {project.title}
                   </h2>
 
                   <div className="flex flex-col gap-1.5">
-                    <p className="text-[0.9375rem] text-paper">
+                    <p className="t-body-sm text-paper">
                       {project.authors.map((a) => a.name).join(", ")}
                     </p>
                     <p className="mono-label text-faint">
@@ -145,7 +145,7 @@ export function ProjectModal() {
                     </p>
                   </div>
 
-                  <p className="max-w-[56ch] text-[0.9375rem] leading-[1.7] text-paper-dim">
+                  <p className="t-body max-w-[52ch] text-paper-dim">
                     {project.summary}
                   </p>
 

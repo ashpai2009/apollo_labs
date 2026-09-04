@@ -63,11 +63,3 @@ export function AuthLayout({
     </div>
   );
 }
-
-export function MockNotice() {
-  return (
-    <p className="mono-label mt-6 border border-hairline px-3 py-2.5 text-faint">
-      Prototype build — no account is created and nothing is submitted.
-    </p>
-  );
-}

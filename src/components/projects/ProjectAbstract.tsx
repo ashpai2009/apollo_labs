@@ -16,7 +16,7 @@ export function ProjectAbstract({ abstract }: { abstract: string }) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={id}
-        className="group inline-flex items-center gap-2.5 text-[0.875rem] text-paper transition-colors duration-200 hover:text-signal-bright"
+        className="group inline-flex items-center gap-2.5 text-[0.9375rem] font-medium text-paper transition-colors duration-200 hover:text-signal-bright"
       >
         <span className="link-reveal">{open ? "Hide Abstract" : "Read Abstract"}</span>
         <span
@@ -45,7 +45,7 @@ export function ProjectAbstract({ abstract }: { abstract: string }) {
           >
             <div className="mt-6 border-t border-hairline pt-6">
               <p className="mono-label text-signal-text">Abstract</p>
-              <p className="mt-4 max-w-[64ch] text-[0.9375rem] leading-[1.75] text-paper-dim">
+              <p className="t-body-sm mt-4 max-w-[64ch] leading-[1.72] text-paper-dim">
                 {abstract}
               </p>
             </div>

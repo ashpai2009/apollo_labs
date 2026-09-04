@@ -14,25 +14,25 @@ const RHYTHM = [
     index: "01",
     title: "Open studio",
     cadence: "Weekly",
-    body: "Members work in the same room on their own projects. Most useful questions get answered here, before they turn into a week of lost effort.",
+    body: "Work alongside other members. Most useful questions get answered here, before they turn into a week of lost effort.",
   },
   {
     index: "02",
     title: "Project review",
     cadence: "Biweekly",
-    body: "One member presents work in progress and the group pushes on it — scope, method, and whether the claims match the evidence.",
+    body: "One member presents work in progress and the group pushes on scope, method, and evidence.",
   },
   {
     index: "03",
     title: "Mentor sessions",
     cadence: "Monthly",
-    body: "Scheduled time with someone who has done this work professionally. Booked around what projects actually need that month.",
+    body: "Scheduled time with someone who has done this work professionally, booked around what projects need.",
   },
   {
     index: "04",
     title: "Publication review",
     cadence: "As needed",
-    body: "A dedicated read of a finished draft before it goes into the archive. The reviewer is named on the published project.",
+    body: "A dedicated read of a finished draft. The reviewer is named on the published project.",
   },
 ];
 
@@ -48,48 +48,58 @@ export default function CommunityPage() {
             <span className="text-paper-dim">not a mailing list.</span>
           </>
         }
-        lede="Apollo runs on people showing up and doing the work in view of each other. Here is what that actually involves — the rhythm, the review, and how a project gets from an idea to the archive."
+        lede="Apollo runs on people showing up and doing the work in view of each other. Here is the rhythm, the review, and how a project reaches the archive."
       />
 
-      <Prose index="01" heading="What membership looks like">
-        <p>
-          There is no application essay and no selection round. Members join by
-          starting a project and working on it where others can see it.
-        </p>
-        <p>
-          <strong>The one real expectation is that you finish.</strong> Projects
-          are scoped at the start so that finishing is realistic — a term, not a
-          career. A project that turns out to be too large gets narrowed rather
-          than abandoned.
-        </p>
-        <p>
-          Members are expected to review other people&apos;s work too. Reviewing
-          is how the standard holds, and it is the fastest way to get better at
-          your own writing.
-        </p>
-      </Prose>
+      <Prose
+        index="01"
+        label="Membership"
+        title="You join by starting a project, not by applying."
+        lead="There is no application essay and no selection round. Members join by beginning work and doing it where others can see it."
+        points={[
+          {
+            term: "Finish what you start",
+            detail: "The one real expectation. Scope a term, not a career.",
+          },
+          {
+            term: "Narrow, don't abandon",
+            detail: "A project that turns out too large gets cut down.",
+          },
+          {
+            term: "Review others",
+            detail: "Reviewing is how the standard holds — and it is the fastest way to improve your own writing.",
+          },
+        ]}
+      />
 
-      <section className="gutter border-b border-hairline py-12 md:py-16">
-        <div className="shell-wide grid gap-10 lg:grid-cols-12">
-          <p className="mono-label flex gap-3 text-muted lg:col-span-3">
-            <span className="text-signal-text">02</span>
-            <span>The rhythm</span>
-          </p>
+      <section className="gutter border-b border-hairline py-14 md:py-20">
+        <div className="shell-wide grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-3">
+            <p className="mono-label flex gap-3 text-muted lg:sticky lg:top-28">
+              <span className="text-signal-text">02</span>
+              <span>The rhythm</span>
+            </p>
+          </div>
           <div className="lg:col-span-9">
-            <ul className="border-t border-hairline">
+            <h2 className="t-section max-w-[22ch] text-paper">
+              What a term actually looks like.
+            </h2>
+            <p className="t-lead mt-5 max-w-[50ch] text-paper-dim">
+              Four recurring commitments. Everything else is you and the work.
+            </p>
+
+            <ul className="mt-10 border-t border-hairline">
               {RHYTHM.map((item, i) => (
                 <Reveal as="li" key={item.index} delay={i * 0.05}>
-                  <div className="group grid gap-x-8 gap-y-2 border-b border-hairline py-5 md:grid-cols-12 md:items-baseline">
+                  <div className="grid gap-x-8 gap-y-2.5 border-b border-hairline py-6 md:grid-cols-12 md:items-baseline">
                     <span className="mono-label text-signal-text md:col-span-1">
                       {item.index}
                     </span>
-                    <h2 className="text-[1.125rem] font-medium tracking-[-0.015em] md:col-span-4">
-                      {item.title}
-                    </h2>
+                    <h3 className="t-sub md:col-span-4">{item.title}</h3>
                     <span className="mono-label text-faint md:col-span-2">
                       {item.cadence}
                     </span>
-                    <p className="max-w-[46ch] text-[0.9375rem] leading-relaxed text-paper-dim md:col-span-5">
+                    <p className="t-body-sm max-w-[46ch] text-muted md:col-span-5">
                       {item.body}
                     </p>
                   </div>
@@ -100,25 +110,26 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      <Prose index="03" heading="Collaboration">
-        <p>
-          Projects can be solo or shared, and the split is usually decided by
-          what the work needs rather than by who wants to join. A field study
-          with thirty deployment sites needs more hands than a proof does.
-        </p>
+      <Prose
+        index="03"
+        label="Collaboration"
+        title="Credit goes to the person who did the work."
+        lead="Projects can be solo or shared, decided by what the work needs rather than by who wants to join."
+      >
         <p>
           Every contributor is credited by name and by what they actually did —
-          fabrication, analysis, firmware, writing. Vague group authorship helps
-          no one, least of all the person who did the most.
+          fabrication, analysis, firmware, writing.{" "}
+          <strong>Vague group authorship helps no one</strong>, least of all the
+          person who did the most.
         </p>
       </Prose>
 
-      <Prose index="04" heading="Mentorship">
-        <p>
-          Mentors are researchers, engineers, and graduate students who agree to
-          a small, specific commitment: read a draft, sit in on a review, or
-          answer a methods question that has a project stuck.
-        </p>
+      <Prose
+        index="04"
+        label="Mentorship"
+        title="Small, specific commitments from people who have done it."
+        lead="Mentors are researchers, engineers, and graduate students who agree to read a draft, sit in on a review, or unstick a methods question."
+      >
         <p>
           The point is not to hand a project to an expert. It is to shorten the
           distance between a student making an avoidable mistake and someone
@@ -126,30 +137,33 @@ export default function CommunityPage() {
         </p>
       </Prose>
 
-      <Prose index="05" heading="Publishing your work">
-        <p>
-          When a project is finished, it gets written up in the Apollo
-          publication format: abstract, the sections the work actually calls for,
-          figures with real captions, and links to code, data, or hardware files
-          where they exist.
-        </p>
-        <p>
-          After review, it goes into the archive with a permanent URL, an author
-          line, and a date. It stays there. Projects can be updated with a
-          revision note, but published work is not quietly deleted.
-        </p>
-      </Prose>
+      <Prose
+        index="05"
+        label="Publishing"
+        title="Finished work goes into the archive and stays there."
+        lead="A project is written up in the Apollo format: abstract, the sections the work calls for, figures with real captions, and links to code, data, or hardware files."
+        points={[
+          {
+            term: "Permanent URL",
+            detail: "With an author line and a date.",
+          },
+          {
+            term: "Revisions, not deletions",
+            detail: "Updates carry a revision note. Published work is not quietly removed.",
+          },
+        ]}
+      />
 
       <section className="gutter section">
         <div className="shell-wide">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12">
+            <div className="grid gap-8 lg:grid-cols-12">
               <p className="mono-label text-muted lg:col-span-3 lg:pt-3">
                 <span className="text-signal-text">◆</span>
                 <span className="ml-3">Join</span>
               </p>
               <div className="lg:col-span-8 lg:col-start-4">
-                <h2 className="max-w-[18ch] text-[clamp(1.6rem,3vw,2.25rem)] font-medium leading-[1.1] tracking-[-0.025em]">
+                <h2 className="t-section max-w-[18ch] text-paper">
                   Bring the thing you{" "}
                   <span className="text-paper-dim">never finished.</span>
                 </h2>
