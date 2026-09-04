@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { ButtonLink } from "@/components/ui/Button";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/explore", label: "Explore" },
@@ -84,6 +85,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle className="mr-1" />
           <Link
             href="/signin"
             className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper"
@@ -95,9 +97,11 @@ export function Navbar() {
           </ButtonLink>
         </div>
 
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
         <button
           type="button"
-          className="-mr-2 flex size-10 items-center justify-center md:hidden"
+          className="-mr-2 flex size-10 items-center justify-center"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
@@ -116,6 +120,7 @@ export function Navbar() {
             />
           </span>
         </button>
+        </div>
       </div>
 
       {/* Mobile navigation — a full editorial sheet, not a cramped dropdown */}

@@ -30,6 +30,7 @@ export function HeroVisual() {
     if (!ctx) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let accent = "#e4572e";
 
     let seed = 20260418;
     const rand = () => {
@@ -44,6 +45,22 @@ export function HeroVisual() {
       radius: 0.9 + rand() * 1.7,
       accent: i === 5 || i === 22,
     }));
+
+    // Ink is read from CSS so the visual follows the active theme.
+    let ink = "236,232,225";
+    let alpha = 1;
+    const readInk = () => {
+      const parsed = getComputedStyle(canvas)
+        .color.match(/-?\d+(\.\d+)?/g)
+        ?.slice(0, 3);
+      if (parsed) ink = parsed.map((n) => Math.round(Number(n))).join(",");
+      accent =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--apollo-signal")
+          .trim() || accent;
+      alpha =
+        document.documentElement.dataset.theme === "light" ? 1.9 : 1;
+    };
 
     let width = 0;
     let height = 0;
@@ -62,6 +79,7 @@ export function HeroVisual() {
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      readInk();
     };
 
     const positionOf = (node: Node, t: number) => {
@@ -98,7 +116,7 @@ export function HeroVisual() {
           0,
           Math.PI * 2,
         );
-        ctx.strokeStyle = "rgba(236,232,225,0.07)";
+        ctx.strokeStyle = `rgba(${ink},${0.09 * alpha})`;
         ctx.stroke();
       }
 
@@ -112,7 +130,7 @@ export function HeroVisual() {
           const dy = points[i].y - points[j].y;
           const d = Math.hypot(dx, dy);
           if (d < 96) {
-            ctx.strokeStyle = `rgba(236,232,225,${(1 - d / 96) * 0.13})`;
+            ctx.strokeStyle = `rgba(${ink},${(1 - d / 96) * 0.16 * alpha})`;
             ctx.beginPath();
             ctx.moveTo(points[i].x, points[i].y);
             ctx.lineTo(points[j].x, points[j].y);
@@ -127,8 +145,8 @@ export function HeroVisual() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, node.accent ? 3.2 : node.radius, 0, Math.PI * 2);
         ctx.fillStyle = node.accent
-          ? "#e4572e"
-          : `rgba(236,232,225,${0.3 + node.radius * 0.16})`;
+          ? accent
+          : `rgba(${ink},${Math.min(1, (0.34 + node.radius * 0.16) * alpha)})`;
         ctx.fill();
       });
     };
@@ -163,6 +181,15 @@ export function HeroVisual() {
     }
 
     // Stop the loop whenever the visual leaves the viewport.
+    const themeObserver = new MutationObserver(() => {
+      readInk();
+      draw(performance.now());
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (reduced) return;
@@ -182,6 +209,7 @@ export function HeroVisual() {
       running = false;
       cancelAnimationFrame(frame);
       observer.disconnect();
+      themeObserver.disconnect();
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointer);
     };

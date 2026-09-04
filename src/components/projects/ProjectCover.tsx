@@ -23,10 +23,10 @@ function rng(seed: string) {
  *  precision keeps server and client markup byte-identical. */
 const q = (n: number) => Math.round(n * 100) / 100;
 
-const LINE = "rgba(236,232,225,0.34)";
-const LINE_SOFT = "rgba(236,232,225,0.19)";
-const DOT = "rgba(236,232,225,0.55)";
-const SIGNAL = "#e4572e";
+/* Line art rides on currentColor so it inverts with the theme; only the
+   signal accent is fixed. */
+const INK = "currentColor";
+const SIGNAL = "var(--apollo-signal)";
 
 /* ── Artificial Intelligence: node/link network ─────────────── */
 function Network(seed: string) {
@@ -53,7 +53,7 @@ function Network(seed: string) {
           y1={nodes[a].y}
           x2={nodes[b].x}
           y2={nodes[b].y}
-          stroke={LINE_SOFT}
+          stroke={INK} className="art-soft"
           strokeWidth="0.7"
         />
       ))}
@@ -63,7 +63,8 @@ function Network(seed: string) {
           cx={n.x}
           cy={n.y}
           r={i === hub ? 5 : n.s}
-          fill={i === hub ? SIGNAL : DOT}
+          fill={i === hub ? SIGNAL : INK}
+          className={i === hub ? undefined : "art-dot"}
         />
       ))}
       {i0(nodes[hub], nodes)}
@@ -83,7 +84,8 @@ function i0(hub: { x: number; y: number }, nodes: { x: number; y: number }[]) {
             y1={hub.y}
             x2={n.x}
             y2={n.y}
-            stroke="rgba(228,87,46,0.35)"
+            stroke={SIGNAL}
+            strokeOpacity={0.4}
             strokeWidth="0.7"
           />
         ))}
@@ -122,7 +124,8 @@ function Lattice(seed: string) {
             width={rc.w}
             height={rc.h}
             fill={i === accent ? "rgba(228,87,46,0.14)" : "none"}
-            stroke={i === accent ? SIGNAL : LINE_SOFT}
+            stroke={i === accent ? SIGNAL : INK}
+            className={i === accent ? undefined : "art-soft"}
             strokeWidth={i === accent ? 1.3 : 0.8}
           />
           {rc.d >= 4 && (
@@ -131,7 +134,7 @@ function Lattice(seed: string) {
               y1={rc.y}
               x2={rc.x + rc.w}
               y2={rc.y + rc.h}
-              stroke={LINE_SOFT}
+              stroke={INK} className="art-soft"
               strokeWidth="0.6"
             />
           )}
@@ -152,34 +155,34 @@ function Blueprint(seed: string) {
   return (
     <g>
       {Array.from({ length: 17 }, (_, i) => (
-        <line key={`v${i}`} x1={40 + i * 45} y1={28} x2={40 + i * 45} y2={H - 28} stroke="rgba(236,232,225,0.06)" strokeWidth="0.5" />
+        <line key={`v${i}`} x1={40 + i * 45} y1={28} x2={40 + i * 45} y2={H - 28} stroke={INK} className="art-grid" strokeWidth="0.5" />
       ))}
       {Array.from({ length: 12 }, (_, i) => (
-        <line key={`h${i}`} x1={28} y1={44 + i * 52} x2={W - 28} y2={44 + i * 52} stroke="rgba(236,232,225,0.06)" strokeWidth="0.5" />
+        <line key={`h${i}`} x1={28} y1={44 + i * 52} x2={W - 28} y2={44 + i * 52} stroke={INK} className="art-grid" strokeWidth="0.5" />
       ))}
-      <circle cx={cx} cy={cy} r={base} stroke={LINE} strokeWidth="1" fill="none" />
-      <circle cx={cx} cy={cy} r={q(base * 0.62)} stroke={LINE_SOFT} strokeWidth="0.8" fill="none" />
-      <circle cx={cx} cy={cy} r={q(base * 0.24)} stroke={LINE} strokeWidth="1" fill="none" />
+      <circle cx={cx} cy={cy} r={base} stroke={INK} className="art-line" strokeWidth="1" fill="none" />
+      <circle cx={cx} cy={cy} r={q(base * 0.62)} stroke={INK} className="art-soft" strokeWidth="0.8" fill="none" />
+      <circle cx={cx} cy={cy} r={q(base * 0.24)} stroke={INK} className="art-line" strokeWidth="1" fill="none" />
       {sideRect && (
         <rect
           x={q(cx + base + 40)}
           y={q(cy - base * 0.7)}
           width={q(base * 1.2)}
           height={q(base * 1.4)}
-          stroke={LINE_SOFT}
+          stroke={INK} className="art-soft"
           strokeWidth="0.8"
           fill="none"
         />
       )}
       {!sideRect && (
         <g>
-          <circle cx={q(cx + base + 96)} cy={q(cy - base * 0.35)} r={q(base * 0.42)} stroke={LINE_SOFT} strokeWidth="0.8" fill="none" />
-          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 152)} y2={q(cy + base * 0.6)} stroke={LINE_SOFT} strokeWidth="0.8" />
-          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 40)} y2={q(cy - base * 0.35)} stroke={LINE_SOFT} strokeWidth="0.8" />
+          <circle cx={q(cx + base + 96)} cy={q(cy - base * 0.35)} r={q(base * 0.42)} stroke={INK} className="art-soft" strokeWidth="0.8" fill="none" />
+          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 152)} y2={q(cy + base * 0.6)} stroke={INK} className="art-soft" strokeWidth="0.8" />
+          <line x1={q(cx + base + 40)} y1={q(cy + base * 0.6)} x2={q(cx + base + 40)} y2={q(cy - base * 0.35)} stroke={INK} className="art-soft" strokeWidth="0.8" />
         </g>
       )}
-      <line x1={q(cx - base - 46)} y1={cy} x2={q(cx + base + 46)} y2={cy} stroke={LINE_SOFT} strokeWidth="0.6" strokeDasharray="12 6 3 6" />
-      <line x1={cx} y1={q(cy - base - 44)} x2={cx} y2={q(cy + base + 44)} stroke={LINE_SOFT} strokeWidth="0.6" strokeDasharray="12 6 3 6" />
+      <line x1={q(cx - base - 46)} y1={cy} x2={q(cx + base + 46)} y2={cy} stroke={INK} className="art-soft" strokeWidth="0.6" strokeDasharray="12 6 3 6" />
+      <line x1={cx} y1={q(cy - base - 44)} x2={cx} y2={q(cy + base + 44)} stroke={INK} className="art-soft" strokeWidth="0.6" strokeDasharray="12 6 3 6" />
       {Array.from({ length: spokes }, (_, i) => {
         const a = (i / spokes) * Math.PI * 2 + r() * 0.4;
         return (
@@ -189,7 +192,7 @@ function Blueprint(seed: string) {
             y1={q(cy + Math.sin(a) * base * 0.24)}
             x2={q(cx + Math.cos(a) * base)}
             y2={q(cy + Math.sin(a) * base)}
-            stroke={LINE_SOFT}
+            stroke={INK} className="art-soft"
             strokeWidth="0.8"
           />
         );
@@ -228,7 +231,8 @@ function Contour(seed: string) {
           key={i}
           points={ring(s)}
           fill="none"
-          stroke={i === 2 ? SIGNAL : LINE_SOFT}
+          stroke={i === 2 ? SIGNAL : INK}
+          className={i === 2 ? undefined : "art-soft"}
           strokeWidth={i === 2 ? 1.4 : 0.8}
           opacity={i === 2 ? 0.85 : 1}
         />
@@ -256,14 +260,14 @@ function Curves(seed: string) {
   });
   return (
     <g>
-      <line x1={34} y1={H / 2} x2={W - 34} y2={H / 2} stroke="rgba(236,232,225,0.08)" strokeWidth="0.7" />
-      <line x1={W / 2} y1={28} x2={W / 2} y2={H - 28} stroke="rgba(236,232,225,0.08)" strokeWidth="0.7" />
+      <line x1={34} y1={H / 2} x2={W - 34} y2={H / 2} stroke={INK} className="art-grid" strokeWidth="0.7" />
+      <line x1={W / 2} y1={28} x2={W / 2} y2={H - 28} stroke={INK} className="art-grid" strokeWidth="0.7" />
       {lines.map((p, i) => (
         <polyline
           key={i}
           points={p}
           fill="none"
-          stroke={LINE_SOFT}
+          stroke={INK} className="art-soft"
           strokeWidth="0.8"
           opacity={0.85 - i / 16}
         />
@@ -298,7 +302,7 @@ export function ProjectCover({
     <svg
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="xMidYMid slice"
-      className={`size-full ${className ?? ""}`}
+      className={`size-full text-paper ${className ?? ""}`}
       role={label ? "img" : "presentation"}
       aria-hidden={label ? undefined : true}
       aria-label={label}
@@ -306,8 +310,8 @@ export function ProjectCover({
       {label ? <title>{label}</title> : null}
       <defs>
         <linearGradient id={`cv-${seed}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#16161a" />
-          <stop offset="100%" stopColor="#0d0d0f" />
+          <stop offset="0%" className="art-from" />
+          <stop offset="100%" className="art-to" />
         </linearGradient>
       </defs>
       <rect width={W} height={H} fill={`url(#cv-${seed})`} />

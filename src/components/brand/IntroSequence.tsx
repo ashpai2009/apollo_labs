@@ -2,12 +2,16 @@
 
 import { useEffect } from "react";
 
-const DURATION = 1530;
+const DURATION = 2300;
 
 /**
- * First-visit intro. The decision to play happens in a blocking inline script
- * (see `IntroGate`) so repeat visits never flash the overlay, and the motion
- * itself is pure CSS so it starts at parse time rather than after hydration.
+ * First-visit intro: points settle, the orbit draws, the Apollo A resolves,
+ * a rocket traces the orbit, and a ringed-planet silhouette rises behind the
+ * mark before the wordmark lands.
+ *
+ * The decision to play happens in a blocking inline script (see `IntroGate`)
+ * so repeat visits never flash the overlay, and the motion is pure CSS so it
+ * starts at parse time rather than after hydration.
  */
 export function IntroSequence() {
   useEffect(() => {
@@ -21,38 +25,76 @@ export function IntroSequence() {
 
   return (
     <div id="apollo-intro" aria-hidden="true">
-      <svg viewBox="0 0 32 32" className="intro-mark" fill="none">
-        <g className="intro-points">
-          <circle cx="3.2" cy="14.5" r="0.9" fill="currentColor" />
-          <circle cx="16" cy="27.6" r="0.9" fill="currentColor" />
-          <circle cx="28.8" cy="21.5" r="0.9" fill="currentColor" />
-          <circle cx="9" cy="8.4" r="0.9" fill="currentColor" />
+      <svg viewBox="0 0 200 200" className="intro-scene" fill="none">
+        {/* Ringed planet, behind everything */}
+        <g className="intro-planet">
+          <circle cx="100" cy="108" r="62" stroke="currentColor" strokeWidth="1.2" />
+          <ellipse
+            cx="100"
+            cy="108"
+            rx="94"
+            ry="25"
+            transform="rotate(-17 100 108)"
+            stroke="currentColor"
+            strokeWidth="1.2"
+          />
+          <ellipse
+            cx="100"
+            cy="108"
+            rx="80"
+            ry="21"
+            transform="rotate(-17 100 108)"
+            stroke="currentColor"
+            strokeWidth="0.8"
+          />
         </g>
-        <ellipse
-          className="intro-orbit"
-          cx="16"
-          cy="18"
-          rx="13.5"
-          ry="6.5"
-          transform="rotate(-22 16 18)"
-          stroke="currentColor"
-          strokeWidth="1.1"
-        />
+
+        {/* Settling points */}
+        <g className="intro-points">
+          <circle cx="34" cy="70" r="2" fill="currentColor" />
+          <circle cx="168" cy="88" r="2" fill="currentColor" />
+          <circle cx="72" cy="170" r="2" fill="currentColor" />
+          <circle cx="146" cy="158" r="2" fill="currentColor" />
+        </g>
+
+        {/* Orbit + rocket share one rotated frame */}
+        <g transform="rotate(-20 100 112)">
+          <ellipse
+            className="intro-orbit"
+            cx="100"
+            cy="112"
+            rx="78"
+            ry="38"
+            stroke="currentColor"
+            strokeWidth="1.1"
+          />
+          <g className="intro-rocket-track">
+            <g className="intro-rocket">
+              <path d="M12 0 3-5H-8l-3 2.5v5L-8 5H3Z" fill="currentColor" />
+              <path d="M-3-5-8-11-11-5Z" fill="currentColor" />
+              <path d="M-3 5-8 11-11 5Z" fill="currentColor" />
+              <circle cx="4" cy="0" r="1.9" fill="var(--color-void)" />
+              <path d="M-11-1.7-18.5 0-11 1.7Z" fill="var(--apollo-signal)" opacity="0.9" />
+            </g>
+          </g>
+        </g>
+
+        {/* The Apollo A */}
         <path
           className="intro-a"
-          d="M6.6 26.4 L16 5.4 L25.4 26.4"
+          d="M41 165 L100 34 L159 165"
           stroke="currentColor"
-          strokeWidth="1.9"
+          strokeWidth="7"
           strokeLinecap="square"
         />
         <path
           className="intro-bar"
-          d="M11.1 19.6 H20.9"
+          d="M69 122 H131"
           stroke="currentColor"
-          strokeWidth="1.9"
+          strokeWidth="7"
           strokeLinecap="square"
         />
-        <circle className="intro-node" cx="28.5" cy="12.9" r="2.1" fill="var(--color-signal)" />
+        <circle className="intro-node" cx="178" cy="81" r="7.5" fill="var(--apollo-signal)" />
       </svg>
 
       <span className="intro-word">

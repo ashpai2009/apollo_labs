@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Navbar } from "@/components/chrome/Navbar";
 import { Footer } from "@/components/chrome/Footer";
 import { IntroGate, IntroSequence } from "@/components/brand/IntroSequence";
+import { ThemeGate } from "@/components/chrome/ThemeToggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -54,6 +55,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased">
+        <ThemeGate />
         <IntroGate />
         <IntroSequence />
         <a
