@@ -18,7 +18,7 @@ function FormMessage({ state }: { state: AuthState }) {
   if (!state.message) return null;
   return (
     <p
-      className={`border px-3 py-2.5 text-sm ${
+      className={`border px-4 py-3 text-[0.9375rem] leading-snug ${
         state.success
           ? "border-paper/20 bg-paper/[0.04] text-paper-dim"
           : "border-signal/40 bg-signal/[0.07] text-signal-text"
@@ -34,10 +34,10 @@ export function JoinForm() {
   const [state, action, pending] = useActionState(signUp, initialState);
   return (
     <form action={action} className="mt-10 flex flex-col gap-7" noValidate>
-      <Field label="Full name" name="name" placeholder="Your name" autoComplete="name" required error={state.errors?.name} />
-      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required error={state.errors?.email} />
+      <Field label="Full name" name="name" placeholder="Your name" autoComplete="name" required defaultValue={state.values?.name} error={state.errors?.name} />
+      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required defaultValue={state.values?.email} error={state.errors?.email} />
       <Field label="Password" type="password" name="password" placeholder="At least 8 characters" autoComplete="new-password" required minLength={8} error={state.errors?.password} />
-      <Field label="Graduation year" type="number" name="graduationYear" placeholder="2028" min={2024} max={2040} required error={state.errors?.graduationYear} />
+      <Field label="Graduation year" type="number" name="graduationYear" placeholder="2028" min={2024} max={2040} required defaultValue={state.values?.graduationYear} error={state.errors?.graduationYear} />
       <FormMessage state={state} />
       <div className="mt-2">
         <Button type="submit" disabled={pending} className="group w-full">
@@ -52,7 +52,7 @@ export function SignInForm() {
   const [state, action, pending] = useActionState(signIn, initialState);
   return (
     <form action={action} className="mt-10 flex flex-col gap-7" noValidate>
-      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required error={state.errors?.email} />
+      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required defaultValue={state.values?.email} error={state.errors?.email} />
       <Field label="Password" type="password" name="password" placeholder="••••••••" autoComplete="current-password" required error={state.errors?.password} />
       <FormMessage state={state} />
       <div className="mt-2 flex flex-col gap-4">
@@ -71,7 +71,7 @@ export function ForgotPasswordForm() {
   const [state, action, pending] = useActionState(requestPasswordReset, initialState);
   return (
     <form action={action} className="mt-10 flex flex-col gap-7" noValidate>
-      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required error={state.errors?.email} />
+      <Field label="Email" type="email" name="email" placeholder="you@school.edu" autoComplete="email" required defaultValue={state.values?.email} error={state.errors?.email} />
       <FormMessage state={state} />
       <Button type="submit" disabled={pending} className="group w-full">
         {pending ? "Sending link…" : "Send Reset Link"} {!pending && <Arrow />}

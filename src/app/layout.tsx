@@ -4,6 +4,7 @@ import { Navbar } from "@/components/chrome/Navbar";
 import { Footer } from "@/components/chrome/Footer";
 import { IntroGate, IntroSequence } from "@/components/brand/IntroSequence";
 import { ThemeGate } from "@/components/chrome/ThemeToggle";
+import { PointerGlow } from "@/components/ui/PointerGlow";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,15 +59,18 @@ export default function RootLayout({
         <ThemeGate />
         <IntroGate />
         <IntroSequence />
+        <PointerGlow />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[200] focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:text-paper"
         >
           Skip to content
         </a>
-        <Navbar />
-        <main id="main">{children}</main>
-        <Footer />
+        <div className="relative z-10">
+          <Navbar />
+          <main id="main">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

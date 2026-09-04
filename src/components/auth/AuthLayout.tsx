@@ -1,6 +1,4 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
-import { Logo } from "@/components/brand/Logo";
 import { ProjectCover } from "@/components/projects/ProjectCover";
 
 /**
@@ -21,25 +19,20 @@ export function AuthLayout({
   footer: ReactNode;
 }) {
   return (
-    <div className="grid min-h-[100dvh] lg:grid-cols-2">
+    <div className="grid min-h-[calc(100dvh-4rem)] lg:grid-cols-2">
       {/* Identity */}
-      <aside className="relative hidden overflow-hidden border-r border-hairline bg-base lg:flex lg:flex-col lg:justify-between">
-        <div className="absolute inset-0 opacity-70">
-          <ProjectCover variant="matrix" seed="apollo-auth" />
+      <aside className="relative hidden overflow-hidden border-r border-hairline bg-base lg:flex lg:flex-col lg:justify-end">
+        <div className="absolute inset-0">
+          <ProjectCover variant="curves" seed="apollo-auth-panel" />
         </div>
-        <div className="relative gutter pt-16">
-          <Link href="/" className="inline-flex items-center gap-3">
-            <Logo size={30} />
-            <span className="flex items-baseline gap-[0.45em] text-[0.8125rem] font-medium uppercase leading-none tracking-[0.2em]">
-              <span className="text-paper">Apollo</span>
-              <span className="text-muted">Labs</span>
-            </span>
-          </Link>
-        </div>
-        <div className="relative gutter pb-16">
-          <p className="max-w-[20ch] font-serif text-[clamp(1.9rem,2.6vw,2.6rem)] leading-[1.15]">
-            {statement}
-          </p>
+        {/* Scrim: keeps the wordmark and statement legible over the artwork
+            in both themes without washing the gradient out. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-void/80 via-void/15 to-void/25"
+        />
+        <div className="relative z-10 gutter pb-16">
+          <p className="t-section max-w-[16ch] text-paper">{statement}</p>
           <p className="mono-label mt-8 text-faint">
             Apollo Labs · Est. 2026 · Student-Led Research
           </p>
@@ -48,14 +41,12 @@ export function AuthLayout({
 
       {/* Form */}
       <section className="gutter flex flex-col justify-center py-28 lg:py-16">
-        <div className="mx-auto w-full max-w-[26rem]">
+        <div className="mx-auto w-full max-w-[28rem]">
           <p className="mono-label flex items-center gap-3 text-muted">
             <span className="text-signal-text">◆</span>
             {eyebrow}
           </p>
-          <h1 className="mt-7 text-[clamp(1.9rem,3.4vw,2.5rem)] font-normal leading-[1.08] tracking-[-0.025em]">
-            {title}
-          </h1>
+          <h1 className="t-section mt-7 text-paper">{title}</h1>
           {children}
           <div className="mt-10 border-t border-hairline pt-6">{footer}</div>
         </div>

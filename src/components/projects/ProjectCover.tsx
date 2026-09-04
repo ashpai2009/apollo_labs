@@ -19,45 +19,16 @@ function rng(seed: string) {
   };
 }
 
-/** Rounded so Node and the browser serialise identical path data. */
+/** Rounded so Node and the browser serialise identical attribute values. */
 const q = (n: number) => Math.round(n * 100) / 100;
 
-/**
- * A placeholder for a figure that does not exist yet — not a piece of art.
- * A near-neutral ground, a measured grid, and the Apollo mark held small in
- * the corner. The discipline shifts the hue slightly and the seed shifts the
- * grid origin, so a wall of cards has variation without colour noise.
- *
- * Any project carrying `coverImageUrl` skips generation entirely.
- */
-function Grid({ seed }: { seed: string }) {
-  const r = rng(seed);
-  const step = 60;
-  const offset = q(r() * step);
-  const lines: React.ReactNode[] = [];
-  for (let x = offset; x < W; x += step) {
-    lines.push(
-      <line key={`v${x}`} x1={q(x)} y1={0} x2={q(x)} y2={H} strokeWidth="1" />,
-    );
-  }
-  for (let y = offset; y < H; y += step) {
-    lines.push(
-      <line key={`h${y}`} x1={0} y1={q(y)} x2={W} y2={q(y)} strokeWidth="1" />,
-    );
-  }
-  return (
-    <g stroke="var(--cover-ink)" strokeOpacity="0.2">
-      {lines}
-    </g>
-  );
-}
-
-/** The Apollo mark, authored on a 32×32 grid. */
-function Mark({ scale, x, y }: { scale: number; x: number; y: number }) {
+/** The Apollo mark, authored on a 32×32 grid, scaled into the cover. */
+function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
+  const half = (32 * scale) / 2;
   return (
     <g
-      transform={`translate(${q(x)} ${q(y)}) scale(${scale})`}
-      stroke="var(--cover-ink)"
+      transform={`translate(${q(cx - half)} ${q(cy - half)}) scale(${scale})`}
+      stroke="var(--cover-mark)"
       fill="none"
     >
       <ellipse
@@ -66,20 +37,20 @@ function Mark({ scale, x, y }: { scale: number; x: number; y: number }) {
         rx="13.5"
         ry="6.5"
         transform="rotate(-22 16 18)"
-        strokeOpacity="0.3"
-        strokeWidth="0.7"
+        strokeOpacity="0.38"
+        strokeWidth="0.5"
       />
       <path
         d="M6.6 26.4 L16 5.4 L25.4 26.4"
-        strokeOpacity="0.62"
-        strokeWidth="1.5"
+        strokeOpacity="0.8"
+        strokeWidth="1.05"
         strokeLinecap="square"
         strokeLinejoin="miter"
       />
       <path
         d="M11.1 19.6 H20.9"
-        strokeOpacity="0.62"
-        strokeWidth="1.5"
+        strokeOpacity="0.8"
+        strokeWidth="1.05"
         strokeLinecap="square"
       />
       <circle
@@ -87,13 +58,21 @@ function Mark({ scale, x, y }: { scale: number; x: number; y: number }) {
         cy="12.9"
         r="2.1"
         fill="var(--apollo-signal)"
-        fillOpacity="0.75"
+        fillOpacity="0.9"
         stroke="none"
       />
     </g>
   );
 }
 
+/**
+ * A soft gradient ground, one diffuse highlight, and the Apollo mark centred.
+ * The discipline picks the hue (via the `cover-*` class in globals.css) and
+ * the seed nudges the gradient direction and highlight position, so two cards
+ * in the same discipline are not identical.
+ *
+ * Any project carrying `coverImageUrl` skips generation entirely.
+ */
 export function ProjectCover({
   variant,
   seed,
@@ -121,7 +100,15 @@ export function ProjectCover({
     );
   }
 
+  const r = rng(seed);
+  const flip = r() > 0.5;
+  // The highlight stays in the upper half so the light reads as consistent.
+  const glowX = q(0.18 + r() * 0.3);
+  const glowY = q(0.12 + r() * 0.24);
+  const glowR = q(0.6 + r() * 0.22);
+
   const gid = `cv-${seed}`;
+  const glid = `cg-${seed}`;
 
   return (
     <svg
@@ -134,15 +121,28 @@ export function ProjectCover({
     >
       {label ? <title>{label}</title> : null}
       <defs>
-        <linearGradient id={gid} x1="0" y1="0" x2="0.6" y2="1">
+        <linearGradient
+          id={gid}
+          x1={flip ? "1" : "0"}
+          y1="0"
+          x2={flip ? "0" : "1"}
+          y2="1"
+        >
           <stop offset="0%" stopColor="var(--cover-a)" />
           <stop offset="100%" stopColor="var(--cover-b)" />
         </linearGradient>
+
+        <radialGradient id={glid} cx={glowX} cy={glowY} r={glowR}>
+          <stop offset="0%" stopColor="var(--cover-glow)" stopOpacity="0.32" />
+          <stop offset="55%" stopColor="var(--cover-glow)" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="var(--cover-glow)" stopOpacity="0" />
+        </radialGradient>
       </defs>
 
       <rect width={W} height={H} fill={`url(#${gid})`} />
-      <Grid seed={seed} />
-      <Mark scale={4.4} x={W - 232} y={H - 232} />
+      <rect width={W} height={H} fill={`url(#${glid})`} />
+
+      <Mark scale={11} cx={W / 2} cy={H / 2} />
     </svg>
   );
 }
