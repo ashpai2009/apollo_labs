@@ -62,10 +62,15 @@ export function Navbar() {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onResize = () => {
+      if (window.matchMedia("(min-width: 768px)").matches) setOpen(false);
+    };
     window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
     };
   }, [open]);
 
@@ -137,7 +142,7 @@ export function Navbar() {
           <ThemeToggle />
         <button
           type="button"
-          className="-mr-2 flex size-10 items-center justify-center"
+          className="flex size-11 items-center justify-center"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
@@ -159,14 +164,14 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile navigation — a full editorial sheet, not a cramped dropdown */}
+      {/* Mobile navigation */}
       <div
         id="mobile-nav"
         hidden={!open}
         className="gutter h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-hairline bg-void pb-10 pt-6 md:hidden"
       >
         <ul className="flex flex-col">
-          {NAV.map((item, i) => (
+          {NAV.map((item) => (
             <li key={item.href} className="border-b border-hairline">
               <Link
                 href={item.href}
@@ -179,9 +184,6 @@ export function Navbar() {
                   }`}
                 >
                   {item.label}
-                </span>
-                <span className="mono-label text-faint">
-                  {String(i + 1).padStart(2, "0")}
                 </span>
               </Link>
             </li>
@@ -200,9 +202,6 @@ export function Navbar() {
             </>
           )}
         </div>
-        <p className="mono-label mt-10 text-faint">
-          Apollo Labs · Student-Led Research
-        </p>
       </div>
     </header>
   );

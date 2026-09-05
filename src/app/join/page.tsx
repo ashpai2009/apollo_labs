@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Join Apollo Labs and start publishing your research.",
 };
 
+const DISCORD_INVITE = "https://discord.gg/pvgqDxX2NE";
+
 export default function JoinPage() {
   return (
     <AuthLayout
@@ -27,15 +29,26 @@ export default function JoinPage() {
       ]}
       workspaceItems={["Project overview", "Team directory", "Account snapshot"]}
       footer={
-        <p className="text-sm text-muted">
-          Already a member?{" "}
-          <Link
-            href="/signin"
-            className="link-reveal text-paper transition-colors hover:text-signal-bright"
+        <div className="flex flex-col gap-3 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            Already a member?{" "}
+            <Link
+              href="/signin"
+              className="link-reveal inline-flex min-h-11 items-center text-paper transition-colors hover:text-signal-bright"
+            >
+              Sign in
+            </Link>
+          </p>
+          <a
+            href={DISCORD_INVITE}
+            target="_blank"
+            rel="noreferrer"
+            className="link-reveal inline-flex min-h-11 items-center text-paper transition-colors hover:text-signal-bright"
           >
-            Sign in
-          </Link>
-        </p>
+            Join the Discord
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
       }
     >
       <JoinForm />
