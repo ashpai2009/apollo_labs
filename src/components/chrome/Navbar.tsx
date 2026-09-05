@@ -16,6 +16,8 @@ const NAV = [
   { href: "/team", label: "Team" },
 ];
 
+const DISCORD_INVITE = "https://discord.gg/pvgqDxX2NE";
+
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -85,7 +87,7 @@ export function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="shell-wide gutter flex h-14 items-center justify-between md:h-16">
+      <div className="shell-wide gutter flex h-14 items-center justify-between lg:h-16">
         <Link
           href="/"
           className="rounded-sm transition-opacity duration-200 hover:opacity-80"
@@ -94,7 +96,7 @@ export function Navbar() {
           <Wordmark />
         </Link>
 
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-6 lg:gap-7">
             {NAV.map((item) => {
               const active = isActive(item.href);
@@ -121,8 +123,19 @@ export function Navbar() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <ThemeToggle className="mr-1" />
+          <ButtonLink
+            href={DISCORD_INVITE}
+            target="_blank"
+            rel="noreferrer"
+            variant="secondary"
+            size="sm"
+            className="border-signal/55 text-signal-text hover:border-signal hover:bg-signal/[0.08]"
+          >
+            Discord <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </ButtonLink>
           {signedIn ? (
             <>
               <button type="button" onClick={handleSignOut} className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper">
@@ -138,7 +151,7 @@ export function Navbar() {
           )}
         </div>
 
-        <div className="flex items-center gap-1 md:hidden">
+        <div className="flex items-center gap-1 lg:hidden">
           <ThemeToggle />
         <button
           type="button"
@@ -168,7 +181,7 @@ export function Navbar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="gutter h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-hairline bg-void pb-10 pt-6 md:hidden"
+        className="gutter h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-hairline bg-void pb-10 pt-6 lg:hidden"
       >
         <ul className="flex flex-col">
           {NAV.map((item) => (
@@ -190,6 +203,17 @@ export function Navbar() {
           ))}
         </ul>
         <div className="mt-8 flex flex-col gap-3">
+          <ButtonLink
+            href={DISCORD_INVITE}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setOpen(false)}
+            variant="secondary"
+            className="w-full justify-between border-signal/55 text-signal-text hover:border-signal hover:bg-signal/[0.08]"
+          >
+            Discord <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </ButtonLink>
           {signedIn ? (
             <>
               <ButtonLink href="/dashboard" onClick={() => setOpen(false)} className="w-full">Dashboard</ButtonLink>
