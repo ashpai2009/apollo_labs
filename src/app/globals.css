@@ -66,7 +66,7 @@
   --apollo-paper: #ece8e1;
   --apollo-paper-dim: #b9b5ae;
   --apollo-muted: #8d8c92;
-  --apollo-faint: #6e6d73;
+  --apollo-faint: #828187;
 
   --apollo-signal: #e4572e;
   --apollo-signal-bright: #f2764f;
@@ -301,6 +301,320 @@ html[data-theme="light"] {
     transform-origin: left;
   }
 
+  /* Primary actions have a slightly larger magnetic capture field. The
+     orange orbit makes the pull visible without turning every control into an
+     animated object. */
+  .magnetic-action::after {
+    content: "";
+    position: absolute;
+    inset: -0.45rem;
+    border: 1px solid color-mix(in srgb, var(--color-signal) 42%, transparent);
+    box-shadow: 0 0 1.75rem color-mix(in srgb, var(--color-signal) 22%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+    transition:
+      opacity 240ms var(--ease-precise),
+      transform 360ms var(--ease-out-expo);
+  }
+  .magnetic-action:hover::after,
+  .magnetic-action:focus-visible::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  @media (prefers-reduced-motion: reduce), (pointer: coarse) {
+    .magnetic-action::after { display: none; }
+  }
+
+  /* ── Launch controls ──────────────────────────────
+     Magnetic movement and press compression share one transform, so neither
+     interaction can cancel the other. A real pending state reveals a quiet
+     progress line; there are no artificial waits just to show the effect. */
+  .button-motion {
+    --magnetic-x: 0px;
+    --magnetic-y: 0px;
+    --press-scale: 1;
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0)
+      scale(var(--press-scale));
+  }
+  .button-motion::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      color-mix(in srgb, currentColor 13%, transparent) 48%,
+      transparent 76%
+    );
+    opacity: 0;
+    transform: translateX(-28%) scaleX(0.32);
+    transition:
+      opacity 180ms var(--ease-precise),
+      transform 460ms var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .button-motion:hover::before,
+  .button-motion:focus-visible::before {
+    opacity: 0.7;
+    transform: translateX(28%) scaleX(1);
+  }
+  .button-motion:active {
+    --press-scale: 0.97;
+  }
+  .button-motion:disabled {
+    opacity: 0.45;
+  }
+  .button-motion[aria-busy="true"] {
+    opacity: 0.82;
+  }
+  .button-motion__label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition:
+      opacity 180ms var(--ease-precise),
+      transform 220ms var(--ease-out-expo);
+  }
+  .button-motion.justify-between .button-motion__label {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .button-motion:active .button-motion__label {
+    transform: translateY(1px) scale(0.985);
+  }
+  .button-motion[aria-busy="true"] .button-motion__label {
+    opacity: 0.55;
+    transform: translateX(-0.35rem);
+  }
+  .button-progress {
+    position: absolute;
+    inset: auto 0.45rem 0.22rem;
+    z-index: 2;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    background: color-mix(in srgb, currentColor 20%, transparent);
+    transition: opacity 180ms var(--ease-precise) 100ms;
+    pointer-events: none;
+  }
+  .button-progress.is-pending {
+    opacity: 0.72;
+    visibility: visible;
+  }
+  .button-progress__signal {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 32%;
+    background: currentColor;
+    transform: translateX(-110%);
+  }
+  .button-progress.is-pending .button-progress__signal {
+    animation: button-progress-run 1.15s var(--ease-precise) 100ms infinite;
+  }
+  @keyframes button-progress-run {
+    to { transform: translateX(415%); }
+  }
+
+  /* ── Rocket motion language ───────────────────────
+     The card craft and visible line share the cover's exact SVG path. */
+  .project-cover-rocket {
+    color: var(--color-signal);
+    pointer-events: none;
+  }
+  .project-cover-rocket__static {
+    display: none;
+  }
+  .project-cover-rocket__flame {
+    transform-box: fill-box;
+    transform-origin: right center;
+    animation: rocket-flame 360ms ease-in-out infinite alternate;
+  }
+  .rocket-craft {
+    --rocket-color: var(--color-signal);
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .rocket-craft__body {
+    position: absolute;
+    z-index: 2;
+    left: 23%;
+    top: 22%;
+    width: 70%;
+    height: 56%;
+    background: var(--rocket-color);
+    clip-path: polygon(0 0, 69% 0, 100% 50%, 69% 100%, 0 100%);
+  }
+  .rocket-craft__window {
+    position: absolute;
+    right: 31%;
+    top: 23%;
+    height: 54%;
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--rocket-color) 62%, var(--color-void));
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-paper) 78%, transparent);
+  }
+  .rocket-craft__seam {
+    position: absolute;
+    left: 16%;
+    top: 14%;
+    width: 1px;
+    height: 72%;
+    background: color-mix(in srgb, var(--rocket-color) 55%, var(--color-void));
+  }
+  .rocket-craft__fin {
+    position: absolute;
+    z-index: 1;
+    left: 28%;
+    width: 28%;
+    height: 35%;
+    background: color-mix(in srgb, var(--rocket-color) 70%, var(--color-void));
+  }
+  .rocket-craft__fin--port {
+    top: 2%;
+    clip-path: polygon(20% 100%, 70% 0, 100% 100%);
+  }
+  .rocket-craft__fin--starboard {
+    bottom: 2%;
+    clip-path: polygon(20% 0, 100% 0, 70% 100%);
+  }
+  .rocket-craft__nozzle {
+    position: absolute;
+    z-index: 2;
+    left: 15%;
+    top: 35%;
+    width: 10%;
+    height: 30%;
+    background: color-mix(in srgb, var(--rocket-color) 50%, var(--color-paper));
+  }
+  .rocket-craft__flame {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 31%;
+    width: 18%;
+    height: 38%;
+    background: var(--color-signal-bright);
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    transform-origin: 100% 50%;
+    animation: rocket-flame 360ms ease-in-out infinite alternate;
+  }
+  .rocket-craft__flame-core {
+    position: absolute;
+    right: 0;
+    top: 31%;
+    width: 72%;
+    height: 38%;
+    background: color-mix(in srgb, var(--color-paper) 76%, var(--color-signal));
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  }
+  @keyframes rocket-flame {
+    from { opacity: 0.65; transform: scaleX(0.72); }
+    to { opacity: 1; transform: scaleX(1.08); }
+  }
+  /* A static monochrome craft plus text makes the corner control's purpose
+     explicit without adding another flying object to the interface. */
+  .theme-toggle__icon {
+    position: relative;
+    display: block;
+    flex: none;
+    width: 1.45rem;
+    height: 0.78rem;
+  }
+  .theme-toggle__craft {
+    --rocket-color: currentColor;
+    position: absolute;
+    inset: 0;
+  }
+  .theme-toggle__craft .rocket-craft__flame {
+    display: none;
+  }
+  .theme-toggle__label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── Route arrival and genuine wait state ───────── */
+  .route-stage {
+    position: relative;
+    min-height: 42vh;
+    animation: route-arrival 420ms var(--ease-out-expo) both;
+  }
+  .route-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 30;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-signal), transparent);
+    pointer-events: none;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: route-launch-line 560ms var(--ease-out-expo) both;
+  }
+  .route-loading {
+    display: grid;
+    min-height: 68vh;
+    place-items: center;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .route-loading__content {
+    display: grid;
+    width: min(100%, 64rem);
+    align-items: center;
+    gap: 2.5rem;
+    padding-block: 5rem;
+  }
+  .route-loading__meter {
+    position: relative;
+    width: min(100%, 24rem);
+    height: 1px;
+    overflow: hidden;
+    background: var(--color-hairline-strong);
+  }
+  .route-loading__signal {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 34%;
+    background: var(--color-signal);
+    transform: translateX(-110%);
+    animation: route-loading-signal 1.35s var(--ease-precise) infinite;
+  }
+  @media (min-width: 768px) {
+    .route-loading__content {
+      grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr);
+      gap: 4rem;
+    }
+    .route-loading__meter { justify-self: end; }
+  }
+  @keyframes route-arrival {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes route-launch-line {
+    0% { opacity: 0; transform: scaleX(0); transform-origin: left; }
+    38% { opacity: 1; transform: scaleX(1); transform-origin: left; }
+    62% { opacity: 1; transform: scaleX(1); transform-origin: right; }
+    100% { opacity: 0; transform: scaleX(0); transform-origin: right; }
+  }
+  @keyframes route-loading-signal {
+    to { transform: translateX(395%); }
+  }
+
   /* ── Pointer glow ─────────────────────────────────
      A faint light trailing the cursor over empty ground.
      Fixed, behind everything, and never interactive. Starts
@@ -437,6 +751,29 @@ html[data-theme="light"] {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .project-cover-rocket__animated {
+    display: none;
+  }
+  .project-cover-rocket__static {
+    display: block;
+  }
+  .rocket-craft__flame,
+  .project-cover-rocket__flame,
+  .button-progress.is-pending .button-progress__signal,
+  .route-loading__signal,
+  .route-stage,
+  .route-stage::before {
+    animation: none !important;
+  }
+  .button-progress.is-pending {
+    opacity: 0.9;
+    visibility: visible;
+  }
+  .button-progress.is-pending .button-progress__signal,
+  .route-loading__signal {
+    width: 100%;
+    transform: none;
+  }
 }
 
 /* ─────────────────────────────────────────────────
@@ -457,7 +794,7 @@ html[data-apollo-intro="play"] #apollo-intro {
   gap: 1.25rem;
   background: var(--color-void);
   color: var(--color-paper);
-  animation: intro-exit 320ms var(--ease-precise) 1980ms forwards;
+  animation: intro-exit 350ms var(--ease-precise) 2650ms forwards;
 }
 
 html[data-apollo-intro="play"] body {
@@ -480,56 +817,56 @@ html[data-apollo-intro="play"] body {
 #apollo-intro .intro-points circle:nth-child(3) { animation-delay: 200ms; }
 #apollo-intro .intro-points circle:nth-child(4) { animation-delay: 280ms; }
 
-/* 0.20s — the orbit draws itself */
+/* 0.25s — the orbit draws itself */
 #apollo-intro .intro-orbit {
   stroke-dasharray: 372;
   stroke-dashoffset: 372;
   opacity: 0.3;
   animation:
-    intro-draw 640ms var(--ease-precise) 200ms forwards,
-    intro-fade-out 380ms var(--ease-precise) 1420ms forwards;
+    intro-draw 850ms var(--ease-precise) 250ms forwards,
+    intro-fade-out 350ms var(--ease-precise) 1900ms forwards;
 }
 
-/* 0.48s — the A resolves */
+/* 0.65s — the A resolves */
 #apollo-intro .intro-a {
   stroke-dasharray: 288;
   stroke-dashoffset: 288;
-  animation: intro-draw 520ms var(--ease-out-expo) 480ms forwards;
+  animation: intro-draw 700ms var(--ease-out-expo) 650ms forwards;
 }
 #apollo-intro .intro-bar {
   stroke-dasharray: 62;
   stroke-dashoffset: 62;
-  animation: intro-draw 300ms var(--ease-out-expo) 800ms forwards;
+  animation: intro-draw 400ms var(--ease-out-expo) 1100ms forwards;
 }
 #apollo-intro .intro-node {
   opacity: 0;
   transform-origin: 178px 81px;
-  animation: intro-node 320ms var(--ease-out-expo) 880ms forwards;
+  animation: intro-node 360ms var(--ease-out-expo) 1280ms forwards;
 }
 
-/* 0.72s — the rocket runs the orbit once */
+/* 0.75s — the rocket takes one measured orbit */
 #apollo-intro .intro-rocket-track {
   offset-path: path("M 22,112 a 78,38 0 1,1 156,0 a 78,38 0 1,1 -156,0");
   offset-rotate: auto;
   offset-distance: 0%;
   opacity: 0;
   animation:
-    intro-orbit-run 1080ms cubic-bezier(0.4, 0, 0.35, 1) 720ms forwards,
-    intro-rocket-visible 1080ms linear 720ms forwards;
+    intro-orbit-run 1400ms linear 750ms forwards,
+    intro-rocket-visible 1400ms linear 750ms forwards;
 }
 #apollo-intro .intro-rocket {
   /* Nose leads the path; the mark is authored pointing along +X. */
   transform: scale(1.4);
 }
 
-/* 1.42s — the ringed planet rises behind the mark */
+/* 1.45s — the ringed planet rises behind the mark */
 #apollo-intro .intro-planet {
   opacity: 0;
   transform-origin: 100px 108px;
-  animation: intro-planet-in 620ms var(--ease-out-expo) 1420ms forwards;
+  animation: intro-planet-in 600ms var(--ease-out-expo) 1450ms forwards;
 }
 
-/* 1.62s — wordmark lands */
+/* 1.75s — wordmark lands */
 #apollo-intro .intro-word {
   display: flex;
   gap: 0.5em;
@@ -542,9 +879,9 @@ html[data-apollo-intro="play"] body {
 #apollo-intro .intro-word > span {
   display: block;
   transform: translateY(110%);
-  animation: intro-rise 520ms var(--ease-out-expo) 1620ms forwards;
+  animation: intro-rise 500ms var(--ease-out-expo) 1750ms forwards;
 }
-#apollo-intro .intro-word > span:last-child { animation-delay: 1700ms; }
+#apollo-intro .intro-word > span:last-child { animation-delay: 1900ms; }
 #apollo-intro .intro-word-dim { color: var(--color-muted); }
 
 @keyframes intro-draw { to { stroke-dashoffset: 0; } }

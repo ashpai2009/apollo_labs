@@ -1,4 +1,5 @@
 import type { CoverVariant } from "@/lib/types";
+import { APOLLO_MARK_ORBIT_PATH } from "@/components/ui/RocketOrbit";
 
 const W = 1200;
 const H = 800;
@@ -31,12 +32,8 @@ function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
       stroke="var(--cover-mark)"
       fill="none"
     >
-      <ellipse
-        cx="16"
-        cy="18"
-        rx="13.5"
-        ry="6.5"
-        transform="rotate(-22 16 18)"
+      <path
+        d={APOLLO_MARK_ORBIT_PATH}
         strokeOpacity="0.38"
         strokeWidth="0.5"
       />
@@ -52,14 +49,6 @@ function Mark({ scale, cx, cy }: { scale: number; cx: number; cy: number }) {
         strokeOpacity="0.8"
         strokeWidth="1.05"
         strokeLinecap="square"
-      />
-      <circle
-        cx="28.5"
-        cy="12.9"
-        r="2.1"
-        fill="var(--apollo-signal)"
-        fillOpacity="0.9"
-        stroke="none"
       />
     </g>
   );
@@ -96,6 +85,8 @@ export function ProjectCover({
         alt={label ?? ""}
         className={`size-full object-cover ${className ?? ""}`}
         loading="lazy"
+        decoding="async"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
       />
     );
   }

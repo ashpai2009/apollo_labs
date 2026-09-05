@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
 import { PageHeader, Prose } from "@/components/ui/PageHeader";
-import { TeamGrid } from "@/components/about/TeamGrid";
 import { ButtonLink, Arrow } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why Apollo Labs exists, how students participate, how work gets reviewed and published, and who runs it.",
+    "Why Apollo Labs exists, how students participate, and how work gets reviewed and published.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <PageHeader
-        index="01"
         eyebrow="About"
         title={
           <>
@@ -43,10 +41,6 @@ export default function AboutPage() {
             term: "Permanent pages",
             detail: "A citable URL with an author and a date.",
           },
-          {
-            term: "Public archive",
-            detail: "Published work stays up. It is not quietly deleted.",
-          },
         ]}
       >
         <p>
@@ -60,32 +54,6 @@ export default function AboutPage() {
 
       <Prose
         index="02"
-        label="Why we exist"
-        title="Students hit the same three walls."
-        lead="They cannot tell whether an idea is the right size, they have no one to check the work who is not grading it, and there is nowhere credible to put the result."
-        points={[
-          {
-            term: "Scoping",
-            detail: "A conversation with people who have finished before.",
-          },
-          {
-            term: "Review",
-            detail: "In the open, from other members, before publication.",
-          },
-          {
-            term: "Archive",
-            detail: "A permanent home that is not a slideshow or a folder.",
-          },
-          {
-            term: "Builds count",
-            detail:
-              "A documented build with real testing is a contribution too.",
-          },
-        ]}
-      />
-
-      <Prose
-        index="03"
         label="How students participate"
         title="Join with an interest, not a finished proposal."
         lead="The first step is usually a conversation that turns a broad curiosity into a question narrow enough to answer in a term."
@@ -104,8 +72,6 @@ export default function AboutPage() {
         </p>
       </Prose>
 
-      <TeamGrid />
-
       <section className="gutter section-lg">
         <div className="shell-wide">
           <Reveal>
@@ -123,9 +89,6 @@ export default function AboutPage() {
               <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:col-start-8 lg:justify-end lg:pb-2">
                 <ButtonLink href="/explore" size="lg" className="group">
                   Browse the Archive <Arrow />
-                </ButtonLink>
-                <ButtonLink href="/community" size="lg" variant="secondary">
-                  How Membership Works
                 </ButtonLink>
               </div>
             </div>

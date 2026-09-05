@@ -1,38 +1,44 @@
 import type { Metadata } from "next";
-import { PageHeader, Prose } from "@/components/ui/PageHeader";
-import { ButtonLink, Arrow } from "@/components/ui/Button";
+import { Arrow, ButtonLink } from "@/components/ui/Button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Community",
   description:
-    "What membership looks like at Apollo Labs: how projects develop, how review works, mentorship, meetings, and how work gets published.",
+    "A simple working rhythm for students who want to finish and publish meaningful work.",
 };
+
+const EXPECTATIONS = [
+  {
+    term: "Start small",
+    detail: "Turn a broad interest into one question you can answer this term.",
+  },
+  {
+    term: "Work in view",
+    detail: "Share progress early enough for another member to help.",
+  },
+  {
+    term: "Leave a record",
+    detail: "Publish the method, result, and lessons learned in one lasting place.",
+  },
+];
 
 const RHYTHM = [
   {
-    index: "01",
     title: "Open studio",
     cadence: "Weekly",
-    body: "Work alongside other members. Most useful questions get answered here, before they turn into a week of lost effort.",
+    body: "Work beside other members and ask for help while the project is still taking shape.",
   },
   {
-    index: "02",
     title: "Project review",
     cadence: "Biweekly",
-    body: "One member presents work in progress and the group pushes on scope, method, and evidence.",
+    body: "Pressure-test scope, method, and evidence with people doing the same work.",
   },
   {
-    index: "03",
-    title: "Mentor sessions",
-    cadence: "Monthly",
-    body: "Scheduled time with someone who has done this work professionally, booked around what projects need.",
-  },
-  {
-    index: "04",
-    title: "Publication review",
+    title: "Mentor session",
     cadence: "As needed",
-    body: "A dedicated read of a finished draft. The reviewer is named on the published project.",
+    body: "Bring one specific question to someone with experience in the field.",
   },
 ];
 
@@ -40,142 +46,84 @@ export default function CommunityPage() {
   return (
     <>
       <PageHeader
-        index="02"
         eyebrow="Community"
         title={
           <>
-            Membership is a working group,{" "}
-            <span className="text-paper-dim">not a mailing list.</span>
+            A working group{" "}
+            <span className="text-paper-dim">for unfinished ideas.</span>
           </>
         }
-        lede="Apollo runs on people showing up and doing the work in view of each other. Here is the rhythm, the review, and how a project reaches the archive."
+        lede="Apollo is a place to make progress in public, get useful feedback, and give finished work a permanent home."
       />
 
-      <Prose
-        index="01"
-        label="Membership"
-        title="You join by starting a project, not by applying."
-        lead="There is no application essay and no selection round. Members join by beginning work and doing it where others can see it."
-        points={[
-          {
-            term: "Finish what you start",
-            detail: "The one real expectation. Scope a term, not a career.",
-          },
-          {
-            term: "Narrow, don't abandon",
-            detail: "A project that turns out too large gets cut down.",
-          },
-          {
-            term: "Review others",
-            detail: "Reviewing is how the standard holds — and it is the fastest way to improve your own writing.",
-          },
-        ]}
-      />
-
-      <section className="gutter border-b border-hairline py-20 md:py-28">
-        <div className="shell-wide">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <p className="mono-label flex gap-3 text-muted">
-                <span className="text-signal-text">02</span>
-                <span>The rhythm</span>
-              </p>
-              <h2 className="t-section mt-6 max-w-[14ch] text-paper">
-                What a term actually looks like.
-              </h2>
-            </div>
-            <p className="t-lead max-w-[40ch] text-paper-dim lg:col-span-6 lg:col-start-7 lg:mt-11">
-              Four recurring commitments. Everything else is you and the work.
-            </p>
+      <section className="gutter border-b border-hairline py-16 md:py-20">
+        <div className="shell-wide grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <p className="mono-label text-signal-text">The approach</p>
+            <h2 className="t-section mt-5 max-w-[14ch] text-paper">
+              Show up, make progress, share the result.
+            </h2>
           </div>
 
-          <ul className="mt-16 border-t border-hairline">
-              {RHYTHM.map((item, i) => (
-                <Reveal as="li" key={item.index} delay={i * 0.05}>
-                  <div className="grid gap-x-10 gap-y-3 border-b border-hairline py-8 md:grid-cols-12 md:items-baseline">
-                    <span className="mono-label text-signal-text md:col-span-1">
-                      {item.index}
-                    </span>
-                    <h3 className="t-sub md:col-span-3">{item.title}</h3>
-                    <span className="mono-label text-faint md:col-span-2">
-                      {item.cadence}
-                    </span>
-                    <p className="t-body-sm max-w-[52ch] text-paper-dim md:col-span-6">
-                      {item.body}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
+          <ul className="divide-y divide-hairline border-y border-hairline lg:col-span-6 lg:col-start-7">
+            {EXPECTATIONS.map((item) => (
+              <li
+                key={item.term}
+                className="grid gap-2 py-5 sm:grid-cols-[minmax(9rem,0.7fr)_1fr] sm:gap-8"
+              >
+                <h3 className="t-sub text-paper">{item.term}</h3>
+                <p className="t-body-sm text-paper-dim">{item.detail}</p>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
 
-      <Prose
-        index="03"
-        label="Collaboration"
-        title="Credit goes to the person who did the work."
-        lead="Projects can be solo or shared, decided by what the work needs rather than by who wants to join."
-      >
-        <p>
-          Every contributor is credited by name and by what they actually did —
-          fabrication, analysis, firmware, writing.{" "}
-          <strong>Vague group authorship helps no one</strong>, least of all the
-          person who did the most.
-        </p>
-      </Prose>
+      <section className="gutter border-b border-hairline bg-surface/35 py-16 md:py-20">
+        <div className="shell-wide">
+          <Reveal>
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-16">
+              <div className="lg:col-span-5">
+                <p className="mono-label text-signal-text">A simple rhythm</p>
+                <h2 className="t-section mt-5 max-w-[14ch] text-paper">
+                  Enough structure to keep moving.
+                </h2>
+              </div>
+              <p className="t-lead max-w-[38ch] text-paper-dim lg:col-span-6 lg:col-start-7">
+                The cadence is light by design. It makes asking for help normal
+                without turning the work into a second class.
+              </p>
+            </div>
+          </Reveal>
 
-      <Prose
-        index="04"
-        label="Mentorship"
-        title="Small, specific commitments from people who have done it."
-        lead="Mentors are researchers, engineers, and graduate students who agree to read a draft, sit in on a review, or unstick a methods question."
-      >
-        <p>
-          The point is not to hand a project to an expert. It is to shorten the
-          distance between a student making an avoidable mistake and someone
-          telling them so.
-        </p>
-      </Prose>
-
-      <Prose
-        index="05"
-        label="Publishing"
-        title="Finished work goes into the archive and stays there."
-        lead="A project is written up in the Apollo format: abstract, the sections the work calls for, figures with real captions, and links to code, data, or hardware files."
-        points={[
-          {
-            term: "Permanent URL",
-            detail: "With an author line and a date.",
-          },
-          {
-            term: "Revisions, not deletions",
-            detail: "Updates carry a revision note. Published work is not quietly removed.",
-          },
-        ]}
-      />
+          <ol className="mt-10 grid gap-px border border-hairline bg-hairline md:grid-cols-3">
+            {RHYTHM.map((item) => (
+              <li
+                key={item.title}
+                className="flex min-h-52 flex-col bg-base p-6 md:p-7"
+              >
+                <span className="mono-label text-signal-text">{item.cadence}</span>
+                <h3 className="t-sub mt-10 text-paper">{item.title}</h3>
+                <p className="t-body-sm mt-3 text-paper-dim">{item.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       <section className="gutter section-lg">
         <div className="shell-wide">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
-              <div className="lg:col-span-6">
-                <p className="mono-label text-muted">
-                  <span className="text-signal-text">◆</span>
-                  <span className="ml-3">Join</span>
-                </p>
-                <h2 className="t-section mt-6 max-w-[15ch] text-paper">
-                  Bring the thing you{" "}
-                  <span className="text-paper-dim">never finished.</span>
+            <div className="flex flex-col gap-6 border-t border-hairline pt-10 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="mono-label text-signal-text">Ready when you are</p>
+                <h2 className="t-section mt-5 max-w-[15ch] text-paper">
+                  Bring the question.
                 </h2>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:col-start-8 lg:justify-end lg:pb-2">
-                <ButtonLink href="/join" size="lg" className="group">
-                  Join Apollo <Arrow />
-                </ButtonLink>
-                <ButtonLink href="/about" size="lg" variant="secondary">
-                  About the Organization
-                </ButtonLink>
-              </div>
+              <ButtonLink href="/join" size="lg" className="group">
+                Join Apollo <Arrow />
+              </ButtonLink>
             </div>
           </Reveal>
         </div>

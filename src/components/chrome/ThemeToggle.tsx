@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useSyncExternalStore } from "react";
+import { RocketCraft } from "@/components/ui/RocketOrbit";
 
 type Theme = "dark" | "light";
 
@@ -23,39 +24,32 @@ const getServerSnapshot = (): Theme => "dark";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const nextTheme = theme === "dark" ? "light" : "dark";
 
   const toggle = useCallback(() => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
+    document.documentElement.dataset.theme = nextTheme;
     try {
-      localStorage.setItem(STORAGE_KEY, next);
+      localStorage.setItem(STORAGE_KEY, nextTheme);
     } catch {
       /* storage unavailable — the choice simply will not persist */
     }
-  }, [theme]);
+  }, [nextTheme]);
 
   return (
     <button
       type="button"
       onClick={toggle}
       aria-pressed={theme === "light"}
-      className={`flex size-9 items-center justify-center border border-transparent text-muted transition-colors duration-200 hover:border-hairline hover:text-paper ${className ?? ""}`}
+      aria-label={`Switch to ${nextTheme} theme`}
+      title={`Switch to ${nextTheme} theme`}
+      className={`theme-toggle group inline-flex h-11 items-center gap-2 border border-hairline px-2.5 text-paper-dim transition-[color,border-color,background-color] duration-200 hover:border-hairline-strong hover:bg-paper/[0.04] hover:text-paper ${className ?? ""}`}
     >
-      <span className="sr-only">
-        Switch to {theme === "dark" ? "light" : "dark"} theme
+      <span aria-hidden="true" className="theme-toggle__icon">
+        <RocketCraft className="theme-toggle__craft" />
       </span>
-      {/* A single mark with a terminator line — the fill flips with the theme. */}
-      <svg viewBox="0 0 20 20" className="size-[1.05rem]" aria-hidden="true" fill="none">
-        <circle cx="10" cy="10" r="5.6" stroke="currentColor" strokeWidth="1.3" />
-        <path
-          d={
-            theme === "dark"
-              ? "M10 4.4a5.6 5.6 0 0 0 0 11.2Z"
-              : "M10 4.4a5.6 5.6 0 0 1 0 11.2Z"
-          }
-          fill="currentColor"
-        />
-      </svg>
+      <span aria-hidden="true" className="theme-toggle__label">
+        {nextTheme} mode
+      </span>
     </button>
   );
 }

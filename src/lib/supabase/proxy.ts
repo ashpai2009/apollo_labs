@@ -1,10 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { requireSupabaseConfig } from "./env";
+import { readSupabaseConfig } from "./env";
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
-  const { url, publishableKey } = requireSupabaseConfig();
+  const config = readSupabaseConfig();
+
+  // Public pages remain previewable before credentials are supplied. Protected
+  // routes and auth actions handle missing configuration without a fake session.
+  if (!config) return response;
+
+  const { url, publishableKey } = config;
   const supabase = createServerClient(url, publishableKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),

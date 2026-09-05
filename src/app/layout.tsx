@@ -52,6 +52,7 @@ export default function RootLayout({
     // variable defined further down the tree resolves to invalid there.
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`dark ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
       suppressHydrationWarning
     >

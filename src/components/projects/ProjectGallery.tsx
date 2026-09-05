@@ -4,14 +4,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Arrow } from "@/components/ui/Button";
 import { PROJECTS } from "@/lib/projects";
 
-/**
- * One featured entry beside two standard cards, then a clean three-column
- * grid. Same card component throughout, same aspect ratios per row.
- */
+/** A short grid gives the homepage a clear sample without becoming an archive. */
 export function ProjectGallery() {
-  const [lead, ...rest] = PROJECTS;
-  const beside = rest.slice(0, 2);
-  const grid = rest.slice(2, 8);
+  const selected = PROJECTS.slice(0, 3);
 
   return (
     <section id="work" className="gutter section-lg scroll-mt-20">
@@ -19,7 +14,7 @@ export function ProjectGallery() {
         <SectionHeading
           label="Projects"
           title="Selected work from Apollo members."
-          lede="Research, engineering, and software built by Apollo members. Open one to read the abstract without leaving the page."
+          lede="A few things members have made, tested, and published."
           action={
             <Link
               href="/explore"
@@ -30,19 +25,8 @@ export function ProjectGallery() {
           }
         />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ProjectCard project={lead} featured />
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
-            {beside.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {grid.map((project) => (
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {selected.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
