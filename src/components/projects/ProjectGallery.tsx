@@ -4,14 +4,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Arrow } from "@/components/ui/Button";
 import { PROJECTS } from "@/lib/projects";
 
-/**
- * One featured entry beside two standard cards, then a clean three-column
- * grid. Same card component throughout, same aspect ratios per row.
- */
+/** A uniform grid keeps every selected project at the same visual weight. */
 export function ProjectGallery() {
-  const [lead, ...rest] = PROJECTS;
-  const beside = rest.slice(0, 2);
-  const grid = rest.slice(2, 8);
+  const selected = PROJECTS.slice(0, 9);
 
   return (
     <section id="work" className="gutter section-lg scroll-mt-20">
@@ -30,19 +25,8 @@ export function ProjectGallery() {
           }
         />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <ProjectCard project={lead} featured />
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
-            {beside.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {grid.map((project) => (
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {selected.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>

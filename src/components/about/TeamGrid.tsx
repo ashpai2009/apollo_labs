@@ -1,77 +1,122 @@
 import { TEAM, initials, type Member } from "@/lib/team";
 import { Reveal } from "@/components/ui/Reveal";
 
-function MemberRow({ member, index }: { member: Member; index: number }) {
+function MemberCard({ member, index }: { member: Member; index: number }) {
   return (
-    <li className="group border-b border-hairline">
-      <div className="grid items-baseline gap-x-10 gap-y-3 py-7 sm:grid-cols-12">
-        <span className="mono-label text-faint sm:col-span-1">
-          {String(index).padStart(2, "0")}
-        </span>
-        <div className="flex items-center gap-5 sm:col-span-4">
+    <Reveal as="li" className="h-full">
+      <article className="group relative flex h-full min-h-72 flex-col overflow-hidden border border-hairline bg-card p-6 transition-[background-color,border-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-signal/45 hover:bg-card-hover md:p-8">
+        <div className="flex items-start justify-between gap-6">
           <span
             aria-hidden="true"
-            className="mono-label flex size-12 shrink-0 items-center justify-center border border-hairline text-paper-dim transition-colors duration-300 group-hover:border-signal group-hover:text-signal-text"
+            className="mono-label flex size-14 shrink-0 items-center justify-center border border-hairline-strong text-paper-dim transition-[border-color,color,background-color] duration-300 group-hover:border-signal group-hover:bg-signal/[0.08] group-hover:text-signal-text"
           >
             {initials(member.name)}
           </span>
-          <span className="t-sub">{member.name}</span>
+          <span className="mono-label text-faint transition-colors duration-300 group-hover:text-signal-text">
+            {String(index).padStart(2, "0")}
+          </span>
         </div>
-        <span className="mono-label text-faint sm:col-span-3">{member.role}</span>
-        <p className="t-body-sm max-w-[46ch] text-paper-dim sm:col-span-4">
+
+        <p className="mono-label mt-10 text-signal-text">{member.role}</p>
+        <h4 className="t-sub mt-3 text-paper">{member.name}</h4>
+        <p className="t-body-sm mt-5 max-w-[38ch] text-paper-dim">
           {member.focus}
         </p>
+
+        <span
+          aria-hidden="true"
+          className="mt-auto block pt-8 text-right text-xs text-faint transition-colors duration-300 group-hover:text-signal-text"
+        >
+          ◆
+        </span>
+      </article>
+    </Reveal>
+  );
+}
+
+function TeamGroup({
+  label,
+  description,
+  members,
+  offset,
+}: {
+  label: string;
+  description: string;
+  members: Member[];
+  offset: number;
+}) {
+  return (
+    <section aria-labelledby={`team-${label.toLowerCase()}`}>
+      <div className="flex flex-col gap-3 border-b border-hairline pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3
+            id={`team-${label.toLowerCase()}`}
+            className="mono-label text-signal-text"
+          >
+            {label}
+          </h3>
+          <p className="t-sub mt-3 text-paper">{description}</p>
+        </div>
+        <span className="mono-label text-faint">
+          {String(members.length).padStart(2, "0")}{" "}
+          {members.length === 1 ? "person" : "people"}
+        </span>
       </div>
-    </li>
+
+      <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {members.map((member, index) => (
+          <MemberCard
+            key={member.name}
+            member={member}
+            index={offset + index + 1}
+          />
+        ))}
+      </ul>
+    </section>
   );
 }
 
 export function TeamGrid() {
-  const founders = TEAM.filter((m) => m.group === "Founders");
-  const engineering = TEAM.filter((m) => m.group === "Engineering");
+  const founders = TEAM.filter((member) => member.group === "Founders");
+  const engineering = TEAM.filter((member) => member.group === "Engineering");
 
   return (
     <section
-      id="team"
-      className="gutter section-lg scroll-mt-20 border-b border-hairline"
+      id="directory"
+      className="gutter scroll-mt-20 border-b border-hairline py-20 md:py-28"
     >
       <div className="shell-wide">
         <Reveal>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
               <p className="mono-label flex gap-3 text-muted">
-                <span className="text-signal-text">04</span>
-                <span>The Team</span>
+                <span className="text-signal-text">01</span>
+                <span>Directory</span>
               </p>
               <h2 className="t-section mt-6 max-w-[15ch] text-paper">
-                Apollo Labs is run by the students who use it.
+                Clear roles. One shared standard.
               </h2>
             </div>
-            <p className="t-lead max-w-[40ch] text-paper-dim lg:col-span-6 lg:col-start-7 lg:mt-11">
-              Everyone below is publishing through Apollo, not just
-              administering it.
+            <p className="t-lead max-w-[42ch] text-paper-dim lg:col-span-6 lg:col-start-7 lg:mt-11">
+              Apollo is led, engineered, and reviewed by students who are also
+              doing the work themselves.
             </p>
           </div>
         </Reveal>
 
-        <div className="mt-14">
-          <h3 className="mono-label text-signal-text">Founders</h3>
-          <ul className="mt-5 border-t border-hairline">
-            {founders.map((member, i) => (
-              <MemberRow key={member.name} member={member} index={i + 1} />
-            ))}
-          </ul>
-
-          <h3 className="mono-label mt-14 text-signal-text">Engineering</h3>
-          <ul className="mt-5 border-t border-hairline">
-            {engineering.map((member, i) => (
-              <MemberRow
-                key={member.name}
-                member={member}
-                index={founders.length + i + 1}
-              />
-            ))}
-          </ul>
+        <div className="mt-16 space-y-16 md:mt-20 md:space-y-20">
+          <TeamGroup
+            label="Founders"
+            description="Direction, review, and member support."
+            members={founders}
+            offset={0}
+          />
+          <TeamGroup
+            label="Engineering"
+            description="The platform and publication infrastructure."
+            members={engineering}
+            offset={founders.length}
+          />
         </div>
       </div>
     </section>

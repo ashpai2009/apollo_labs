@@ -15,6 +15,7 @@ const COLUMNS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/community", label: "Community" },
+      { href: "/team", label: "Team" },
       { href: "/#process", label: "How Apollo Works" },
     ],
   },

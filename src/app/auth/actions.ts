@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { readSupabaseConfig } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 
 export type AuthState = {
@@ -14,6 +15,8 @@ export type AuthState = {
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const unavailableMessage =
+  "Account access is not configured for this site yet. Please try again later.";
 
 /**
  * Supabase surfaces auth failures as raw API strings ("Email address ... is
@@ -72,6 +75,8 @@ export async function signUp(_state: AuthState, formData: FormData): Promise<Aut
   const values = { name, email, graduationYear: graduationYearRaw };
   if (Object.keys(errors).length) return { errors, values };
 
+  if (!readSupabaseConfig()) return { message: unavailableMessage, values };
+
   const supabase = await createClient();
   const origin = await siteOrigin();
   const { data, error } = await supabase.auth.signUp({
@@ -102,6 +107,8 @@ export async function signIn(_state: AuthState, formData: FormData): Promise<Aut
   const values = { email };
   if (Object.keys(errors).length) return { errors, values };
 
+  if (!readSupabaseConfig()) return { message: unavailableMessage, values };
+
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
@@ -124,6 +131,7 @@ export async function signIn(_state: AuthState, formData: FormData): Promise<Aut
 export async function requestPasswordReset(_state: AuthState, formData: FormData): Promise<AuthState> {
   const email = value(formData, "email").toLowerCase();
   if (!emailPattern.test(email)) return { errors: { email: "Enter a valid email address." } };
+  if (!readSupabaseConfig()) return { message: unavailableMessage, values: { email } };
 
   const supabase = await createClient();
   const origin = await siteOrigin();
@@ -147,6 +155,8 @@ export async function updatePassword(_state: AuthState, formData: FormData): Pro
   if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
   if (Object.keys(errors).length) return { errors };
 
+  if (!readSupabaseConfig()) return { message: unavailableMessage };
+
   const supabase = await createClient();
   const { error } = await supabase.auth.updateUser({ password });
   if (error) return { message: authMessage(error) };
@@ -155,6 +165,8 @@ export async function updatePassword(_state: AuthState, formData: FormData): Pro
 }
 
 export async function signOut() {
+  if (!readSupabaseConfig()) redirect("/");
+
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/");

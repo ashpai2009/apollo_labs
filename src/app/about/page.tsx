@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { PageHeader, Prose } from "@/components/ui/PageHeader";
-import { TeamGrid } from "@/components/about/TeamGrid";
 import { ButtonLink, Arrow } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why Apollo Labs exists, how students participate, how work gets reviewed and published, and who runs it.",
+    "Why Apollo Labs exists, how students participate, and how work gets reviewed and published.",
 };
 
 export default function AboutPage() {
@@ -104,8 +103,6 @@ export default function AboutPage() {
         </p>
       </Prose>
 
-      <TeamGrid />
-
       <section className="gutter section-lg">
         <div className="shell-wide">
           <Reveal>
@@ -124,8 +121,8 @@ export default function AboutPage() {
                 <ButtonLink href="/explore" size="lg" className="group">
                   Browse the Archive <Arrow />
                 </ButtonLink>
-                <ButtonLink href="/community" size="lg" variant="secondary">
-                  How Membership Works
+                <ButtonLink href="/team" size="lg" variant="secondary">
+                  Meet the Team
                 </ButtonLink>
               </div>
             </div>

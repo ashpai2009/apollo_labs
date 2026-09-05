@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { ButtonLink } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
+import { readSupabaseConfig } from "@/lib/supabase/env";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/explore", label: "Explore" },
   { href: "/about", label: "About" },
   { href: "/community", label: "Community" },
+  { href: "/team", label: "Team" },
 ];
 
 export function Navbar() {
@@ -22,6 +24,8 @@ export function Navbar() {
   const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
+    if (!readSupabaseConfig()) return;
+
     const supabase = createClient();
     let active = true;
     void supabase.auth.getUser().then(({ data }) => {
@@ -37,6 +41,8 @@ export function Navbar() {
   }, []);
 
   async function handleSignOut() {
+    if (!readSupabaseConfig()) return;
+
     const supabase = createClient();
     await supabase.auth.signOut();
     setOpen(false);
@@ -84,7 +90,7 @@ export function Navbar() {
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center gap-7">
+          <ul className="flex items-center gap-6 lg:gap-7">
             {NAV.map((item) => {
               const active = isActive(item.href);
               return (

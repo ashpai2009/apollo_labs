@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { useMagnetic } from "./useMagnetic";
 
@@ -8,7 +8,7 @@ type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] active:scale-[0.985] disabled:pointer-events-none disabled:opacity-45";
+  "button-motion group relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-[background-color,border-color,color,transform,opacity] duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
   primary:
@@ -27,25 +27,50 @@ const sizes: Record<Size, string> = {
 type SharedProps = {
   variant?: Variant;
   size?: Size;
+  magnetic?: boolean;
+  busy?: boolean;
   className?: string;
   children: ReactNode;
 };
 
+function ProgressStatus({ pending }: { pending: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`button-progress${pending ? " is-pending" : ""}`}
+    >
+      <span className="button-progress__signal" />
+    </span>
+  );
+}
+
+function LinkProgressStatus() {
+  const { pending } = useLinkStatus();
+  return <ProgressStatus pending={pending} />;
+}
+
 export function Button({
   variant = "primary",
   size = "md",
+  magnetic,
+  busy = false,
   className,
   children,
+  disabled,
   ...props
 }: SharedProps & ComponentPropsWithoutRef<"button">) {
-  const magnetic = useMagnetic<HTMLButtonElement>();
+  const isMagnetic = magnetic ?? variant === "primary";
+  const magneticProps = useMagnetic<HTMLButtonElement>(8, isMagnetic);
   return (
     <button
-      {...magnetic}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${className ?? ""}`}
+      {...magneticProps}
+      className={`${base} ${isMagnetic ? "magnetic-action" : ""} ${variants[variant]} ${sizes[size]} ${className ?? ""}`}
+      disabled={disabled || busy}
+      aria-busy={busy || undefined}
       {...props}
     >
-      {children}
+      <span className="button-motion__label">{children}</span>
+      <ProgressStatus pending={busy} />
     </button>
   );
 }
@@ -53,20 +78,23 @@ export function Button({
 export function ButtonLink({
   variant = "primary",
   size = "md",
+  magnetic,
   className,
   children,
   href,
   ...props
-}: SharedProps & ComponentPropsWithoutRef<typeof Link>) {
-  const magnetic = useMagnetic<HTMLAnchorElement>();
+}: Omit<SharedProps, "busy"> & ComponentPropsWithoutRef<typeof Link>) {
+  const isMagnetic = magnetic ?? variant === "primary";
+  const magneticProps = useMagnetic<HTMLAnchorElement>(8, isMagnetic);
   return (
     <Link
-      {...magnetic}
+      {...magneticProps}
       href={href}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${className ?? ""}`}
+      className={`${base} ${isMagnetic ? "magnetic-action" : ""} ${variants[variant]} ${sizes[size]} ${className ?? ""}`}
       {...props}
     >
-      {children}
+      <span className="button-motion__label">{children}</span>
+      <LinkProgressStatus />
     </Link>
   );
 }
