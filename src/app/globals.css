@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors resolve from the palettes below so both themes share one scale. */
+  /* Colors resolve from the paper-and-ink palette below. */
   --color-void: var(--apollo-void);
   --color-base: var(--apollo-base);
   --color-surface: var(--apollo-surface);
@@ -46,35 +46,35 @@
 }
 
 /* ─────────────────────────────────────────────────
-   Apollo's night-lab palette.
+   Apollo's paper-and-ink palette.
    ───────────────────────────────────────────────── */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --apollo-void: #0a0a0b;
-  --apollo-base: #0e0e10;
-  --apollo-surface: #131316;
-  --apollo-surface-2: #1a1a1e;
-  --apollo-elevated: #1f1f24;
+  --apollo-void: #f6f4f0;
+  --apollo-base: #fffdf9;
+  --apollo-surface: #efede7;
+  --apollo-surface-2: #e5e1d8;
+  --apollo-elevated: #ffffff;
 
-  --apollo-hairline: rgba(255, 255, 255, 0.09);
-  --apollo-hairline-strong: rgba(255, 255, 255, 0.18);
-  --apollo-card: #141417;
-  --apollo-card-hover: #191920;
+  --apollo-hairline: rgba(24, 21, 18, 0.14);
+  --apollo-hairline-strong: rgba(24, 21, 18, 0.27);
+  --apollo-card: #fffdf9;
+  --apollo-card-hover: #f2efe8;
 
-  --apollo-paper: #ece8e1;
-  --apollo-paper-dim: #b9b5ae;
-  --apollo-muted: #8d8c92;
-  --apollo-faint: #828187;
+  --apollo-paper: #191713;
+  --apollo-paper-dim: #504c45;
+  --apollo-muted: #716c63;
+  --apollo-faint: #817b72;
 
-  --apollo-signal: #e4572e;
-  --apollo-signal-bright: #f2764f;
-  --apollo-signal-dim: #a83c1e;
-  --apollo-signal-ink: #140803;
-  --apollo-signal-text: #e4572e;
+  --apollo-signal: #c8411c;
+  --apollo-signal-bright: #a83415;
+  --apollo-signal-dim: #8f2f13;
+  --apollo-signal-ink: #fffdf9;
+  --apollo-signal-text: #a83415;
 
-  --apollo-backdrop: rgba(8, 8, 9, 0.6);
-  --apollo-modal-shadow: rgba(0, 0, 0, 0.8);
+  --apollo-backdrop: rgba(24, 21, 18, 0.42);
+  --apollo-modal-shadow: rgba(48, 42, 34, 0.24);
 }
 
 @layer base {
@@ -585,46 +585,46 @@
      the Apollo mark. Only the hue changes, keyed to the
      discipline, so a wall of cards reads as one family. */
   .cover-matrix {
-    --cover-a: hsl(275 32% 18%);
-    --cover-b: hsl(275 26% 10%);
-    --cover-glow: hsl(275 60% 64%);
-    --cover-mark: hsl(275 44% 80%);
+    --cover-a: hsl(275 54% 95%);
+    --cover-b: hsl(275 40% 86%);
+    --cover-glow: hsl(275 68% 88%);
+    --cover-mark: hsl(275 42% 36%);
   }
   .cover-interface {
-    --cover-a: hsl(218 32% 18%);
-    --cover-b: hsl(218 26% 10%);
-    --cover-glow: hsl(218 60% 64%);
-    --cover-mark: hsl(218 44% 80%);
+    --cover-a: hsl(218 54% 95%);
+    --cover-b: hsl(218 40% 86%);
+    --cover-glow: hsl(218 68% 88%);
+    --cover-mark: hsl(218 42% 36%);
   }
   .cover-cells {
-    --cover-a: hsl(138 32% 18%);
-    --cover-b: hsl(138 26% 10%);
-    --cover-glow: hsl(138 60% 64%);
-    --cover-mark: hsl(138 44% 80%);
+    --cover-a: hsl(138 54% 95%);
+    --cover-b: hsl(138 40% 86%);
+    --cover-glow: hsl(138 68% 88%);
+    --cover-mark: hsl(138 42% 36%);
   }
   .cover-solid {
-    --cover-a: hsl(25 32% 18%);
-    --cover-b: hsl(25 26% 10%);
-    --cover-glow: hsl(25 60% 64%);
-    --cover-mark: hsl(25 44% 80%);
+    --cover-a: hsl(25 54% 95%);
+    --cover-b: hsl(25 40% 86%);
+    --cover-glow: hsl(25 68% 88%);
+    --cover-mark: hsl(25 42% 36%);
   }
   .cover-terrain {
-    --cover-a: hsl(176 32% 18%);
-    --cover-b: hsl(176 26% 10%);
-    --cover-glow: hsl(176 60% 64%);
-    --cover-mark: hsl(176 44% 80%);
+    --cover-a: hsl(176 54% 95%);
+    --cover-b: hsl(176 40% 86%);
+    --cover-glow: hsl(176 68% 88%);
+    --cover-mark: hsl(176 42% 36%);
   }
   .cover-curves {
-    --cover-a: hsl(336 32% 18%);
-    --cover-b: hsl(336 26% 10%);
-    --cover-glow: hsl(336 60% 64%);
-    --cover-mark: hsl(336 44% 80%);
+    --cover-a: hsl(336 54% 95%);
+    --cover-b: hsl(336 40% 86%);
+    --cover-glow: hsl(336 68% 88%);
+    --cover-mark: hsl(336 42% 36%);
   }
   .cover-mechanism {
-    --cover-a: hsl(58 32% 18%);
-    --cover-b: hsl(58 26% 10%);
-    --cover-glow: hsl(58 60% 64%);
-    --cover-mark: hsl(58 44% 80%);
+    --cover-a: hsl(58 54% 95%);
+    --cover-b: hsl(58 40% 86%);
+    --cover-glow: hsl(58 68% 88%);
+    --cover-mark: hsl(58 42% 36%);
   }
 
 }
@@ -835,7 +835,7 @@ html[data-apollo-intro="play"] body {
 
 /* The gallery must stay legible behind the preview. */
 .apollo-dialog::backdrop {
-  background: rgba(8, 8, 9, 0.6);
+  background: rgba(24, 21, 18, 0.42);
   backdrop-filter: blur(3px);
   animation: backdrop-in 320ms var(--ease-precise);
 }
