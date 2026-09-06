@@ -16,6 +16,7 @@ const NAV = [
 ];
 
 const DISCORD_INVITE = "https://discord.gg/pvgqDxX2NE";
+type AuthStatus = "loading" | "signed-in" | "signed-out";
 
 function DiscordIcon() {
   return (
@@ -35,7 +36,9 @@ export function Navbar() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>(() =>
+    readSupabaseConfig() ? "loading" : "signed-out",
+  );
 
   useEffect(() => {
     if (!readSupabaseConfig()) return;
@@ -43,10 +46,10 @@ export function Navbar() {
     const supabase = createClient();
     let active = true;
     void supabase.auth.getUser().then(({ data }) => {
-      if (active) setSignedIn(Boolean(data.user));
+      if (active) setAuthStatus(data.user ? "signed-in" : "signed-out");
     });
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSignedIn(Boolean(session?.user));
+      setAuthStatus(session?.user ? "signed-in" : "signed-out");
     });
     return () => {
       active = false;
@@ -148,19 +151,19 @@ export function Navbar() {
             Discord
             <span className="sr-only"> (opens in a new tab)</span>
           </ButtonLink>
-          {signedIn ? (
+          {authStatus === "signed-in" ? (
             <>
               <button type="button" onClick={handleSignOut} className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper">
                 Sign Out
               </button>
               <ButtonLink href="/dashboard" size="sm" className="ml-3">Dashboard</ButtonLink>
             </>
-          ) : (
+          ) : authStatus === "signed-out" ? (
             <>
               <Link href="/signin" className="link-reveal px-1 text-[0.8125rem] text-paper-dim transition-colors duration-200 hover:text-paper">Sign In</Link>
               <ButtonLink href="/join" size="sm" className="ml-3">Join Apollo</ButtonLink>
             </>
-          )}
+          ) : null}
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
@@ -226,17 +229,17 @@ export function Navbar() {
             Discord
             <span className="sr-only"> (opens in a new tab)</span>
           </ButtonLink>
-          {signedIn ? (
+          {authStatus === "signed-in" ? (
             <>
               <ButtonLink href="/dashboard" onClick={() => setOpen(false)} className="w-full">Dashboard</ButtonLink>
               <button type="button" onClick={handleSignOut} className="h-11 border border-hairline-strong px-6 text-sm font-medium text-paper transition-colors hover:bg-paper/[0.04]">Sign Out</button>
             </>
-          ) : (
+          ) : authStatus === "signed-out" ? (
             <>
               <ButtonLink href="/join" onClick={() => setOpen(false)} className="w-full">Join Apollo</ButtonLink>
               <ButtonLink href="/signin" onClick={() => setOpen(false)} variant="secondary" className="w-full">Sign In</ButtonLink>
             </>
-          )}
+          ) : null}
         </div>
       </div>
     </header>
