@@ -10,7 +10,7 @@ const ORBIT_DURATION = 4.5;
 export const APOLLO_MARK_ORBIT_PATH =
   "M 3.48 23.06 A 13.5 6.5 -22 1 1 28.52 12.94 A 13.5 6.5 -22 1 1 3.48 23.06";
 
-/** A CSS-drawn craft used by project cards and the static theme label. */
+/** A CSS-drawn craft used by project cards and compact interface accents. */
 export function RocketCraft({ className }: { className?: string }) {
   return (
     <span className={`rocket-craft${className ? ` ${className}` : ""}`}>
