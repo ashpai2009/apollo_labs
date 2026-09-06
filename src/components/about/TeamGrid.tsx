@@ -1,9 +1,9 @@
 import { TEAM, initials, type Member } from "@/lib/team";
 import { Reveal } from "@/components/ui/Reveal";
 
-function MemberCard({ member }: { member: Member }) {
+function MemberCard({ member, offset }: { member: Member; offset?: string }) {
   return (
-    <Reveal as="li" className="h-full">
+    <Reveal as="li" className={`h-full ${offset ?? ""}`}>
       <article className="group relative flex h-full min-h-72 flex-col overflow-hidden border border-hairline bg-card p-6 transition-[background-color,border-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-signal/45 hover:bg-card-hover md:p-8">
         <div className="flex items-start justify-between gap-6">
           <span
@@ -58,8 +58,14 @@ function TeamGroup({
       </div>
 
       <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {members.map((member) => (
-          <MemberCard key={member.name} member={member} />
+        {members.map((member, index) => (
+          <MemberCard
+            key={member.name}
+            member={member}
+            offset={
+              index === 1 ? "md:mt-8" : index === 2 ? "md:-mt-4" : undefined
+            }
+          />
         ))}
       </ul>
     </section>

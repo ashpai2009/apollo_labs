@@ -16,6 +16,13 @@ const TYPES: ProjectType[] = [
 
 type Sort = "newest" | "featured";
 
+const ARCHIVE_LAYOUT = [
+  "lg:col-span-7",
+  "lg:col-span-5 lg:mt-12",
+  "lg:col-span-5 lg:col-start-2 lg:-mt-2",
+  "lg:col-span-7 lg:col-start-6 lg:mt-8",
+];
+
 function matches(project: Project, query: string) {
   if (!query) return true;
   const q = query.toLowerCase();
@@ -175,9 +182,14 @@ export function ExploreArchive() {
               </p>
             </div>
           ) : (
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {results.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-12 lg:items-start">
+              {results.map((project, index) => (
+                <div
+                  key={project.id}
+                  className={ARCHIVE_LAYOUT[index % ARCHIVE_LAYOUT.length]}
+                >
+                  <ProjectCard project={project} />
+                </div>
               ))}
             </div>
           )}
