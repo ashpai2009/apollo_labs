@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Navbar } from "@/components/chrome/Navbar";
 import { Footer } from "@/components/chrome/Footer";
 import { IntroGate, IntroSequence } from "@/components/brand/IntroSequence";
-import { ThemeGate } from "@/components/chrome/ThemeToggle";
 import { PointerGlow } from "@/components/ui/PointerGlow";
 import "./globals.css";
 
@@ -45,19 +44,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    // suppressHydrationWarning: IntroGate stamps data-apollo-intro on <html>
-    // before hydration, the same pattern theme scripts use.
+    // IntroGate stamps data-apollo-intro on <html> before hydration.
     // Font variables live on <html>: Tailwind's @theme resolves --font-sans /
     // --font-serif / --font-mono at :root, and a custom property referencing a
     // variable defined further down the tree resolves to invalid there.
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <ThemeGate />
         <IntroGate />
         <IntroSequence />
         <PointerGlow />

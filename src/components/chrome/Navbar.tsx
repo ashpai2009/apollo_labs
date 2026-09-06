@@ -7,7 +7,6 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { ButtonLink } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { readSupabaseConfig } from "@/lib/supabase/env";
-import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/explore", label: "Explore" },
@@ -137,7 +136,6 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <ThemeToggle className="mr-1" />
           <ButtonLink
             href={DISCORD_INVITE}
             target="_blank"
@@ -166,28 +164,27 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
-          <ThemeToggle />
-        <button
-          type="button"
-          className="flex size-11 items-center justify-center"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          <span className="relative block h-3 w-5">
-            <span
-              className={`absolute left-0 h-px w-full bg-paper transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${
-                open ? "top-1.5 rotate-45" : "top-0"
-              }`}
-            />
-            <span
-              className={`absolute left-0 h-px w-full bg-paper transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${
-                open ? "top-1.5 -rotate-45" : "top-3"
-              }`}
-            />
-          </span>
-        </button>
+          <button
+            type="button"
+            className="flex size-11 items-center justify-center"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            <span className="relative block h-3 w-5">
+              <span
+                className={`absolute left-0 h-px w-full bg-paper transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${
+                  open ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-px w-full bg-paper transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] ${
+                  open ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </span>
+          </button>
         </div>
       </div>
 
