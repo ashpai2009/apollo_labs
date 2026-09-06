@@ -9,7 +9,7 @@ import { DISCIPLINES } from "@/lib/disciplines";
 export const metadata: Metadata = {
   title: "Explore",
   description:
-    "The complete Apollo Labs archive — every published student project, searchable by title, author, discipline, and type.",
+    "Apollo Labs project areas, ready for the first student research submissions.",
 };
 
 export default function ExplorePage() {
@@ -19,11 +19,11 @@ export default function ExplorePage() {
         eyebrow="The Archive"
         title={
           <>
-            Every project Apollo has{" "}
-            <span className="text-paper-dim">published.</span>
+            The archive is ready for its{" "}
+            <span className="text-paper-dim">first entries.</span>
           </>
         }
-        lede="Search by title, author, tag, or abstract, then filter to a discipline or project type. Open any entry to read its abstract without leaving the page."
+        lede="Choose an area, bring a question, and help make the first project worth pinning here."
         aside={
           <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-6 border-t border-hairline pt-6">
             <div>

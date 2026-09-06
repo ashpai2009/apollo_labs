@@ -1,10 +1,11 @@
 export type Discipline =
-  | "Artificial Intelligence"
   | "Computer Science"
-  | "Engineering"
   | "Biology"
-  | "Environmental Science"
+  | "Chemistry"
   | "Mathematics"
+  | "Engineering"
+  | "Artificial Intelligence"
+  | "Environmental Science"
   | "Robotics";
 
 export type ProjectType =

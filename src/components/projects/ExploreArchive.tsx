@@ -175,10 +175,14 @@ export function ExploreArchive() {
           {results.length === 0 ? (
             <div className="py-20 text-center">
               <p className="text-[1.25rem] font-medium text-paper-dim">
-                Nothing matches that yet.
+                {PROJECTS.length === 0
+                  ? "No projects have been pinned yet."
+                  : "Nothing matches that yet."}
               </p>
               <p className="mt-3 text-sm text-muted">
-                Try a broader term, or clear the filters to see the full archive.
+                {PROJECTS.length === 0
+                  ? "Pick an area, bring a question, and make the first entry."
+                  : "Try a broader term, or clear the filters to see the full archive."}
               </p>
             </div>
           ) : (
